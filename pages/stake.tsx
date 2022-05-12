@@ -324,7 +324,7 @@ const Mint: NextPage = () => {
                                         <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-60" key={contract_id + key}>
                                           <div className="t-card">
                                             <div className="t-card-img  mb-12">
-                                              <img className="stake-img" src={X_PARAS_COLLECTIONS.includes(contract_id) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftMetadata.get(contract_id)?.base_uri + '/' + nftData.metadata.media)} alt="staking" loading="lazy" />
+                                              <img className="stake-img" src={X_PARAS_COLLECTIONS.includes(contract_id) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(contract_id)?.base_uri + '/' + nftData.metadata.media))} alt="staking" loading="lazy" />
                                             </div>
                                             <div className="t-card-title">
                                               <h5 className="t-18-b white-c">{nftData.metadata.title}</h5>
@@ -403,7 +403,7 @@ const Mint: NextPage = () => {
                                         <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-60" key={key}>
                                           <div className="t-card">
                                             <div className="t-card-img  mb-12">
-                                              <img className="stake-img" src={X_PARAS_COLLECTIONS.includes(contract_id) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftMetadata.get(contract_id)?.base_uri + '/' + nftData.metadata.media)} alt="staking" loading="lazy" />
+                                              <img className="stake-img" src={X_PARAS_COLLECTIONS.includes(contract_id) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(contract_id)?.base_uri + '/' + nftData.metadata.media))} alt="staking" loading="lazy" />
                                             </div>
                                             <div className="t-card-title">
                                               <h5 className="t-18-b white-c">{nftData.metadata.title}</h5>

@@ -70,7 +70,7 @@ const Mint: NextPage = () => {
   }
 
   const getTransactionsForCollection = async (account_id: string) => {
-    const api = process.env.API;
+    const api = process.env.NEXT_PUBLIC_API;
 
     // const api = "http://35.75.88.169:3001";
     // const api = 'https://api.terraspaces.io';

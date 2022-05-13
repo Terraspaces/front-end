@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    API: "",
+    NEXT_PUBLIC_API: "",
   },
 };
 

@@ -33,7 +33,7 @@ const Home: NextPage = () => {
   const [collectionMetadataList, setCollectionMetadataList] = useState<Map<string, any>>(new Map());
 
   const getTrendingCollectionData = async () => {
-    const api = process.env.API;
+    const api = process.env.NEXT_PUBLIC_API;
     // const api = "http://35.75.88.169:3001";
     // const api = 'https://api.terraspaces.io';
     const getAPI = async () => {

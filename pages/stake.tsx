@@ -19,9 +19,9 @@ const Mint: NextPage = () => {
   const [totalStaked, setTotalStaked] = useState<number>(0);
 
   const getTrendingCollectionData = async () => {
-    // const api =process.env.API !== undefined ? process.env.API: 'https://api.terraspaces.io';
+    const api = process.env.NEXT_PUBLIC_API;
     // const api = "http://35.75.88.169:3001";
-    const api = 'https://api.terraspaces.io';
+    // const api = 'https://api.terraspaces.io';
     const getAPI = async () => {
       const trendingCollectionDataEndpoint = `${api}/trending_collection_data`;
       const result = await fetch(trendingCollectionDataEndpoint, {

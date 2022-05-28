@@ -332,6 +332,32 @@ button.star-btn:hover:before {
     transform: translate(10px, 49px) !important;
 }
 
+.primary-btn {
+    background-color: var(--primary-2);
+    color: var(--white);
+    padding: 5px 13px;
+    transition: all 0.2s linear;
+    border-radius: 10px;
+}
+.primary-btn:hover {
+    background-color: #6130B6;
+}
+.primary-btn:focus {
+    background-color: #4C258D;
+}
+
+.primary-btn-naked {
+    background-color: transparent;
+    color: var(--white);
+    padding: 5px 13px;
+    border: 1px solid var(--primary-2);
+    transition: all 0.2s linear;
+    border-radius: 10px;
+}
+.primary-btn-naked:hover {
+    background-color: var(--primary-2);
+}
+
 .partner-wrapper {
     padding-bottom: 100px;
     position: relative;
@@ -614,6 +640,16 @@ button.star-btn:hover:before {
 }
 
 .vector-abs img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+.vector-abs span {
     position: absolute;
     left: 50%;
     top: 50%;

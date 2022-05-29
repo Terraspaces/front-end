@@ -73,6 +73,10 @@ a {
   width: calc(100% - 24px);
 }
 
+#header .container {
+  flex-wrap: wrap;
+}
+
 @media (max-width: 992px) {
   .dashboard-t {
     flex-direction: column-reverse;
@@ -82,4 +86,69 @@ a {
     margin-bottom: 20px;
   }
 
+}
+
+.floating-tooltip-2 {
+	width: 96px;
+	position: absolute;
+	display: none;
+	padding: 8px;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: white;
+	background-color: #0a0221;
+	text-align: left;
+	z-index: 1000;
+	top: 12px;
+	left: 12px;
+	pointer-events: none;
+	border: 1px solid #1e153c;
+	border-radius: 8px;
+}
+
+.floating-tooltip-2 > div {
+  display: flex;
+  align-items: center;
+}
+
+.floating-tooltip-2 > div span:first-child {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.high-chart-tooltip .y-value {
+  color: rgb(74, 143, 231);
+}
+
+.high-chart-tooltip .x-value {
+  color: rgb(235, 235, 240);
+  font-weight: bold;
+}
+
+@media (min-width: 578px) {
+  /** Mozilla scrollbar*/
+  * {
+    scrollbar-color: #CCC !important;
+    scrollbar-width: thin !important;
+  }
+
+  /** Scrollbar for browser based on webkit */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: rgba(255,255,255,0.08);
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.06);
+  }
 }

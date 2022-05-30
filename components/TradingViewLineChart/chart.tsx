@@ -3,6 +3,7 @@ import { createChart } from "lightweight-charts";
 import {
   Container
 } from './styles'
+import { FloorIcon } from "../DashboardChartView";
 
 function TradingViewLineChart(props: any) {
   const { graphStatus, floorData, listedData, volumeData } = props
@@ -125,7 +126,7 @@ function TradingViewLineChart(props: any) {
       toolTip.style.left = left + 'px';
       toolTip.style.top = top + 'px';
     });
-  }, [graphStatus]);
+  }, [graphStatus, floorData, listedData, volumeData]);
 
   return (
     <Container>

@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react';
 import { WalletContext } from "../contexts/wallet"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { SearchBox } from './SearchBox';
 
 const Header: NextPage = () => {
     const router = useRouter()
@@ -22,8 +23,11 @@ const Header: NextPage = () => {
                         <a className="navbar-brand logo" href="">
                             <img src="assets/img/logo/logo.png" alt="logo" loading="lazy" />
                         </a>
-                        <div className="d-flex align-items-center">
-                            <div className="d-block d-md-none login-b ">
+                        <div>
+                            <SearchBox />
+                        </div>
+                        <div className="d-flex align-items-center mobile-icon-wrapper">
+                            <div className="d-block login-b ">
                                 <button className="cmn-btn" onClick={onWallet}>
                                     {
                                         !wallet?.isSignedIn() ?
@@ -61,10 +65,19 @@ const Header: NextPage = () => {
                                         <a className={`nav-link ${router.pathname == "/mint" ? "active" : ""}`}>Mint</a>
                                     </Link>
                                 </li> */}
+                                <button className="cmn-btn mobile-wallet" onClick={onWallet}>
+                                    {
+                                        !wallet?.isSignedIn() ?
+                                            <span> Wallet</span>
+                                            :
+                                            <span> {wallet.getAccountId()}</span>
+                                    }
+                                    <img src="assets/img/icons/Wallet1.svg" alt="wallet" />
+                                </button>
                             </ul>
                         </div>
 
-                        <div className="d-none d-md-block  ms-auto">
+                        <div className="mobile-icon  ms-auto d-none">
                             <button className="cmn-btn" onClick={onWallet}>
                                 {
                                     !wallet?.isSignedIn() ?

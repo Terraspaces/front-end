@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const InnerContainer = styled.div`
   padding: 25px;
   background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(255, 255, 255, 0.4) 0%, #31254A 0.01%, rgba(160, 120, 237, 0) 100%);
-  border-radius: 15px;
+  border-radius: 30px;
 `
 
 export const DetailWrapper = styled.div`

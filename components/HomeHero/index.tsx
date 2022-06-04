@@ -43,11 +43,6 @@ export const HomeHero = (props: HomeHeroProps) => {
           ))}
         </CheckListWrapper>
         <ButtonWrapper>
-          {/* <button className='primary-btn'>
-            <span>{data.button1.title}</span>
-            <SoundIcon />
-          </button> */}
-
           {data.button1._blank ? (
             <button className='primary-btn'>
               <a href={data.button1.link} target="_blank" rel="noreferrer" style={{ color: "white" }}>

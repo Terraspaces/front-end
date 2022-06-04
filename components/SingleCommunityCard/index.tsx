@@ -18,34 +18,34 @@ interface SingleExplorecardProps {
 
 export const SingleCommunityCard = (props: SingleExplorecardProps) => {
   const { card } = props;
-
+  const {name, image_link, mint_date, discord, twitter, website} = card;
   return (
     <Container>
       <InnerContainer>
-        <img draggable={false} src={card?.photo} alt='' />
+        <img draggable={false} src={image_link} alt='' />
         <FooterWrapper>
           <TitleWrapper>
-            <h2>{card?.name}</h2>
+            <h2>{name}</h2>
             <VerifiedIcon />
           </TitleWrapper>
           <div>
             <DateIconWrapper>
-              <DateBox className='date-box'>{moment(card.timestamp).format('MMM DD | HH:mm') }</DateBox>
+              <DateBox className='date-box'>{mint_date ? moment(mint_date).format('MMM DD | HH:mm') : "Coming soon" }</DateBox>
               <SocialList>
-                <a href='https://discord.com' target='_blank' rel="noreferrer">
+                <a href={discord || '#'} target='_blank' rel="noreferrer">
                   <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
                 </a>
-                <a href='https://twitter.com' target='_blank' rel="noreferrer">
+                <a href={twitter || '#'} target='_blank' rel="noreferrer">
                   <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
                 </a>
-                <a href='https://twitter.com' target='_blank' rel="noreferrer">
+                <a href={website || '#'} target='_blank' rel="noreferrer">
                   <LinkIcon />
                 </a>
               </SocialList>
             </DateIconWrapper>
             <FavoriteBox className='favorite-box'>
               <HeartIcon />
-              <span>{card.favorite_count}</span>
+              <span>{card.vote_count}</span>
             </FavoriteBox>
           </div>
         </FooterWrapper>

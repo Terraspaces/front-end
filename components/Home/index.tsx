@@ -23,8 +23,8 @@ const heroData = [
       'Earn up to $2000 upon successful referrals of new staking partners.',
       'Access our farm by staking specific NFTs to earn passive token emission.'
     ],
-    button1: { title: 'Live on PARAS' },
-    button2: { title: 'Stake Your NFTs' }
+    button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
+    button2: { title: 'Stake Your NFTs', link: '/stake', _blank: false }
   },
   {
     title: 'Check For Terraspaces Or Partnered NFTs To Stake.',
@@ -35,8 +35,8 @@ const heroData = [
       'Earn up to $2000 upon successful referrals of new staking partners.',
       'Access our farm by staking specific NFTs to earn passive token emission.'
     ],
-    button1: { title: 'Live on PARAS' },
-    button2: { title: 'Read Gitbook' }
+    button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
+    button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
   },
   {
     title: 'Stake To Access Dashboard And Referral Commission',
@@ -47,8 +47,8 @@ const heroData = [
       'Terraspaces can earn maximum $2000 with 40 NFTs staked per referral.',
       'Staking Partners can earn maximum $1000 with 40 NFTs staked per referral.'
     ],
-    button1: { title: 'Make a Referral' },
-    button2: { title: 'Goto Dashboard' }
+    button1: { title: 'Make a Referral', link: '#', _blank: false },
+    button2: { title: 'Go to Dashboard', link: '/dashboard', _blank: false }
   },
   {
     title: 'Earn Commission Referring New Staking Partners.',
@@ -59,8 +59,8 @@ const heroData = [
       'Each NFT staked enables multipler of 0.5x to boost commission.',
       'The maximum multiplier is capped at 40 NFTs staked per referral.'
     ],
-    button1: { title: 'Live on PARAS' },
-    button2: { title: 'Read Gitbook' }
+    button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
+    button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
   },
   {
     title: 'Introducing $SAGA Token Rewards For Monarchs',
@@ -71,8 +71,8 @@ const heroData = [
       '$SAGA is a  utility token with max supply of 12,000,000 tokens.',
       '$SAGA will pay for Haven\'s utilities, services and mint future collections.'
     ],
-    button1: { title: 'Live on PARAS' },
-    button2: { title: 'Read Gitbook' }
+    button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
+    button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
   },
 ]
 

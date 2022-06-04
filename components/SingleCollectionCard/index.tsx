@@ -14,7 +14,6 @@ interface SingleCollectionCardProps {
 
 export const SingleCollectionCard = (props: SingleCollectionCardProps) => {
   const { card } = props;
-
   return (
     <Container>
       <InnerContainer>

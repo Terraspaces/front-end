@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { VerifiedIcon, CheckedIcon, LinkIcon, SoundIcon } from '../Shared/SvgIcons'
 import {
   ExploreNearWrapper,
@@ -32,7 +33,7 @@ export const HomeHero = (props: HomeHeroProps) => {
         <h1>{data?.title}</h1>
         <p>{data?.description}</p>
         <CheckListWrapper className='row'>
-          {data?.list.map((item: any, i:number) => (
+          {data?.list.map((item: any, i: number) => (
             <div className='col-md-6 col-sm-6 col-12' key={i}>
               <CheckItem>
                 <CheckedIcon />
@@ -42,13 +43,39 @@ export const HomeHero = (props: HomeHeroProps) => {
           ))}
         </CheckListWrapper>
         <ButtonWrapper>
-          <button className='primary-btn'>
+          {/* <button className='primary-btn'>
             <span>{data.button1.title}</span>
             <SoundIcon />
-          </button>
-          <button className='primary-btn-naked'>
-            <span>{data.button2.title}</span>
-          </button>
+          </button> */}
+
+          {data.button1._blank ? (
+            <button className='primary-btn'>
+              <a href={data.button1.link} target="_blank" rel="noreferrer" style={{ color: "white" }}>
+                <span>{data.button1.title}</span>
+              </a>
+              <SoundIcon />
+            </button>
+          ) : (
+            <button className='primary-btn'>
+              <Link href={data.button1.link}>
+                <span>{data.button1.title}</span>
+              </Link>
+              <SoundIcon />
+            </button>
+          )}
+          {data.button2._blank ? (
+            <button className='primary-btn-naked'>
+              <a href={data.button2.link} target="_blank" rel="noreferrer" style={{ color: "white" }}>
+                <span>{data.button2.title}</span>
+              </a>
+            </button>
+          ) : (
+            <button className='primary-btn-naked'>
+              <Link href={data.button2.link}>
+                <span>{data.button2.title}</span>
+              </Link>
+            </button>
+          )}
         </ButtonWrapper>
       </TextWrapper>
       <ImageWrapper>
@@ -69,10 +96,10 @@ export const HomeHero = (props: HomeHeroProps) => {
               </InfoWrapper>
             </DetailLeftWrapper>
             <DetailRightWrapper>
-              <a href='https://discord.com' target='_blank' rel="noreferrer">
+              <a href='https://discord.gg/3Usk73ep' target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
               </a>
-              <a href='https://twitter.com' target='_blank' rel="noreferrer">
+              <a href='https://twitter.com/terraspaces' target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
               </a>
             </DetailRightWrapper>

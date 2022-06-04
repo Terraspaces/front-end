@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { LeftArrowIcon, RightArrowIcon } from '../Shared/SvgIcons';
-import { SingleMarketCapCard } from '../SingleMarketCapCard';
+import { SingleTopTokenCard } from '../SingleTopTokenCard';
 import {
   Container,
   Header,
@@ -11,20 +11,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-
-const communityList = [
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-]
+import { getTopTokens } from '../../utils/paraApi';
 
 export const HighestSales = () => {
   const carouselRef = useRef<any>();
@@ -50,6 +37,13 @@ export const HighestSales = () => {
     }
   };
 
+  const [highestSaleTokens, setHighestSaleTokens] = useState<any[]>([]);
+
+  const getHighestSaleTokens = async () => {
+    const tokens = await getTopTokens();
+    setHighestSaleTokens(tokens);
+  }
+
   const goToNext = () => {
     const nextSlide = carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
@@ -60,12 +54,15 @@ export const HighestSales = () => {
     carouselRef.current.goToSlide(prevSlide)
   }
 
+  useEffect(() => {
+    getHighestSaleTokens();
+  }, []);
+
   return (
     <Container>
       <Header className='container'>
         <TitleTabWrapper>
           <h1>Highest Sales Over Last 24 Hours</h1>
-          <button className='primary-btn'>See All</button>
         </TitleTabWrapper>
         <CarouselButtonGroup>
           <ArrowButton onClick={gotToPrev}>
@@ -94,8 +91,8 @@ export const HighestSales = () => {
             autoPlay={true}
             ssr={true}
           >
-            {communityList.map((item, i) => (
-              <SingleMarketCapCard key={i} card={item} isSales />
+            {highestSaleTokens.map((item, i) => (
+              <SingleTopTokenCard key={i} card={item} />
             ))}
           </Carousel>
         </div>

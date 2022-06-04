@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import { listItemSecondaryActionClasses } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { LeftArrowIcon, RightArrowIcon } from '../Shared/SvgIcons';
@@ -11,20 +12,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-
-const collectionList = [
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-  { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', price: 145 },
-]
+import { getNewCollections } from '../../utils/paraApi';
 
 export const NewCollections = () => {
   const carouselRef = useRef<any>();
@@ -50,6 +38,16 @@ export const NewCollections = () => {
     }
   };
 
+  const [publications, setPublications] = useState<any[]>([]);
+
+  const getPublications = async () => {
+    const collections = await getNewCollections();
+    setPublications(collections.map((collection: any) => ({
+      name: collection.title,
+      photo: `https://ipfs.io/ipfs/${collection.thumbnail.split("ipfs://")[1]}`
+    })))
+  }
+
   const goToNext = () => {
     const nextSlide = carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
@@ -60,12 +58,15 @@ export const NewCollections = () => {
     carouselRef.current.goToSlide(prevSlide)
   }
 
+  useEffect(() => {
+    getPublications();
+  }, []);
+
   return (
     <Container>
       <Header className='container'>
         <TitleTabWrapper>
           <h1>New Collections on PARAS</h1>
-          <button className='primary-btn'>See All</button>
         </TitleTabWrapper>
         <CarouselButtonGroup>
           <ArrowButton onClick={gotToPrev}>
@@ -94,7 +95,7 @@ export const NewCollections = () => {
             autoPlay={true}
             ssr={true}
           >
-            {collectionList.map((item, i) => (
+            {publications.map((item, i) => (
               <SingleCollectionCard key={i} card={item} />
             ))}
           </Carousel>

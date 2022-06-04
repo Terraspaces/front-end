@@ -11,36 +11,37 @@ import {
   Content
 } from './styles';
 
-interface SingleMarketCapCardProps {
+import { parseEther } from '../../utils/bignumber';
+
+interface SingleTopTokenCardProps {
   card?: any;
 }
 
-export const SingleMarketCapCard = (props: SingleMarketCapCardProps) => {
+export const SingleTopTokenCard = (props: SingleTopTokenCardProps) => {
   const { card } = props;
-  const { name, photo, est_market_cap, social_media } = card;
-  const { discord, twitter, website } = social_media;
+  const { token, volume } = card;
   return (
     <Container>
       <InnerContainer>
-        <img draggable={false} src={photo} alt='' />
+        <img draggable={false} src={token?.metadata?.media} alt='' />
         <FooterWrapper>
           <TitleWrapper>
-            <h2>{name}</h2>
+            <h2>{token?.metadata?.title}</h2>
             <VerifiedIcon />
           </TitleWrapper>
           <Content>
             <InfoWrapper>
-              <p>Est. Marketcap</p>
-              <p className="price">${est_market_cap.toFixed(0)}</p>
+              <p>Sold For</p>
+              <p className='price'>{parseEther(volume)} N</p>
             </InfoWrapper>
             <SocialList>
-              <a href={discord ? `https://discord.gg/${discord}` : "#"} target='_blank' rel="noreferrer">
+              <a href='https://discord.com' target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
               </a>
-              <a href={twitter ? `https://twitter.com/${twitter}` : "#"} target='_blank' rel="noreferrer">
+              <a href='https://twitter.com' target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
               </a>
-              <a href={website || "#"} target='_blank' rel="noreferrer">
+              <a href='https://twitter.com' target='_blank' rel="noreferrer">
                 <LinkIcon />
               </a>
             </SocialList>

@@ -123,7 +123,7 @@ export const ImageWrapper = styled.div`
 
 export const ImageContent = styled.div`
   position: relative;
-  border-radius: 16px;
+  border-radius: 30px;
   overflow: hidden;
   width: 100%;
   > img {
@@ -137,7 +137,7 @@ export const DetailInfoWrapper = styled.div`
   position: absolute;
   bottom: 0px;
   left: 0px;
-  padding: 15px 10px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   background-color: #24242f;

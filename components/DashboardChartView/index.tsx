@@ -49,9 +49,9 @@ export const DashboardChartView = ({ token }: Props) => {
         };
         const result = await getAPI();
         // const result = transactionData;
-        const floorData = result.map((data: any) => ({time: new Date(data.created_at).getTime() / 1000, value: data.floor_price}));
-        const listedData = result.map((data: any) => ({time: new Date(data.created_at).getTime() / 1000, value: data.total_listed}));
-        const volumeData = result.map((data: any) => ({time: new Date(data.created_at).getTime() / 1000, value: data.instant_volume}));
+        const floorData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.floor_price }));
+        const listedData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.total_listed }));
+        const volumeData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.instant_volume }));
         setFloorData(floorData);
         setListedData(listedData);
         setVolumeData(volumeData);
@@ -66,7 +66,9 @@ export const DashboardChartView = ({ token }: Props) => {
             <RightArrowIcon />
           </ArrowIconButton>
           <img src={token?.icon} alt='' />
-          <span>{token?.name}</span>
+          <a href={`https://paras.id/collection/${token?.account_id}`} target='_blank' rel="noreferrer">
+            <span>{token?.name}</span>
+          </a>
         </InfoWrapper>
         <ChartInfoWrapper>
           {isCollapse ? (
@@ -91,10 +93,6 @@ export const DashboardChartView = ({ token }: Props) => {
       {isCollapse && (
         <ContentWrapper>
           <ChartHeader>
-            <FloorButton>
-              <FloorIcon />
-              <span>Snipe the floor</span>
-            </FloorButton>
             <HideShowWrapper>
               <HideShowItem bgColor='rgb(115, 251, 211)' inActive={!graphStatus?.floor}>
                 <div />

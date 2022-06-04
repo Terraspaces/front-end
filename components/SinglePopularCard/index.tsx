@@ -11,25 +11,33 @@ import {
   InnerContainer
 } from './styles';
 
-export const SinglePopularCard = () => {
+interface SinglePopularCardProps {
+  card?: any;
+}
+
+export const SinglePopularCard = (props: SinglePopularCardProps) => {
+  const { card } = props;
+  const { name, photo, social_media, floor_price, total_volume, total_listed } = card;
+  const { discord, twitter, website } = social_media;
+
   return (
     <Container>
       <InnerContainer>
         <DetailWrapper>
-          <img draggable={false} src='/assets/img/home/collection3.png' alt='' />
+          <img draggable={false} src={photo} alt='' />
           <InfoWrapper>
             <InfoItem>
-              <span>Terraspaces</span>
+              <span>{name}</span>
               <VerifiedIcon />
             </InfoItem>
             <SocialList>
-              <a href='https://discord.com' target='_blank' rel="noreferrer">
+              <a href={discord ? `https://discord.gg/${discord}` : "#"} target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
               </a>
-              <a href='https://twitter.com' target='_blank' rel="noreferrer">
+              <a href={twitter ? `https://twitter.com/${twitter}` : "#"} target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
               </a>
-              <a href='https://twitter.com' target='_blank' rel="noreferrer">
+              <a href={website || "#"} target='_blank' rel="noreferrer">
                 <LinkIcon />
               </a>
             </SocialList>
@@ -39,19 +47,19 @@ export const SinglePopularCard = () => {
           <div className="col-md-4">
             <InfoCard>
               <p>Floor</p>
-              <p>333</p>
+              <p>{floor_price}</p>
             </InfoCard>
           </div>
           <div className="col-md-4">
             <InfoCard>
-              <p>Floor</p>
-              <p>333</p>
+              <p>Volume</p>
+              <p>{total_volume.toFixed(2)}</p>
             </InfoCard>
           </div>
           <div className="col-md-4">
             <InfoCard>
-              <p>Floor</p>
-              <p>333</p>
+              <p>Listing</p>
+              <p>{total_listed}</p>
             </InfoCard>
           </div>
         </InfoCardWrapper>

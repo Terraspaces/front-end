@@ -50,10 +50,15 @@ impl Contract {
         let start = u64::from(from_index);
         let end = min(start + limit, staking_informations.len());
         for i in start..end {
+            let info = self.staking_informations.get(&keys.get(i).unwrap());
+            let staking_info = if let Some(info) = info {
+                info
+            } else {
+                continue;
+            };
+    
             tmp.push(
-                self.staking_informations
-                    .get(&keys.get(i).unwrap())
-                    .unwrap(),
+                staking_info
             );
         }
         tmp

@@ -164,25 +164,37 @@ const Test = async () => {
   // });
   // console.log("init 7");
 
-  result = await account.functionCall({
-    contractId: STAKING_CONTRACT_ID,
-    methodName: "append_observe_id",
-    args: {
-      nft_contract_id: "mrbrownproject.near"
-    },
-    gas: MAX_GAS,
-  });
-  console.log("add observe");
+  // result = await account.functionCall({
+  //   contractId: STAKING_CONTRACT_ID,
+  //   methodName: "append_observe_id",
+  //   args: {
+  //     nft_contract_id: "friendlyturtles.nearocean.near"
+  //   },
+  //   gas: MAX_GAS,
+  // });
+  // console.log("add observe");
 
-  result = await account.functionCall({
-    contractId: STAKING_CONTRACT_ID,
-    methodName: "append_nft_contract_id",
-    args: {
-      nft_contract_id: "mrbrownproject.near"
+  // result = await account.functionCall({
+  //   contractId: STAKING_CONTRACT_ID,
+  //   methodName: "append_nft_contract_id",
+  //   args: {
+  //     nft_contract_id: "friendlyturtles.nearocean.near"
+  //   },
+  //   gas: MAX_GAS,
+  // });
+  // console.log("add partner");
+
+  result = await account.viewFunction(
+    STAKING_CONTRACT_ID,
+    "get_staking_informations_by_owner_id",
+    {
+      account_id: "xuguangxia.near",
+      from_index: "0",
+      limit: 10,
     },
-    gas: MAX_GAS,
-  });
-  console.log("add partner");
+    MAX_GAS
+  );
+  console.log("Staking Info:", result);
 
 };
 

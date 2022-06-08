@@ -128,6 +128,7 @@ export const Top30Ranked = () => {
               className="partner-container"
               showDots={false}
               arrows={false}
+              shouldResetAutoplay={false}
               ssr={true}
             >
               <div className='row'>

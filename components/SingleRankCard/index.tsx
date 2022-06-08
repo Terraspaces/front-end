@@ -16,17 +16,17 @@ interface SingleRankCardProps {
 }
 
 export const SingleRankCard = (props: SingleRankCardProps) => {
-  const { card, index } = props;
+  const { card: collection, index } = props;
 
   return (
     <Container>
       <span>{index ?? 1}</span>
       <ContentWrapper>
         <DetailWrapper>
-          <img draggable={false} src='/assets/img/home/collection3.png' alt='' />
+          <img draggable={false} src={collection?.photo} alt='' />
           <InfoWrapper>
             <InfoItem>
-              <span>Terraspaces</span>
+              <span>{collection?.name}</span>
               <VerifiedIcon />
             </InfoItem>
             <VolumeWrapper>
@@ -39,19 +39,19 @@ export const SingleRankCard = (props: SingleRankCardProps) => {
           <div className="col-md-4 col-sm-4">
             <InfoCard>
               <p className='title'>Floor Price</p>
-              <p className='value'>8 N</p>
+              <p className='value'>{collection?.floor_price} N</p>
             </InfoCard>
           </div>
           <div className="col-md-4 col-sm-4">
             <InfoCard>
-              <p className='title'>Floor Price</p>
-              <p className='value'>100/777</p>
+              <p className='title'>Listed</p>
+              <p className='value'>{collection?.total_listed}</p>
             </InfoCard>
           </div>
           <div className="col-md-4 col-sm-4">
             <InfoCard>
-              <p className='title'>Floor Price</p>
-              <p className='value'>2000 N</p>
+              <p className='title'>Volume</p>
+              <p className='value'>{collection?.total_volume.toFixed(2)} N</p>
             </InfoCard>
           </div>
         </div>

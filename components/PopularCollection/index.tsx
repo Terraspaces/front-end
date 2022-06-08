@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { SinglePopularCard } from '../SinglePopularCard';
@@ -13,6 +13,8 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
+import { getFeaturedCollections, getCollectionStats } from '../../utils/paraApi';
+import { parseEther } from '../../utils/bignumber';
 
 export const PopularCollection = () => {
   const [daySelected, setDaySelected] = useState<number | string>(1);
@@ -44,6 +46,25 @@ export const PopularCollection = () => {
     }
   };
 
+  const [popularCollections, setPopularCollections] = useState<any[]>([]);
+
+  const getPopularCollections = async () => {
+    const collections = await getFeaturedCollections();
+    const derivatives = await Promise.all(collections.map(async (data: any) => {
+      const { collection: name, collection_id, media, socialMedia } = data;
+      const { floor_price, total_card_sale, volume } = await getCollectionStats(collection_id);
+      return {
+        name,
+        photo: `https://ipfs.io/ipfs/${media}`,
+        social_media: socialMedia,
+        floor_price: parseEther(floor_price),
+        total_listed: total_card_sale,
+        total_volume: parseEther(volume)
+      }
+    }))
+    setPopularCollections(derivatives);
+  }
+
   const goToNext = () => {
     const nextSlide = carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
@@ -53,6 +74,10 @@ export const PopularCollection = () => {
     const prevSlide = carouselRef.current.state.currentSlide - 1;
     carouselRef.current.goToSlide(prevSlide)
   }
+
+  useEffect(() => {
+    getPopularCollections();
+  }, []);
 
   return (
     <Container>
@@ -96,8 +121,8 @@ export const PopularCollection = () => {
             autoPlay={true}
             ssr={true}
           >
-            {[...Array(10).keys()].map(i => (
-              <SinglePopularCard key={i} />
+            {popularCollections.map((item, i) => (
+              <SinglePopularCard key={i} card={item} />
             ))}
           </Carousel>
         </div>

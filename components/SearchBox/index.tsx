@@ -48,6 +48,7 @@ export const SearchBox = () => {
           const data = await getCollectionMetadata(account_id);
           return { ...data, account_id }
         }));
+        console.log(collectionList);
         setCollectionList(collectionList);
         return;
       }

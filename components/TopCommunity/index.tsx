@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-multi-carousel';
+import Link from 'next/link';
 import 'react-multi-carousel/lib/styles.css';
 import { LeftArrowIcon, RightArrowIcon } from '../Shared/SvgIcons';
 import {
@@ -11,6 +12,7 @@ import {
   ArrowButton
 } from './styles';
 import { SingleCommunityCard } from '../SingleCommunityCard';
+import { getUpcomingProjects } from '../../utils/paraApi';
 
 const communityList = [
   { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', favorite_count: 4012, timestamp: 1652425452000 },
@@ -50,6 +52,14 @@ export const TopCommunity = () => {
     }
   };
 
+  const [topUpcomingDrops, setTopUpcomingDrops] = useState<any[]>([]);
+
+  const getUpcomingDrops = async () => {
+    const drops = await getUpcomingProjects();
+    const top10 = drops.sort((a: any, b: any) => b.vote_count - a.vote_count).slice(0, 10);
+    setTopUpcomingDrops(top10);
+  }
+
   const goToNext = () => {
     const nextSlide = carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
@@ -60,12 +70,15 @@ export const TopCommunity = () => {
     carouselRef.current.goToSlide(prevSlide)
   }
 
+  useEffect(() => {
+    getUpcomingDrops();
+  }, []);
   return (
     <Container>
       <Header className='container'>
         <TitleTabWrapper>
           <h1>Top Community Upvoted Drops</h1>
-          <button className='primary-btn'>See All</button>
+          <button className='primary-btn'><Link href="/drops" ><span>See All</span></Link></button>
         </TitleTabWrapper>
         <CarouselButtonGroup>
           <ArrowButton onClick={gotToPrev}>
@@ -94,7 +107,7 @@ export const TopCommunity = () => {
             autoPlay={true}
             ssr={true}
           >
-            {communityList.map((item, i) => (
+            {topUpcomingDrops.map((item, i) => (
               <SingleCommunityCard key={i} card={item} />
             ))}
           </Carousel>

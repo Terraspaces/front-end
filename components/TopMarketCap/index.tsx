@@ -28,12 +28,13 @@ export const TopMarketCap = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2.5,
+      items: 2,
       partialVisibilityGutter: 30
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
+      items: 1,
+      paritialVisibilityGutter: 100
     }
   };
 
@@ -91,7 +92,6 @@ export const TopMarketCap = () => {
             swipeable={true}
             draggable={true}
             responsive={responsive}
-            infinite={true}
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
             dotListClass="custom-dot-list-style"
@@ -99,8 +99,8 @@ export const TopMarketCap = () => {
             className="partner-container"
             showDots={false}
             arrows={false}
-            autoPlay={true}
             ssr={true}
+            partialVisbile
           >
             {topMCAPCollections.map((item, i) => (
               <SingleMarketCapCard key={i} card={item} />

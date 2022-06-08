@@ -38,11 +38,12 @@ export const PopularCollection = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2.3
+      items: 2
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
+      items: 1,
+      paritialVisibilityGutter: 100
     }
   };
 
@@ -66,6 +67,7 @@ export const PopularCollection = () => {
   }
 
   const goToNext = () => {
+    console.log(carouselRef)
     const nextSlide = carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
   }
@@ -84,7 +86,7 @@ export const PopularCollection = () => {
       <Header className='container'>
         <TitleTabWrapper>
           <h1>Popular Collections on PARAS</h1>
-          <TabWrapper>
+          {/* <TabWrapper>
             {tabList.map((day, i) => (
               <Tab
                 key={i}
@@ -92,7 +94,7 @@ export const PopularCollection = () => {
                 onClick={() => setDaySelected(day.key)}
               >{day.name}</Tab>
             ))}
-          </TabWrapper>
+          </TabWrapper> */}
         </TitleTabWrapper>
         <CarouselButtonGroup>
           <ArrowButton onClick={gotToPrev}>
@@ -107,19 +109,14 @@ export const PopularCollection = () => {
         <div>
           <Carousel
             ref={(el) => (carouselRef.current = el)}
-            swipeable={true}
             draggable={true}
             responsive={responsive}
-            infinite={true}
             containerClass="carousel-container"
-            removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
             className="partner-container"
-            showDots={false}
             arrows={false}
-            autoPlay={true}
-            ssr={true}
+            partialVisbile
           >
             {popularCollections.map((item, i) => (
               <SinglePopularCard key={i} card={item} />

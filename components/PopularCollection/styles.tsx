@@ -14,13 +14,16 @@ export const TitleTabWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   > h1 {
-    font-size: 25px;
+    font-size: 30px;
     margin-right: 10px;
     margin-top: 10px;
+    font-family: Gojali-Medium;
   }
 
   @media (min-width: 576px) {
-    font-size: 30px;
+    > h1 {
+      font-size: 36px;
+    }
   }
 `
 
@@ -37,13 +40,12 @@ interface TabProps {
 }
 
 export const Tab = styled.div<TabProps>`
-  font-size: 16px;
+  font-size: 14px;
   border-radius: 6px;
   padding: 7px 12px;
   cursor: pointer;
   color: var(--white);
   transition: all 0.2s ease;
-
   ${(props: any) => props.active && css`
     background-color: var(--primary-2);
   `}

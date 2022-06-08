@@ -1,14 +1,19 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
 import { WalletContext, STAKE_CONTRACT_ID, NFT_CONTRACT_ID, MAX_GAS, NftData, NftContractMetadata, DEPOSIT, X_PARAS_COLLECTIONS } from '../contexts/wallet'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { parseNearAmount } from 'near-api-js/lib/utils/format'
-import { stake } from 'near-api-js/lib/transaction'
-import { resourceLimits } from 'worker_threads'
-// import fetch from 'node-fetch'
+import { useContext, useEffect, useState } from 'react'
+import ReactModal from 'react-modal'
+import ReferralModal from '../components/ReferralModal'
+import HeaderContent from '../components/HeaderContent'
+import {
+  NavBarContent,
+  NavHomeContent,
+  NavProfileContent,
+  NavFarmsContent,
+  NavReferralsContent
+} from '../components/StakePageContent'
 
 const Mint: NextPage = () => {
-  const { wallet, getNftMetadata, getMainCollectionList, getCollectionMetadata } = useContext(WalletContext)
+  const { wallet, getMainCollectionList, getCollectionMetadata } = useContext(WalletContext)
   const [nftContractList, setNftContractList] = useState<string[]>([]);
   const [trendingData, setTrendingData] = useState<any>({})
   const [nftList, setNftList] = useState<Map<string, NftData[]>>(new Map());
@@ -17,11 +22,11 @@ const Mint: NextPage = () => {
   const [totalNftCountList, setTotalNftCountList] = useState<Map<string, number>>(new Map());
   const [stakedNftCountList, setStakedNftCountList] = useState<Map<string, number>>(new Map());
   const [totalStaked, setTotalStaked] = useState<number>(0);
+  const [overviewStatus, setOverviewStatus] = useState<number>(0);
+  const [isNetworkSelectModalOpen, setIsNetworkSelectModalOpen] = useState<boolean>(false);
 
   const getTrendingCollectionData = async () => {
     const api = process.env.NEXT_PUBLIC_API;
-    // const api = "http://35.75.88.169:3001";
-    // const api = 'https://api.terraspaces.io';
     const getAPI = async () => {
       const trendingCollectionDataEndpoint = `${api}/trending_collection_data`;
       const result = await fetch(trendingCollectionDataEndpoint, {
@@ -154,7 +159,6 @@ const Mint: NextPage = () => {
     setStakeList(newData);
     setTotalNftCountList(totalCountData);
     setStakedNftCountList(stakedCountData);
-    console.log(NFTData, newData, totalCountData, stakedCountData);
   }
 
   useEffect(() => {
@@ -169,277 +173,70 @@ const Mint: NextPage = () => {
     }
   }, [wallet]);
 
+  ReactModal.defaultStyles.overlay!.backgroundColor = 'rgba(255, 100, 255, 0.05)';
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: "transparent",
+      border: 'none',
+      overflow: 'hidden',
+    },
+  };
+
+  function closeModal() {
+    setIsNetworkSelectModalOpen(false);
+    document.getElementById('__next')!.style.filter = 'none'
+  }
+
+  function openModal() {
+    setIsNetworkSelectModalOpen(true);
+    document.getElementById('__next')!.style.filter = 'blur(20px)'
+  }
+
+  const setOverview = (key: number) => {
+    setOverviewStatus(key)
+  }
+
   return (
-    <main className="stking-page pt-160 fix">
+    <main id="app-root" className="stking-page pt-160 fix">
       <div className="home-vect-abs v-top">
-        <img src="assets/img/vector/stakin-v.png" alt="stakin" loading="lazy" />
+        <img src="assets/img/vector/stakin-v.png" alt="staking" loading="lazy" />
       </div>
       {
         wallet?.isSignedIn() ?
           <>
-            <div className="stking-hero-area mb-60">
-              <div className="container">
-                <div className="row justify-content-center align-items-center text-center">
-                  <div className="col-xl-8 col-lg-11 col-md-12">
-                    <div className="top-staking">
-                      <div className="stking-icon pb-20">
-                        <img src="assets/img/staking/stakin-l.png" alt="powerded" loading="lazy" />
-                      </div>
-                      <div className="hero-description text-center">
-                        <div className="hero-subs-t d-flex align-items-center justify-content-center">
-                          <h3 className="t-18-b white-c mr-8">
-                            <span>Terraspaces</span>
-                          </h3>
-                          <img src="assets/img/icons/verified.svg" width="20" height="20" alt="verified" />
-                        </div>
-                        <div className="pt-1 hero-subs-s-title d-flex align-items-center justify-content-center">
-                          <p className="t-14 neutral-c mr-4">
-                            Terraspaces.Near
-                          </p>
-                          <img src="assets/img/icons/chain.svg" width="20" height="20" alt="verified" />
-                        </div>
-                        <div className="hero-d-p">
-                          <p className="t-16 neutral-c">
-                            Generative dystopian NFTs meet utility via proof-of-staking to access analytics dashboard. <br />Genesis collection of 777 abstract #NFTs. Powered by #NEARProtocol
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="count-parent">
-                      <div className="count-s">
-                        <div className="single-text text-center">
-                          <p className="t-14 linr-h-150 neutral-c">
-                            Floor Price
-                          </p>
-                          <h3 className="t-20 white-c pt-1">
-                            <span className="counter">{trendingData[NFT_CONTRACT_ID]?.floor_price}</span>
-                            <span>N</span>
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="count-s">
-                        <div className="single-text text-center">
-                          <p className="t-14 linr-h-150 neutral-c">
-                            Listed
-                          </p>
-                          <h3 className="t-20 white-c pt-1">
-                            <span className="counter">{trendingData[NFT_CONTRACT_ID]?.total_listed}</span>
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="count-s">
-                        <div className="single-text sm-berore text-center">
-                          <p className="t-14 linr-h-150 neutral-c">
-                            Total Staked
-                          </p>
-                          <h3 className="t-20 white-c pt-1">
-                            <span className="counter">{totalStaked}</span>
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="count-s">
-                        <div className="single-text text-center">
-                          <p className="t-14 linr-h-150 neutral-c">
-                            Owned BY
-                          </p>
-                          <h3 className="t-20 white-c pt-1">
-                            <span className="counter">{trendingData[NFT_CONTRACT_ID]?.total_owners}</span>
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="count-s">
-                        <div className="single-text text-center">
-                          <p className="t-14 linr-h-150 neutral-c">
-                            Total Volume
-                          </p>
-                          <h3 className="t-20 white-c pt-1">
-                            <span className="counter">{trendingData[NFT_CONTRACT_ID]?.total_volume}</span>
-                            <span>N</span>
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <HeaderContent overviewStatus={overviewStatus} />
             <div className="stake-area">
               <div className="container">
                 <div className="stake-wrapper">
-                  <div className="navs-area">
-                    <ul className="nav nav-pills" id="pills-tab" role="tablist">
-                      <li className="nav-item" role="presentation">
-                        <button className="t-20 nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Owned</button>
-                      </li>
-                      <li className="nav-item" role="presentation">
-                        <button className="nav-link t-20" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Stake</button>
-                      </li>
-                    </ul>
-                  </div>
-
+                  <NavBarContent setOverview={setOverview} />
                   <div className="tab-content" id="pills-tabContent">
-
-                    <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                      {
-                        nftContractList.map((contract_id, contract_index) => (
-                          <div className="owned-r" key={contract_index}>
-                            {/* <div className="stake-btn stake-btn-abs d-inline-block ">
-                            <button className="cmn-btn-1 f-18 redius-12">
-                              <span> Stake All </span>
-                            </button>
-                          </div> */}
-
-                            <div className="navs-title ">
-                              <div className="d-flex align-items-center mb-12">
-                                <div className="stking-icon mr-12">
-                                  {/* {nftMetadata.get(contract_id)?.icon != undefined ?
-                                  <img className="mr-8" src={nftMetadata.get(contract_id)?.icon} alt="Icon" width={32} height={32} loading="lazy" /> :
-                                  <img className="mr-8" src="assets/img/icons/Near.png" alt="Near" width={32} height={32} loading="lazy" />
-                                } */}
-                                  <img className="mr-8" src={"assets/icons/" + contract_id + ".png"} alt="Near" width={32} height={32} loading="lazy" />
-                                </div>
-                                <div className="hero-subs-t d-flex align-items-center">
-                                  <h3 className="t-20 white-c mr-8">
-                                    <span>{nftMetadata.get(contract_id) != undefined ? nftMetadata.get(contract_id)?.name : contract_id}</span>
-                                  </h3>
-                                  <img src="assets/img/icons/verified.svg" width="20" height="20" alt="verified" />
-                                </div>
-                              </div>
-                              <div className="floor-c d-flex">
-                                <button type="button" className="floor-btn mr-16">Floor : {trendingData[contract_id]?.floor_price}N</button>
-                                <button type="button" className="floor-btn">
-                                  Total Floor Value :
-                                  {trendingData[contract_id]?.floor_price * (totalNftCountList.get(contract_id) ?? 0)}N</button>
-                              </div>
-                            </div>
-                            <div className="my-22 hr-line">
-                            </div>
-
-                            <div className="t-card-wrapper">
-                              <div className="row">
-                                {
-                                  nftList.get(contract_id)?.map((nftData, key) => {
-                                    if (!stakeList.get(contract_id)?.includes(nftData.token_id))
-                                      return (
-                                        <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-60" key={contract_id + key}>
-                                          <div className="t-card">
-                                            <div className="t-card-img  mb-12">
-                                              <img className="stake-img" src={X_PARAS_COLLECTIONS.includes(contract_id) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(contract_id)?.base_uri + '/' + nftData.metadata.media))} alt="staking" loading="lazy" />
-                                            </div>
-                                            <div className="t-card-title">
-                                              <h5 className="t-18-b white-c">{nftData.metadata.title}</h5>
-                                            </div>
-                                            <div className="stake-s-v mt-30">
-                                              <div className="d-flex align-items-center mb-12">
-                                                <div className="stking-icon mr-12">
-                                                  {/* {nftMetadata.get(contract_id)?.icon != undefined ?
-                                                  <img className="mr-8" src={nftMetadata.get(contract_id)?.icon} alt="Icon" width={32} height={32} loading="lazy" /> :
-                                                  <img className="mr-8" src="assets/img/icons/Near.png" alt="Near" width={32} height={32} loading="lazy" />
-                                                } */}
-                                                  <img className="mr-8" src={"assets/icons/" + contract_id + ".png"} alt="Near" width={32} height={32} loading="lazy" />
-                                                </div>
-                                                <div className="hero-subs-t d-flex align-items-center">
-                                                  <h3 className="t-14 neutral-c  mr-8">
-                                                    <span>{nftMetadata.get(contract_id)?.name}</span>
-                                                  </h3>
-                                                  <img src="assets/img/icons/verified.svg" alt="verified" />
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="stake-btn mt-20">
-                                              <button className="cmn-btn-1 h-48 f-18 redius-12" onClick={() => { onStake(contract_id, nftData.token_id) }}>
-                                                <span> Stake</span>
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      )
-                                  })
-                                }
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                      }
-                    </div>
-                    <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                      {
-                        nftContractList.map((contract_id, contract_index) => (
-                          <div className="owned-r" key={contract_index}>
-                            {/* <div className="stake-btn stake-btn-abs d-inline-block ">
-                            <button className="cmn-btn-1 f-18 redius-12">
-                              <span> Unstake All </span>
-                            </button>
-                          </div> */}
-
-                            <div className="navs-title ">
-                              <div className="d-flex align-items-center mb-12">
-                                <div className="stking-icon mr-12">
-                                  {/* {nftMetadata.get(contract_id)?.icon != undefined ?
-                                  <img className="mr-8" src={nftMetadata.get(contract_id)?.icon} alt="Icon" width={32} height={32} loading="lazy" /> :
-                                  <img className="mr-8" src="assets/img/icons/Near.png" alt="Near" width={32} height={32} loading="lazy" />
-                                } */}
-                                  <img className="mr-8" src={"assets/icons/" + contract_id + ".png"} alt="Near" width={32} height={32} loading="lazy" />
-                                </div>
-                                <div className="hero-subs-t d-flex align-items-center">
-                                  <h3 className="t-20 white-c mr-8">
-                                    <span>{nftMetadata.get(contract_id) != undefined ? nftMetadata.get(contract_id)?.name : contract_id}</span>
-                                  </h3>
-                                  <img src="assets/img/icons/verified.svg" width="20" height="20" alt="verified" />
-                                </div>
-                              </div>
-                              <div className="floor-c d-flex">
-                                <button type="button" className="floor-btn mr-16">Floor : {trendingData[contract_id]?.floor_price}N</button>
-                                <button type="button" className="floor-btn">Total Floor Value : {trendingData[contract_id]?.floor_price * (stakedNftCountList.get(contract_id) ?? 0)}N</button>
-                              </div>
-                            </div>
-                            <div className="my-22 hr-line"> </div>
-                            <div className="t-card-wrapper">
-                              <div className="row">
-                                {
-                                  nftList.get(contract_id)?.map((nftData, key) => {
-                                    if (stakeList.get(contract_id)?.includes(nftData.token_id))
-                                      return (
-                                        <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-60" key={key}>
-                                          <div className="t-card">
-                                            <div className="t-card-img  mb-12">
-                                              <img className="stake-img" src={X_PARAS_COLLECTIONS.includes(contract_id) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(contract_id)?.base_uri + '/' + nftData.metadata.media))} alt="staking" loading="lazy" />
-                                            </div>
-                                            <div className="t-card-title">
-                                              <h5 className="t-18-b white-c">{nftData.metadata.title}</h5>
-                                            </div>
-                                            <div className="stake-s-v mt-30">
-                                              <div className="d-flex align-items-center mb-12">
-                                                <div className="stking-icon mr-12">
-                                                  {/* {nftMetadata.get(contract_id)?.icon != undefined ?
-                                                  <img className="mr-8" src={nftMetadata.get(contract_id)?.icon} alt="Icon" width={32} height={32} loading="lazy" /> :
-                                                  <img className="mr-8" src="assets/img/icons/Near.png" alt="Near" width={32} height={32} loading="lazy" />
-                                                } */}
-                                                  <img className="mr-8" src={"assets/icons/" + contract_id + ".png"} alt="Near" width={32} height={32} loading="lazy" />
-                                                </div>
-                                                <div className="hero-subs-t d-flex align-items-center">
-                                                  <h3 className="t-14 neutral-c  mr-8">
-                                                    <span>{nftMetadata.get(contract_id)?.name}</span>
-                                                  </h3>
-                                                  <img src="assets/img/icons/verified.svg" alt="verified" />
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="stake-btn mt-20">
-                                              <button className="cmn-btn-1 h-48 f-18 redius-12" onClick={() => { onUnstake(contract_id, nftData.token_id) }}>
-                                                <span> Unstake</span>
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      )
-                                  })
-                                }
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
+                    <NavHomeContent
+                      nftContractList={nftContractList}
+                      nftMetadata={nftMetadata}
+                      trendingData={trendingData}
+                      totalNftCountList={totalNftCountList}
+                      nftList={nftList}
+                      stakeList={stakeList}
+                      onStake={onStake}
+                    />
+                    <NavProfileContent
+                      nftContractList={nftContractList}
+                      nftMetadata={nftMetadata}
+                      trendingData={trendingData}
+                      stakedNftCountList={stakedNftCountList}
+                      nftList={nftList}
+                      stakeList={stakeList}
+                      onUnstake={onUnstake}
+                    />
+                    <NavFarmsContent />
+                    <NavReferralsContent openModal={openModal} />
                   </div>
                 </div>
               </div>
@@ -452,6 +249,9 @@ const Mint: NextPage = () => {
             </div>
           </div>
       }
+      <ReactModal isOpen={isNetworkSelectModalOpen} onRequestClose={() => closeModal()} style={customStyles}>
+        <ReferralModal />
+      </ReactModal>
     </main >
   )
 }

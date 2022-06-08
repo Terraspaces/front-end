@@ -125,11 +125,11 @@ export const Home = () => {
         </HomeHeroWrapper>
         <PopularCollection />
         <ExploreExclusive />
-        <Top30Ranked />
         <TopCommunity />
         <TopMarketCap />
         <HighestSales />
         <NewCollections />
+        <Top30Ranked />
       </Container>
     </>
   )

@@ -107,7 +107,7 @@ export const Dahsboard = () => {
         const _tokens = [...item.tokens]
         _tokens.push(collection)
         setCollection(undefined);
-        setSelectedWatchList({...selectedWatchList, tokens: _tokens})
+        setSelectedWatchList({ ...selectedWatchList, tokens: _tokens })
         return {
           ...item,
           tokens: _tokens

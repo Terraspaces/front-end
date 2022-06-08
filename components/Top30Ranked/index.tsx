@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { SingleExploreCard } from '../SingleExploreCard';
@@ -17,6 +18,8 @@ import { parseEther } from '../../utils/bignumber';
 
 export const Top30Ranked = () => {
   const carouselRef = useRef<any>();
+
+  const isMobile = useMediaQuery("(max-width: 768px)")
 
   const responsive = {
     superLargeDesktop: {
@@ -38,12 +41,30 @@ export const Top30Ranked = () => {
     }
   };
 
+  const mobileResponsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      paritialVisibilityGutter: 80
+    }
+  };
+
   const [top30Collections, setTop30Collections] = useState<any[]>([]);
 
   const getTop30Collections = async () => {
-
-    const _collections = await getHistoricalCollections();
-    console.log(_collections);
     const collections = await getTopCollections();
     const derivatives = await Promise.all(collections.map(async (data: any) => {
       const { collection_id } = data;
@@ -91,57 +112,79 @@ export const Top30Ranked = () => {
         </CarouselButtonGroup>
       </Header>
       <SliderWrapper className='container'>
-        <Carousel
-          ref={(el) => (carouselRef.current = el)}
-          swipeable={true}
-          draggable={true}
-          responsive={responsive}
-          infinite={true}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
-          className="partner-container"
-          showDots={false}
-          arrows={false}
-          autoPlay={true}
-          ssr={true}
-        >
-          <div className='row'>
-            <div className="col-md-4">
-              {top30Collections.slice(0, 5).map((item, i) => (
+        {
+          !isMobile ? (
+            <Carousel
+              ref={(el) => (carouselRef.current = el)}
+              swipeable={true}
+              draggable={true}
+              responsive={responsive}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+              className="partner-container"
+              showDots={false}
+              arrows={false}
+              ssr={true}
+            >
+              <div className='row'>
+                <div className="col-lg-4 col-md-6">
+                  {top30Collections.slice(0, 5).map((item, i) => (
+                    <SingleRankCard key={i} index={i + 1} card={item} />
+                  ))}
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  {top30Collections.slice(5, 10).map((item, i) => (
+                    <SingleRankCard key={i} index={i + 6} card={item} />
+                  ))}
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  {top30Collections.slice(10, 15).map((item, i) => (
+                    <SingleRankCard key={i} index={i + 11} card={item} />
+                  ))}
+                </div>
+              </div>
+              <div className='row'>
+                <div className="col-lg-4 col-md-6">
+                  {top30Collections.slice(15, 20).map((item, i) => (
+                    <SingleRankCard key={i} index={i + 16} card={item} />
+                  ))}
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  {top30Collections.slice(20, 25).map((item, i) => (
+                    <SingleRankCard key={i} index={i + 21} card={item} />
+                  ))}
+                </div>
+                <div className="col-lg-4 col-md-6">
+                  {top30Collections.slice(25, 30).map((item, i) => (
+                    <SingleRankCard key={i} index={i + 26} card={item} />
+                  ))}
+                </div>
+              </div>
+            </Carousel>
+          ) : (
+            <Carousel
+              ref={(el) => (carouselRef.current = el)}
+              swipeable={true}
+              draggable={true}
+              responsive={mobileResponsive}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+              className="partner-container"
+              showDots={false}
+              arrows={false}
+              ssr={true}
+              partialVisbile
+            >
+              {top30Collections.map((item, i) => (
                 <SingleRankCard key={i} index={i + 1} card={item} />
               ))}
-            </div>
-            <div className="col-md-4">
-              {top30Collections.slice(5, 10).map((item, i) => (
-                <SingleRankCard key={i} index={i + 6} card={item} />
-              ))}
-            </div>
-            <div className="col-md-4">
-              {top30Collections.slice(10, 15).map((item, i) => (
-                <SingleRankCard key={i} index={i + 11} card={item} />
-              ))}
-            </div>
-          </div>
-          <div className='row'>
-            <div className="col-md-4">
-              {top30Collections.slice(15, 20).map((item, i) => (
-                <SingleRankCard key={i} index={i + 16} card={item} />
-              ))}
-            </div>
-            <div className="col-md-4">
-              {top30Collections.slice(20, 25).map((item, i) => (
-                <SingleRankCard key={i} index={i + 21} card={item} />
-              ))}
-            </div>
-            <div className="col-md-4">
-              {top30Collections.slice(25, 30).map((item, i) => (
-                <SingleRankCard key={i} index={i + 26} card={item} />
-              ))}
-            </div>
-          </div>
-        </Carousel>
+            </Carousel>
+          )
+        }
       </SliderWrapper>
     </Container>
   )

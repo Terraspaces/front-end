@@ -15,7 +15,8 @@ export const TitleTabWrapper = styled.div`
   flex-wrap: wrap;
   > h1 {
     margin-top: 10px;
-    font-size: 25px;
+    font-size: 30px;
+    font-family: Gojali-Medium;
     margin-right: 10px;
     text-transform: capitalize;
   }
@@ -29,7 +30,7 @@ export const TitleTabWrapper = styled.div`
   
   @media (min-width: 576px) {
     > h1 {
-      font-size: 30px;
+      font-size: 36px;
     }
   }
 `

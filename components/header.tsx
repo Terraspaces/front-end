@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { WalletContext } from "../contexts/wallet"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,6 +8,7 @@ import { SearchBox } from './SearchBox';
 const Header: NextPage = () => {
     const router = useRouter()
     const { near, wallet, signIn, signOut } = useContext(WalletContext)
+    const [isSearchBox, setIsSearchBox] = useState<boolean>(true)
     const onWallet = async () => {
         if (wallet?.isSignedIn()) {
             signOut();
@@ -24,7 +25,7 @@ const Header: NextPage = () => {
                             <img src="assets/img/logo/logo.png" alt="logo" loading="lazy" />
                         </a>
                         <div>
-                            <SearchBox />
+                            {isSearchBox && <SearchBox />}
                         </div>
                         <div className="d-flex align-items-center mobile-icon-wrapper">
                             <div className="d-block login-b ">
@@ -47,24 +48,24 @@ const Header: NextPage = () => {
                             <ul className="navbar-nav">
                                 <li className="nav-item">
                                     <Link href="/">
-                                        <a className={`nav-link ${router.pathname == "/" ? "active" : ""}`}>Overview</a>
+                                        <a className={`nav-link ${router.pathname == "/" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Overview</a>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link href="/stake">
-                                        <a className={`nav-link ${router.pathname == "/stake" ? "active" : ""}`}>Stake</a>
+                                        <a className={`nav-link ${router.pathname == "/stake" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Stake</a>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link href="/dashboard">
-                                        <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`}>Dashboard</a>
+                                        <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Dashboard</a>
                                     </Link>
                                 </li>
-                                {/* <li className="nav-item">
-                                    <Link href="/mint">
-                                        <a className={`nav-link ${router.pathname == "/mint" ? "active" : ""}`}>Mint</a>
+                                <li className="nav-item">
+                                    <Link href="/drops">
+                                        <a className={`nav-link ${router.pathname == "/drops" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Drops</a>
                                     </Link>
-                                </li> */}
+                                </li>
                                 <button className="cmn-btn mobile-wallet" onClick={onWallet}>
                                     {
                                         !wallet?.isSignedIn() ?

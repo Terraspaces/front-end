@@ -29,12 +29,13 @@ export const NewCollections = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2.5,
+      items: 2,
       partialVisibilityGutter: 30
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
+      items: 1,
+      paritialVisibilityGutter: 100
     }
   };
 
@@ -84,7 +85,6 @@ export const NewCollections = () => {
             swipeable={true}
             draggable={true}
             responsive={responsive}
-            infinite={true}
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
             dotListClass="custom-dot-list-style"
@@ -92,8 +92,8 @@ export const NewCollections = () => {
             className="partner-container"
             showDots={false}
             arrows={false}
-            autoPlay={true}
             ssr={true}
+            partialVisbile
           >
             {publications.map((item, i) => (
               <SingleCollectionCard key={i} card={item} />

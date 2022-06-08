@@ -73,7 +73,7 @@ export const Top30Ranked = () => {
       return {
         name,
         photo: `https://ipfs.io/ipfs/${media}`,
-        social_media: socialMedia,
+        social_media: socialMedia || {},
         floor_price: parseEther(floor_price),
         total_listed: total_card_sale,
         total_volume: parseEther(volume)

@@ -657,6 +657,17 @@ button.star-btn:hover:before {
     height: 100%;
 }
 
+.vector-terra {
+    display: inline-block;
+}
+
+.vector-terra img {
+    position: absolute;
+    filter: blur(102px);
+    width: 100%;
+    height: calc(100vh - 450px);
+}
+
 .dashboard-wrapper .track-select .dropdown-item {
     height: 48px;
     display: flex;

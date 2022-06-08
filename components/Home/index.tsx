@@ -103,6 +103,9 @@ export const Home = () => {
         <div className="vector-abs">
           <img src="assets/img/vector/Vector.png" alt="Vector" loading="lazy" />
         </div>
+        <div className='vector-terra'>
+          <img src="assets/img/home/terra1.png" alt="terra" loading='lazy' />
+        </div>
         <HomeHeroWrapper className='container'>
           <Carousel
             swipeable={true}

@@ -61,11 +61,11 @@ const Header: NextPage = () => {
                                         <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Dashboard</a>
                                     </Link>
                                 </li>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <Link href="/drops">
                                         <a className={`nav-link ${router.pathname == "/drops" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Drops</a>
                                     </Link>
-                                </li>
+                                </li> */}
                                 <button className="cmn-btn mobile-wallet" onClick={onWallet}>
                                     {
                                         !wallet?.isSignedIn() ?

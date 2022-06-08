@@ -67,13 +67,14 @@ export const PopularCollection = () => {
   }
 
   const goToNext = () => {
-    console.log(carouselRef)
-    const nextSlide = carouselRef.current.state.currentSlide + 1;
+    const maxSlide = carouselRef.current.state.totalItems - carouselRef.current.state.slidesToShow;
+    const nextSlide = (carouselRef.current.state.currentSlide + 1) >= Math.ceil(maxSlide) ? maxSlide : carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
   }
 
   const gotToPrev = () => {
-    const prevSlide = carouselRef.current.state.currentSlide - 1;
+    let prevSlide = carouselRef.current.state.currentSlide > 0 && carouselRef.current.state.currentSlide - 1;
+    prevSlide = prevSlide < 0 ? 0 : prevSlide
     carouselRef.current.goToSlide(prevSlide)
   }
 
@@ -116,6 +117,7 @@ export const PopularCollection = () => {
             itemClass="carousel-item-padding-40-px"
             className="partner-container"
             arrows={false}
+            shouldResetAutoplay={false}
             partialVisbile
           >
             {popularCollections.map((item, i) => (

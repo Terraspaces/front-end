@@ -12,7 +12,7 @@ const Navbar: NextPage<NavbarProps> = ({ setOverview }) => {
                     <button className="t-20 nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={() => setOverview(0)}>Owned</button>
                 </li>
                 <li className="nav-item col-6" role="presentation">
-                    <button className="nav-link t-20" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={() => setOverview(1)}>Stake</button>
+                    <button className="nav-link t-20" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={() => setOverview(1)}>Staked</button>
                 </li>
                 {/* <li className="nav-item col-3" role="presentation">
                     <button className="nav-link t-20" id="pills-farms-tab" data-bs-toggle="pill" data-bs-target="#pills-farms" type="button" role="tab" aria-controls="pills-farms" aria-selected="false" onClick={() => setOverview(3)}>Farms</button>

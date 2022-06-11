@@ -1,73 +1,58 @@
+import { useEffect, useState, useContext } from 'react';
 import type { NextPage } from 'next';
 import moment from 'moment';
-import { useEffect, useState, useContext } from 'react';
+
 import { Icon } from '@iconify/react';
-import { Container, ToggleContent, UpcomingContent, MobileToggle, CardContent, ButtonGroup, Button, MobileButtonGroup } from "./styles";
-import { getDropData } from '../../utils/paraApi';
-import { WalletContext } from '../../contexts/wallet';
 import DropCard from './DropCard';
+import { Container, UpcomingContent, CardContent, ButtonGroup, Button, MobileButtonGroup } from "./styles";
+
+import { WalletContext } from '../../contexts/wallet';
+
+import { drop_get, drop_like, drop_unlike } from '../../utils/api/terraspace_api';
 
 const Drop: NextPage = () => {
     const { wallet } = useContext(WalletContext)
 
-    const [dropDatas, setDropDatas] = useState<any[]>([])
-    const [isFilter, setIsFilter] = useState<boolean>(false)
+    const [drops, setDrops] = useState<any[]>([])
+    const [isOnFilter, setIsOnFilter] = useState<boolean>(false)
 
     useEffect(() => {
         (async () => {
-            let dropData = await getDropData();
-            dropData = dropData.map((x: any) => {
+            let drops = await drop_get();
+            drops = drops.map((x: any) => {
                 return {
                     ...x,
                     mint_date: x.mint_date ? moment(x.mint_date).format('DD MMM YYYY') : 'TBA',
                     mint_time: x.mint_date ? moment(x.mint_date).format('HH:SS') : 'TBA'
                 }
             })
-            setDropDatas(dropData)
+            setDrops(drops)
         })()
     })
 
-    const handleFav = async (name: string) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ drop_name: name, account_id: wallet?.account().accountId })
-        }
-        await fetch('https://dev-api.terraspaces.io/drops/like', requestOptions)
-
-        // await getDropData()
-        const clone = [...dropDatas];
+    const handleFav = async (drop_name: string) => {
+        await drop_like({ drop_name, account_id: wallet?.account().accountId || '' })
+        const clone = [...drops];
         const drop_index = clone.findIndex((x: any) => x.name === name);
         if (drop_index > -1) {
             clone[drop_index].likes.push(wallet?.account().accountId);
-            setDropDatas(clone);
+            setDrops(clone);
         }
     };
 
 
-    const handleUnFav = async (name: string) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ drop_name: name, account_id: wallet?.account().accountId })
-        }
-        await fetch('https://dev-api.terraspaces.io/drops/unlike', requestOptions)
-
-        // await getDropData()
-        const clone = [...dropDatas];
+    const handleUnFav = async (drop_name: string) => {
+        await drop_unlike({ drop_name, account_id: wallet?.account().accountId || '' })
+        const clone = [...drops];
         const drop_index = clone.findIndex((x: any) => x.name === name);
         if (drop_index > -1) {
             clone[drop_index].likes.pop();
-            setDropDatas(clone);
+            setDrops(clone);
         }
     }
 
-    function isFilterFunc(value: any) {
-        return value.likes.includes(wallet?.account().accountId)
-    }
-
     const filterFav = () => {
-        setIsFilter(!isFilter)
+        setIsOnFilter(!isOnFilter)
     }
 
     return (
@@ -80,8 +65,8 @@ const Drop: NextPage = () => {
                     <div className='d-flex align-items-center'>
                         <h1 className='mr-20 upcoming-text'>Upcoming Drops</h1>
                         <ButtonGroup>
-                            <Button active={!isFilter} onClick={() => filterFav()}>Upcoming</Button>
-                            <Button active={isFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
+                            <Button active={!isOnFilter} onClick={() => filterFav()}>Upcoming</Button>
+                            <Button active={isOnFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
                         </ButtonGroup>
                     </div>
                     <button className="cmn-btn-1 f-18 radius-12 list-btn">
@@ -89,23 +74,21 @@ const Drop: NextPage = () => {
                     </button>
                 </div>
                 <MobileButtonGroup>
-                    <Button active={!isFilter} onClick={() => filterFav()}>Upcoming</Button>
-                    <Button active={isFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
+                    <Button active={!isOnFilter} onClick={() => filterFav()}>Upcoming</Button>
+                    <Button active={isOnFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
                 </MobileButtonGroup>
                 <CardContent>
-                    {!isFilter ? (dropDatas as any).map((dropData: any, index: number) => (
+                    {!isOnFilter ? (drops).map((drop: any, index: number) => (
                         <DropCard
                             key={index}
-                            index={index}
-                            dropData={dropData}
+                            dropData={drop}
                             handleFav={handleFav}
                             handleUnFav={handleUnFav}
                         />
-                    )) : (dropDatas as any).filter(isFilterFunc).map((dropData: any, index: number) => (
+                    )) : (drops).filter((drop) => drop.likes.includes(wallet?.account().accountId)).map((drop: any, index: number) => (
                         <DropCard
                             key={index}
-                            index={index}
-                            dropData={dropData}
+                            dropData={drop}
                             handleFav={handleFav}
                             handleUnFav={handleUnFav}
                         />

@@ -11,7 +11,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-import { getTopTokens } from '../../utils/paraApi';
+import { getTopTokens } from '../../utils/api/third_party_api';
 
 export const HighestSales = () => {
   const carouselRef = useRef<any>();

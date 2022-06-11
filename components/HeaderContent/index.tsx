@@ -94,12 +94,10 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
         }
     };
     return (
-        overviewStatus !== 3 ? (
-            <HomeHeroWrapper className='container'>
+        <HomeHeroWrapper className="container">
+            {overviewStatus !== 3 ? (
                 <HomeHero data={heroData[overviewStatus]} />
-            </HomeHeroWrapper>
-        ) : (
-            <HomeHeroWrapper className='container'>
+            ) : (
                 <Carousel
                     swipeable={true}
                     draggable={true}
@@ -118,8 +116,8 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
                         <HomeHero key={i} data={item} />
                     ))}
                 </Carousel>
-            </HomeHeroWrapper>
-        )
+            )}
+        </HomeHeroWrapper>
     )
 }
 

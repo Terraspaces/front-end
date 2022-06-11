@@ -12,7 +12,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-import { getNewCollections } from '../../utils/paraApi';
+import { getNewCollections } from '../../utils/api/third_party_api';
 
 export const NewCollections = () => {
   const carouselRef = useRef<any>();

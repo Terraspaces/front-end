@@ -2,7 +2,7 @@ import { NativeSelect, MenuItem } from "@mui/material";
 import type { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import { FARM_CONTRACT_ID, WalletContext } from "../../../../contexts/wallet";
-import { useFetchInfoByOwnerId } from "../../../../state/hooks";
+import { useFetchStakingInfoByOwnerId } from "../../../../state/hooks";
 import CardHeader from "../CardHeader";
 import {
     Container,
@@ -30,26 +30,25 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
     onFarmingUnstake
 }) => {
     const { wallet } = useContext(WalletContext)
-    const [stakeList, setStakeList] = useState<Map<string, string[]>>(new Map());
     const [selectOptions, setSelectOptions] = useState([])
     const [selectedNFT, setSelectedNFT] = useState('')
-    const stakeData = useFetchInfoByOwnerId(wallet?.account().accountId as string, farmData)
+    const stakingInfo = useFetchStakingInfoByOwnerId(wallet?.account().accountId as string, farmData)
     const newData = new Map<string, string[]>();
     const selectOption: any = []
     const fetchData = async () => {
-        for (let i = 0; i < (stakeData as any).token_ids?.length; i++) {
+        for (let i = 0; i < stakingInfo.token_ids?.length; i++) {
             const nft_info = await wallet?.account().viewFunction(
                 farmData,
                 "nft_token",
                 {
-                    token_id: (stakeData as any).token_ids[i]
+                    token_id: stakingInfo.token_ids[i]
                 }
             )
             if ((JSON.stringify(nft_info.approved_account_ids).match(FARM_CONTRACT_ID) || []).length
                 == (JSON.stringify(nft_info.approved_account_ids).match('":') || []).length) {
                 let nft_contract_id = farmData;
                 if (nft_contract_id == "x.paras.near") {
-                    const result = await fetch("https://api-v2-mainnet.paras.id/token?token_id=" + (stakeData as any).token_ids[i]);
+                    const result = await fetch("https://api-v2-mainnet.paras.id/token?token_id=" + stakingInfo.token_ids[i]);
                     nft_contract_id = (await result.json())["data"]["results"][0].metadata.collection_id;
                 }
                 let list: string[] = [];
@@ -57,13 +56,12 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
                     const data = newData.get(nft_contract_id);
                     list = data == undefined ? [] : data;
                 }
-                list.push((stakeData as any).token_ids[i]);
+                list.push(stakingInfo.token_ids[i]);
                 newData.set(nft_contract_id, list);
-                selectOption.push({ label: nft_info.metadata.title, value: (stakeData as any).token_ids[i] })
+                selectOption.push({ label: nft_info.metadata.title, value: stakingInfo.token_ids[i] })
                 setSelectOptions(selectOption)
             }
         }
-        setStakeList(newData)
     }
 
     useEffect(() => {

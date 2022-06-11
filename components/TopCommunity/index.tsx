@@ -12,7 +12,7 @@ import {
   ArrowButton
 } from './styles';
 import { SingleCommunityCard } from '../SingleCommunityCard';
-import { getUpcomingProjects } from '../../utils/paraApi';
+import { getUpcomingProjects } from '../../utils/api/third_party_api';
 
 const communityList = [
   { name: 'Ultron Apes', photo: '/assets/img/home/collection1.png', favorite_count: 4012, timestamp: 1652425452000 },

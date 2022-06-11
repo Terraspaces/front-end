@@ -13,7 +13,7 @@ import {
   ArrowButton
 } from './styles';
 import { SingleRankCard } from '../SingleRankCard';
-import { getCollectionData, getCollectionStats, getHistoricalCollections, getTopCollections } from '../../utils/paraApi';
+import { getCollectionData, getCollectionStats, getHistoricalCollections, getTopCollections } from '../../utils/api/third_party_api';
 import { parseEther } from '../../utils/bignumber';
 
 export const Top30Ranked = () => {

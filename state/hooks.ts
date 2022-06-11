@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { WalletContext, FARM_CONTRACT_ID, X_PARAS_COLLECTIONS } from "../contexts/wallet";
+import { WalletContext, FARM_CONTRACT_ID, X_PARAS_COLLECTIONS, NFT_CONTRACT_ID } from "../contexts/wallet";
 
 export const useFetchFarmContractIds = () => {
     const { wallet } = useContext(WalletContext)
@@ -107,9 +107,9 @@ export const useFetchClaimAmountByOwnerId = (account_id: string, nft_contract_id
     return data
 }
 
-export const useFetchInfoByOwnerId = (account_id: string, nft_contract_id: string) => {
+export const useFetchStakingInfoByOwnerId = (account_id: string, nft_contract_id: string) => {
     const { wallet } = useContext(WalletContext)
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<any>({});
     useEffect(() => {
         (async () => {
             const data = await wallet?.account().viewFunction(
@@ -147,7 +147,7 @@ export const useNFTIsApproved = (token_id: string, approved_account_id: string) 
 
 export const useFetchFarmSpec = (nft_contract_id: string) => {
     const { wallet } = useContext(WalletContext)
-    const [data, setData] = useState([])
+    const [data, setData] = useState<any>({})
     useEffect(() => {
         (async () => {
             const data = await wallet?.account().viewFunction(
@@ -165,7 +165,7 @@ export const useFetchFarmSpec = (nft_contract_id: string) => {
 
 export const useFetchTokenRate = (nft_contract_id: string, token_ids: string[]) => {
     const { wallet } = useContext(WalletContext)
-    const [tokenRates, setTokenRates] = useState<Array<string>>([])
+    const [tokenRates, setTokenRates] = useState<string[]>([])
     useEffect(() => {
         (async () => {
             const _tokenRates = await Promise.all(token_ids.map(async (id) => {

@@ -11,7 +11,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-import { getHistoricalCollections, getNearPrice } from '../../utils/paraApi';
+import { getHistoricalCollections, getNearPrice } from '../../utils/api/third_party_api';
 
 export const TopMarketCap = () => {
   const carouselRef = useRef<any>();

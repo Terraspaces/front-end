@@ -1,11 +1,7 @@
+import { apiCall } from "./_apicall";
+
 const PARA_API_ENDPOINT = "https://api-v2-mainnet.paras.id";
 const DEGEN_WHALE_API_ENDPOINT = "https://api.degenwhale.club";
-const DROP_API_ENDPOINT = 'https://dev-api.terraspaces.io';
-
-const apiCall = async (url: string) => {
-    const response = await fetch(url);
-    return await response.json();
-}
 
 export const getFeaturedCollections = async () => {
     const url = `${PARA_API_ENDPOINT}/featured-collections`;
@@ -82,10 +78,4 @@ export const getNearPrice = async () => {
     const url = `${DEGEN_WHALE_API_ENDPOINT}/historical`;
     const { near_usd_price } = await apiCall(url);
     return near_usd_price.current_value;
-}
-
-export const getDropData = async () => {
-    const url = `${DROP_API_ENDPOINT}/drops`;
-    const results = await apiCall(url)
-    return results
 }

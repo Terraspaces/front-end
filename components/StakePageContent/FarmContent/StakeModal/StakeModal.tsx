@@ -2,7 +2,7 @@ import { NativeSelect, MenuItem } from "@mui/material";
 import type { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import { FARM_CONTRACT_ID, WalletContext } from "../../../../contexts/wallet";
-import { useFetchInfoByOwnerId } from "../../../../state/hooks";
+import { useFetchStakingInfoByOwnerId } from "../../../../state/hooks";
 import CardHeader from "../CardHeader";
 import {
     Container,
@@ -32,10 +32,9 @@ const StakeModal: NextPage<StakeModalProps> = ({
     onFarmingStake
 }) => {
     const { wallet } = useContext(WalletContext)
-    const [stakeList, setStakeList] = useState<Map<string, string[]>>(new Map());
     const [selectOptions, setSelectOptions] = useState([])
     const [selectedNFT, setSelectedNFT] = useState('')
-    const stakeData = useFetchInfoByOwnerId(wallet?.account().accountId as string, farmData)
+    const stakingInfo = useFetchStakingInfoByOwnerId(wallet?.account().accountId as string, farmData)
     const newData = new Map<string, string[]>();
     const selectOption: any = []
     const fetchData = async () => {
@@ -62,14 +61,13 @@ const StakeModal: NextPage<StakeModalProps> = ({
                 list.push(nftList.get(farmData)[i]?.token_id);
                 newData.set(nft_contract_id, list);
                 for (let i = 0; i < nftList.get(farmData).length; i++) {
-                    if (!((stakeData as any).token_ids || [])?.includes((newData.get(farmData) as any)[i])) {
+                    if (!(stakingInfo.token_ids || []).includes((newData.get(farmData) as any)[i])) {
                         selectOption.push({ label: nft_info.metadata.title, value: nftList.get(farmData)[i]?.token_id })
                     }
                 }
                 setSelectOptions(selectOption)
             }
         }
-        setStakeList(newData)
     }
 
     useEffect(() => {

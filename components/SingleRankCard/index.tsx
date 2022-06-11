@@ -37,10 +37,10 @@ export const SingleRankCard = (props: SingleRankCardProps) => {
               <span>{title}</span>
               <VerifiedIcon />
             </InfoItem>
-            <VolumeWrapper>
+            {/* <VolumeWrapper>
               <span className='title'>7 day volume:</span>
               <span className='value'>+15.30%</span>
-            </VolumeWrapper>
+            </VolumeWrapper> */}
           </InfoWrapper>
         </DetailWrapper>
         <div className='row mt-2'>

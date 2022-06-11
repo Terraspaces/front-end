@@ -13,7 +13,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-import { getFeaturedCollections, getCollectionStats } from '../../utils/paraApi';
+import { getFeaturedCollections, getCollectionStats } from '../../utils/api/third_party_api';
 import { parseEther } from '../../utils/bignumber';
 
 export const PopularCollection = () => {

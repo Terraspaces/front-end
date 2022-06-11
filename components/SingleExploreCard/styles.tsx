@@ -9,7 +9,6 @@ export const InnerContainer = styled.div`
   background-position: center;
   border-radius: 20px;
   background-size: cover;
-  overflow: hidden;
   border: 1px solid var(--primary-2);
   > img {
     border-radius: 20px;
@@ -17,6 +16,7 @@ export const InnerContainer = styled.div`
     height: 300px;
     max-height: 300px;
     object-fit: cover;
+    transform: scale(1.01);
   }
 `
 

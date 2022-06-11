@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { VerifiedIcon, LinkIcon } from '../Shared/SvgIcons';
 import {
   Container,
@@ -19,7 +19,14 @@ export const SinglePopularCard = (props: SinglePopularCardProps) => {
   const { card } = props;
   const { name, photo, social_media, floor_price, total_volume, total_listed } = card;
   const { discord, twitter, website } = social_media;
-
+  const [title, setTitle] = useState('')
+  useEffect(() => {
+    if (name.length > 12) {
+      setTitle(name.substring(0, 12) + '...')
+    } else {
+      setTitle(name)
+    }
+  })
   return (
     <Container>
       <InnerContainer>
@@ -27,7 +34,7 @@ export const SinglePopularCard = (props: SinglePopularCardProps) => {
           <img draggable={false} src={photo} alt='' />
           <InfoWrapper>
             <InfoItem>
-              <span>{name}</span>
+              <span>{title}</span>
               <VerifiedIcon />
             </InfoItem>
             <SocialList>
@@ -44,19 +51,19 @@ export const SinglePopularCard = (props: SinglePopularCardProps) => {
           </InfoWrapper>
         </DetailWrapper>
         <InfoCardWrapper className='row'>
-          <div className="col-md-4">
+          <div className="col-4">
             <InfoCard>
               <p>Floor</p>
               <p>{floor_price}</p>
             </InfoCard>
           </div>
-          <div className="col-md-4">
+          <div className="col-4">
             <InfoCard>
               <p>Volume</p>
-              <p>{total_volume.toFixed(2)}</p>
+              <p>{total_volume.toFixed(0)}</p>
             </InfoCard>
           </div>
-          <div className="col-md-4">
+          <div className="col-4">
             <InfoCard>
               <p>Listing</p>
               <p>{total_listed}</p>

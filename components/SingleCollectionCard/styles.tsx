@@ -9,7 +9,6 @@ export const InnerContainer = styled.div`
   background-position: center;
   border-radius: 25px;
   background-size: cover;
-  overflow: hidden;
   border: 1px solid var(--primary-2);
   transition: all 0.3s linear;
   > img {
@@ -18,6 +17,7 @@ export const InnerContainer = styled.div`
     height: 250px;
     max-height: 300px;
     object-fit: cover;
+    transform: scale(1.02);
   }
   &:hover {
     background-color: var(--primary-2);
@@ -40,6 +40,7 @@ export const TitleWrapper = styled.div`
   > h2 {
     font-size: 18px;
     margin-right: 10px;
+    width: 80%;
   }
   svg {
     width: 24px;

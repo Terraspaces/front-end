@@ -8,6 +8,7 @@ export const Container = styled.div`
 `
 
 export const HomeHeroWrapper = styled.div`
+  margin-top: -20px;
   > div {
     padding-bottom: 30px;
   }
@@ -26,5 +27,8 @@ export const HomeHeroWrapper = styled.div`
         background-color: white;
       }
     }
+  }
+  @media screen and (min-width: 768px) {
+    margin-top: 0;
   }
 `

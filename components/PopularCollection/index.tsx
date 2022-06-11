@@ -13,7 +13,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-import { getFeaturedCollections, getCollectionStats } from '../../utils/paraApi';
+import { getFeaturedCollections, getCollectionStats } from '../../utils/api/third_party_api';
 import { parseEther } from '../../utils/bignumber';
 
 export const PopularCollection = () => {
@@ -38,11 +38,12 @@ export const PopularCollection = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2.3
+      items: 2
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
+      items: 1,
+      paritialVisibilityGutter: 100
     }
   };
 
@@ -66,12 +67,14 @@ export const PopularCollection = () => {
   }
 
   const goToNext = () => {
-    const nextSlide = carouselRef.current.state.currentSlide + 1;
+    const maxSlide = carouselRef.current.state.totalItems - carouselRef.current.state.slidesToShow;
+    const nextSlide = (carouselRef.current.state.currentSlide + 1) >= Math.ceil(maxSlide) ? maxSlide : carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
   }
 
   const gotToPrev = () => {
-    const prevSlide = carouselRef.current.state.currentSlide - 1;
+    let prevSlide = carouselRef.current.state.currentSlide > 0 && carouselRef.current.state.currentSlide - 1;
+    prevSlide = prevSlide < 0 ? 0 : prevSlide
     carouselRef.current.goToSlide(prevSlide)
   }
 
@@ -84,7 +87,7 @@ export const PopularCollection = () => {
       <Header className='container'>
         <TitleTabWrapper>
           <h1>Popular Collections on PARAS</h1>
-          <TabWrapper>
+          {/* <TabWrapper>
             {tabList.map((day, i) => (
               <Tab
                 key={i}
@@ -92,7 +95,7 @@ export const PopularCollection = () => {
                 onClick={() => setDaySelected(day.key)}
               >{day.name}</Tab>
             ))}
-          </TabWrapper>
+          </TabWrapper> */}
         </TitleTabWrapper>
         <CarouselButtonGroup>
           <ArrowButton onClick={gotToPrev}>
@@ -107,19 +110,15 @@ export const PopularCollection = () => {
         <div>
           <Carousel
             ref={(el) => (carouselRef.current = el)}
-            swipeable={true}
             draggable={true}
             responsive={responsive}
-            infinite={true}
             containerClass="carousel-container"
-            removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
             className="partner-container"
-            showDots={false}
             arrows={false}
-            autoPlay={true}
-            ssr={true}
+            shouldResetAutoplay={false}
+            partialVisbile
           >
             {popularCollections.map((item, i) => (
               <SinglePopularCard key={i} card={item} />

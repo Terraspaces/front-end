@@ -9,7 +9,6 @@ export const InnerContainer = styled.div`
   background-position: center;
   border-radius: 25px;
   background-size: cover;
-  overflow: hidden;
   border: 1px solid var(--primary-2);
   transition: all 0.3s linear;
   > img {
@@ -18,6 +17,7 @@ export const InnerContainer = styled.div`
     height: 200px;
     max-height: 300px;
     object-fit: cover;
+    transform: scale(1.02);
   }
   &:hover {
     background-color: var(--primary-2);

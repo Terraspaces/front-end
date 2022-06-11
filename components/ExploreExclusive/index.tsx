@@ -39,22 +39,25 @@ export const ExploreExclusive = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2.3,
+      items: 2,
       partialVisibilityGutter: 30
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
+      items: 1,
+      paritialVisibilityGutter: 100
     }
   };
 
   const goToNext = () => {
-    const nextSlide = carouselRef.current.state.currentSlide + 1;
+    const maxSlide = carouselRef.current.state.totalItems - carouselRef.current.state.slidesToShow;
+    const nextSlide = (carouselRef.current.state.currentSlide + 1) >= Math.ceil(maxSlide) ? maxSlide : carouselRef.current.state.currentSlide + 1;
     carouselRef.current.goToSlide(nextSlide)
   }
 
   const gotToPrev = () => {
-    const prevSlide = carouselRef.current.state.currentSlide - 1;
+    let prevSlide = carouselRef.current.state.currentSlide > 0 && carouselRef.current.state.currentSlide - 1;
+    prevSlide = prevSlide < 0 ? 0 : prevSlide
     carouselRef.current.goToSlide(prevSlide)
   }
 
@@ -80,7 +83,6 @@ export const ExploreExclusive = () => {
             swipeable={true}
             draggable={true}
             responsive={responsive}
-            infinite={true}
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile", 'desktop']}
             dotListClass="custom-dot-list-style"
@@ -88,8 +90,9 @@ export const ExploreExclusive = () => {
             className="partner-container"
             showDots={false}
             arrows={false}
-            autoPlay={true}
             ssr={true}
+            shouldResetAutoplay={false}
+            partialVisbile
           >
             {exploreList.map((item, i) => (
               <SingleExploreCard key={i} card={item} />

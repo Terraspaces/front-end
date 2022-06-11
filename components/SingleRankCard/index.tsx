@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { VerifiedIcon } from '../Shared/SvgIcons'
 import {
   Container,
@@ -17,6 +17,14 @@ interface SingleRankCardProps {
 
 export const SingleRankCard = (props: SingleRankCardProps) => {
   const { card: collection, index } = props;
+  const [title, setTitle] = useState('')
+  useEffect(() => {
+    if (collection?.name.length > 12) {
+      setTitle(collection?.name.substring(0, 12) + '...')
+    } else {
+      setTitle(collection?.name)
+    }
+  })
 
   return (
     <Container>
@@ -26,32 +34,32 @@ export const SingleRankCard = (props: SingleRankCardProps) => {
           <img draggable={false} src={collection?.photo} alt='' />
           <InfoWrapper>
             <InfoItem>
-              <span>{collection?.name}</span>
+              <span>{title}</span>
               <VerifiedIcon />
             </InfoItem>
-            <VolumeWrapper>
+            {/* <VolumeWrapper>
               <span className='title'>7 day volume:</span>
               <span className='value'>+15.30%</span>
-            </VolumeWrapper>
+            </VolumeWrapper> */}
           </InfoWrapper>
         </DetailWrapper>
-        <div className='row'>
-          <div className="col-md-4 col-sm-4">
+        <div className='row mt-2'>
+          <div className="col-4">
             <InfoCard>
               <p className='title'>Floor Price</p>
-              <p className='value'>{collection?.floor_price} N</p>
+              <p className='value'>{collection?.floor_price.toFixed(0)} N</p>
             </InfoCard>
           </div>
-          <div className="col-md-4 col-sm-4">
+          <div className="col-4">
             <InfoCard>
               <p className='title'>Listed</p>
               <p className='value'>{collection?.total_listed}</p>
             </InfoCard>
           </div>
-          <div className="col-md-4 col-sm-4">
+          <div className="col-4">
             <InfoCard>
               <p className='title'>Volume</p>
-              <p className='value'>{collection?.total_volume.toFixed(2)} N</p>
+              <p className='value'>{collection?.total_volume.toFixed(0)} N</p>
             </InfoCard>
           </div>
         </div>

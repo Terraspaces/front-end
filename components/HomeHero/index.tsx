@@ -75,7 +75,7 @@ export const HomeHero = (props: HomeHeroProps) => {
       </TextWrapper>
       <ImageWrapper>
         <ImageContent>
-          <img draggable={false} src='/assets/img/home/collection3.png' alt='' />
+          <img draggable={false} src='/assets/img/home/carousel_collection.png' alt='' />
           <DetailInfoWrapper>
             <DetailLeftWrapper>
               <img draggable={false} src='/assets/img/home/collection3.png' alt='' />

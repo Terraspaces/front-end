@@ -571,7 +571,7 @@ button.star-btn:hover:before {
     margin-top: -55px;
 }
 
-.stake-wrapper .t-card .farms-card-img {
+.farms-card-img {
     border-radius: 50%;
     border: 1px solid white;
 }
@@ -666,6 +666,7 @@ button.star-btn:hover:before {
     filter: blur(102px);
     width: 100%;
     height: calc(100vh - 450px);
+    z-index: -1;
 }
 
 .dashboard-wrapper .track-select .dropdown-item {

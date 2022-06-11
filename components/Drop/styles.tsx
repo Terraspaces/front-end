@@ -176,6 +176,7 @@ export const Card = styled.div`
   margin-top: 20px;
   img {
     width: 400px;
+    height: 100%;
     border-radius: 20px;
     transform: scale(1.02);
   }
@@ -232,7 +233,7 @@ export const CardBody = styled.div`
   .detail-content {
     display: flex;
     justify-content: space-between;
-    margin-top: 60px;
+    margin-top: 50px;
     img {
       width: 16px;
       height: 16px;
@@ -246,6 +247,13 @@ export const CardBody = styled.div`
       color: white;
       font-size: 18px;
       font-weight: bold;
+    }
+  }
+  .fav-icon {
+    cursor: pointer;
+    transition: all .5s;
+    :hover {
+      transform: scale(1.1);
     }
   }
   @media screen and (max-width: 800px) {
@@ -281,4 +289,47 @@ export const LoverCount = styled.div`
   background-color: #ffffff15;
   padding: 10px 12px;
   border-radius: 50px;
+`
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+`
+
+export const MobileButtonGroup = styled.div`
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  @media screen and (max-width: 600px) {
+    display: flex;
+  }
+`
+
+interface ButtonProps {
+  active?: boolean
+}
+
+export const Button = styled.button<ButtonProps>`
+  border: none;
+  outline: none;
+  padding: 8px 20px;
+  color: white;
+  background-color: transparent;
+  border: 1px solid var(--primary-2);
+  :nth-child(1) {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  :nth-child(2) {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  ${(props: any) => props.active && css`
+    background-color: var(--primary-2);
+    border: 1px solid var(--primary-2);
+  `}
 `

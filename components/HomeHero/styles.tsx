@@ -24,7 +24,6 @@ export const ExploreNearWrapper = styled.div`
 `
 
 export const TextWrapper = styled.div`
-  margin-top: 40px;
   > h1 {
     margin-top: 10px;
     font-family: Gojali-Bold;

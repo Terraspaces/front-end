@@ -1,57 +1,74 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import moment from 'moment';
+import { useEffect, useState, useContext } from 'react';
 import { Icon } from '@iconify/react';
-import { Container, ToggleContent, UpcomingContent, MobileToggle, CardContent, Card, CardBody, LoverCount } from "./styles";
+import { Container, ToggleContent, UpcomingContent, MobileToggle, CardContent, ButtonGroup, Button, MobileButtonGroup } from "./styles";
+import { getDropData } from '../../utils/paraApi';
+import { WalletContext } from '../../contexts/wallet';
+import DropCard from './DropCard';
 
 const Drop: NextPage = () => {
+    const { wallet } = useContext(WalletContext)
 
-    const dropDatas = [
-        {
-            title: 'Monarchs By Haven',
-            img: 'assets/partners/haven.gif',
-            voteCount: 75,
-            description: 'Explorer staking partners and stake their NFT to access dashboard. Explorer staking partners and stake their NFT to access dashboard.Explorer staking partners and stake their NFT to access dashboard.',
-            mintPrice: 7,
-            mintDate: '20 March 2022',
-            supplyCount: '700',
-            mintTime: '16:00',
-            url: {
-                discord: 'https://discord/2h4lsd9',
-                twitter: 'https://twitter.com',
-                site: 'https://haven.com'
-            }
-        },
-        {
-            title: 'Monarchs By Boomonsters',
-            img: 'assets/partners/boomonsters.png',
-            voteCount: 62,
-            description: 'Explorer staking partners and stake their NFT to access dashboard. Explorer staking partners and stake their NFT to access dashboard.Explorer staking partners and stake their NFT to access dashboard.',
-            mintPrice: 7,
-            mintDate: '20 May 2022',
-            supplyCount: '250',
-            mintTime: '06:00',
-            url: {
-                discord: 'https://discord/2h4lsd9',
-                twitter: 'https://twitter.com',
-                site: 'https://haven.com'
-            }
-        },
-        {
-            title: 'Monarchs By Asac',
-            img: 'assets/partners/asac.jpg',
-            voteCount: 49,
-            description: 'Explorer staking partners and stake their NFT to access dashboard. Explorer staking partners and stake their NFT to access dashboard.Explorer staking partners and stake their NFT to access dashboard.',
-            mintPrice: 7,
-            mintDate: '20 October 2021',
-            supplyCount: '400',
-            mintTime: '14:35',
-            url: {
-                discord: 'https://discord/2h4lsd9',
-                twitter: 'https://twitter.com',
-                site: 'https://haven.com'
-            }
+    const [dropDatas, setDropDatas] = useState<any[]>([])
+    const [isFilter, setIsFilter] = useState<boolean>(false)
+
+    useEffect(() => {
+        (async () => {
+            let dropData = await getDropData();
+            dropData = dropData.map((x: any) => {
+                return {
+                    ...x,
+                    mint_date: x.mint_date ? moment(x.mint_date).format('DD MMM YYYY') : 'TBA',
+                    mint_time: x.mint_date ? moment(x.mint_date).format('HH:SS') : 'TBA'
+                }
+            })
+            setDropDatas(dropData)
+        })()
+    })
+
+    const handleFav = async (name: string) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ drop_name: name, account_id: wallet?.account().accountId })
         }
-    ]
+        await fetch('https://dev-api.terraspaces.io/drops/like', requestOptions)
+
+        // await getDropData()
+        const clone = [...dropDatas];
+        const drop_index = clone.findIndex((x: any) => x.name === name);
+        if (drop_index > -1) {
+            clone[drop_index].likes.push(wallet?.account().accountId);
+            setDropDatas(clone);
+        }
+    };
+
+
+    const handleUnFav = async (name: string) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ drop_name: name, account_id: wallet?.account().accountId })
+        }
+        await fetch('https://dev-api.terraspaces.io/drops/unlike', requestOptions)
+
+        // await getDropData()
+        const clone = [...dropDatas];
+        const drop_index = clone.findIndex((x: any) => x.name === name);
+        if (drop_index > -1) {
+            clone[drop_index].likes.pop();
+            setDropDatas(clone);
+        }
+    }
+
+    function isFilterFunc(value: any) {
+        return value.likes.includes(wallet?.account().accountId)
+    }
+
+    const filterFav = () => {
+        setIsFilter(!isFilter)
+    }
 
     return (
         <Container>
@@ -59,96 +76,44 @@ const Drop: NextPage = () => {
                 <img src="assets/img/vector/Vector.png" alt="Vector" loading="lazy" />
             </div>
             <UpcomingContent>
-                <div>
-                    <div className='d-flex align-items-center justify-content-between'>
-                        <div className='d-flex align-items-center'>
-                            <h1 className='mr-20 upcoming-text'>Upcoming Drops</h1>
-                            <ToggleContent>
-                                <input type='checkbox' />
-                                <span className='base-color'>
-                                    <span className='toggle-slider' />
-                                    <span className='cash'>Upcoming</span>
-                                    <span className='token'><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</span>
-                                </span>
-                            </ToggleContent>
-                        </div>
-                        <button className="cmn-btn-1 f-18 radius-12 list-btn">
-                            <span>Get Listed</span>
-                        </button>
+                <div className='d-flex align-items-center justify-content-between'>
+                    <div className='d-flex align-items-center'>
+                        <h1 className='mr-20 upcoming-text'>Upcoming Drops</h1>
+                        <ButtonGroup>
+                            <Button active={!isFilter} onClick={() => filterFav()}>Upcoming</Button>
+                            <Button active={isFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
+                        </ButtonGroup>
                     </div>
-                    <MobileToggle>
-                        <input type='checkbox' />
-                        <span className='base-color'>
-                            <span className='toggle-slider' />
-                            <span className='cash'>Upcoming</span>
-                            <span className='token'><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</span>
-                        </span>
-                    </MobileToggle>
+                    <button className="cmn-btn-1 f-18 radius-12 list-btn">
+                        <span>Get Listed</span>
+                    </button>
                 </div>
+                <MobileButtonGroup>
+                    <Button active={!isFilter} onClick={() => filterFav()}>Upcoming</Button>
+                    <Button active={isFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
+                </MobileButtonGroup>
                 <CardContent>
-                    {
-                        dropDatas.map((dropData, index) => (
-                            <Card key={index}>
-                                <div className='img-content'>
-                                    <img src={dropData.img} alt={dropData.title} />
-                                </div>
-                                <CardBody>
-                                    <div>
-                                        <div className='card-head'>
-                                            <div className='card-subheader'>
-                                                <p className='card-title'>{dropData.title}</p>
-                                                <div className='icon-set'>
-                                                    <Icon icon="akar-icons:discord-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(dropData.url.discord, "_blank")} />
-                                                    <Icon icon="akar-icons:twitter-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(dropData.url.twitter, "_blank")} />
-                                                    <Icon icon="akar-icons:link-chain" color="white" width="25" height="25" onClick={() => window.open(dropData.url.site, "_blank")} />
-                                                </div>
-                                            </div>
-                                            <LoverCount>
-                                                <Icon icon="akar-icons:heart" width="25" height="25" color='white' className='mr-10' />
-                                                <h6>{dropData.voteCount}</h6>
-                                            </LoverCount>
-                                        </div>
-                                        <div className='icon-set'>
-                                            <Icon icon="akar-icons:discord-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(dropData.url.discord, "_blank")} />
-                                            <Icon icon="akar-icons:twitter-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(dropData.url.twitter, "_blank")} />
-                                            <Icon icon="akar-icons:link-chain" color="white" width="25" height="25" onClick={() => window.open(dropData.url.site, "_blank")} />
-                                        </div>
-                                        <p className='description'>{dropData.description}</p>
-                                    </div>
-                                    <div>
-                                        <div className='detail-content row'>
-                                            <div className='col-md-5 col-xs-12 d-flex justify-content-between'>
-                                                <div>
-                                                    <p className='subtitle'>Mint Price</p>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='sub-detail mr-10'>{dropData.mintPrice}</p>
-                                                        <img src='assets/img/icons/volume.png' alt='near icon' className='mt-0' />
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex flex-direction-column align-items-end'>
-                                                    <p className='subtitle'>Mint Date</p>
-                                                    <p className='sub-detail mt-1'>{dropData.mintTime}</p>
-                                                </div>
-                                            </div>
-                                            <div className='col-md-5 col-xs-12 d-flex justify-content-between'>
-                                                <div>
-                                                    <p className='subtitle'>Supply</p>
-                                                    <p className='sub-detail mr-10'>{dropData.supplyCount} NFTs</p>
-                                                </div>
-                                                <div className='d-flex flex-direction-column align-items-end'>
-                                                    <p className='subtitle'>Mint Time</p>
-                                                    <p className='sub-detail'>{dropData.mintTime}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        ))
+                    {!isFilter ? (dropDatas as any).map((dropData: any, index: number) => (
+                        <DropCard
+                            key={index}
+                            index={index}
+                            dropData={dropData}
+                            handleFav={handleFav}
+                            handleUnFav={handleUnFav}
+                        />
+                    )) : (dropDatas as any).filter(isFilterFunc).map((dropData: any, index: number) => (
+                        <DropCard
+                            key={index}
+                            index={index}
+                            dropData={dropData}
+                            handleFav={handleFav}
+                            handleUnFav={handleUnFav}
+                        />
+                    ))
                     }
                 </CardContent>
             </UpcomingContent>
-        </Container>
+        </Container >
     )
 }
 

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { WalletContext, STAKE_CONTRACT_ID, NFT_CONTRACT_ID, MAX_GAS, NftData, NftContractMetadata, DEPOSIT, X_PARAS_COLLECTIONS } from '../contexts/wallet'
+import { WalletContext, STAKE_CONTRACT_ID, NFT_CONTRACT_ID, MAX_GAS, NftData, NftContractMetadata, DEPOSIT, X_PARAS_COLLECTIONS, FARM_CONTRACT_ID } from '../contexts/wallet'
 import { useContext, useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
 import ReferralModal from '../components/ReferralModal'
@@ -11,6 +11,9 @@ import {
   NavFarmsContent,
   NavReferralsContent
 } from '../components/StakePageContent'
+import {
+  useFetchFarmContractIds,
+} from '../state/hooks'
 
 const Mint: NextPage = () => {
   const { wallet, getMainCollectionList, getCollectionMetadata } = useContext(WalletContext)
@@ -24,7 +27,7 @@ const Mint: NextPage = () => {
   const [totalStaked, setTotalStaked] = useState<number>(0);
   const [overviewStatus, setOverviewStatus] = useState<number>(0);
   const [isNetworkSelectModalOpen, setIsNetworkSelectModalOpen] = useState<boolean>(false);
-
+  const farmContractList = useFetchFarmContractIds();
   const getTrendingCollectionData = async () => {
     const api = process.env.NEXT_PUBLIC_API;
     const getAPI = async () => {
@@ -60,6 +63,22 @@ const Mint: NextPage = () => {
     )
   }
 
+  const onFarmingStake = async (account_id: string, token_id: string) => {
+    await wallet?.account().functionCall(
+      X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
+      "nft_approve",
+      {
+        token_id,
+        account_id: FARM_CONTRACT_ID,
+        msg: JSON.stringify({
+          staking_status: "Staking to platform"
+        }),
+      },
+      MAX_GAS,
+      DEPOSIT,
+    )
+  }
+
   const onUnstake = async (account_id: string, token_id: string) => {
     await wallet?.account().functionCall(
       STAKE_CONTRACT_ID,
@@ -70,6 +89,31 @@ const Mint: NextPage = () => {
       },
       MAX_GAS,
       "1",
+    )
+  }
+
+  const onFarmingUnstake = async (account_id: string, token_id: string) => {
+    await wallet?.account().functionCall(
+      FARM_CONTRACT_ID,
+      "unstake",
+      {
+        nft_contract_id: X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
+        token_id
+      },
+      MAX_GAS,
+      "1"
+    )
+  }
+
+  const onClaimReward = async (nft_contract_id: string) => {
+    await wallet?.account().functionCall(
+      FARM_CONTRACT_ID,
+      "claim_reward",
+      {
+        nft_contract_id: X_PARAS_COLLECTIONS.includes(nft_contract_id) ? "x.paras.near" : nft_contract_id,
+      },
+      MAX_GAS,
+      "1"
     )
   }
 
@@ -204,9 +248,12 @@ const Mint: NextPage = () => {
   }
 
   return (
-    <main id="app-root" className="stking-page pt-160 fix">
+    <main id="app-root" className="stking-page pt-120 fix">
       <div className="home-vect-abs v-top">
         <img src="assets/img/vector/stakin-v.png" alt="staking" loading="lazy" />
+      </div>
+      <div className='vector-terra'>
+        <img src="assets/img/home/terra1.png" draggable={false} alt="terra" loading='lazy' />
       </div>
       {
         wallet?.isSignedIn() ?
@@ -235,7 +282,13 @@ const Mint: NextPage = () => {
                       stakeList={stakeList}
                       onUnstake={onUnstake}
                     />
-                    <NavFarmsContent />
+                    <NavFarmsContent
+                      onFarmingStake={onFarmingStake}
+                      onFarmingUnstake={onFarmingUnstake}
+                      onClaimReward={onClaimReward}
+                      farmContractList={farmContractList}
+                      nftList={nftList}
+                    />
                     <NavReferralsContent openModal={openModal} />
                   </div>
                 </div>

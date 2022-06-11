@@ -55,6 +55,11 @@ const Drop: NextPage = () => {
         setIsOnFilter(!isOnFilter)
     }
 
+    const getList = async () => {
+        const updateData = await drop_get()
+        setDrops(updateData)
+    }
+
     return (
         <Container>
             <div className="vector-abs">
@@ -69,7 +74,7 @@ const Drop: NextPage = () => {
                             <Button active={isOnFilter} onClick={() => filterFav()}><Icon icon="ant-design:star-filled" width="20" height="20" />Favorites</Button>
                         </ButtonGroup>
                     </div>
-                    <button className="cmn-btn-1 f-18 radius-12 list-btn">
+                    <button className="cmn-btn-1 f-18 radius-12 list-btn" onClick={() => getList()}>
                         <span>Get Listed</span>
                     </button>
                 </div>

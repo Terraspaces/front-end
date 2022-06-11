@@ -3,18 +3,21 @@ import styled from 'styled-components';
 export const ExploreNearWrapper = styled.div`
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  margin-bottom: 20px;
   > div {
     width: 100%;
   }
 
   @media (min-width: 768px) {
+    flex-direction: row;
     > div {
       &:first-child {
-        width: 60%;
+        width: 50%;
+        margin-right: 5%;
       }
       &:last-child {
-        width: 40%;
+        width: 45%;
       }
     }
   }
@@ -23,6 +26,8 @@ export const ExploreNearWrapper = styled.div`
 export const TextWrapper = styled.div`
   > h1 {
     margin-top: 10px;
+    font-family: Gojali-Bold;
+    line-height: 100%;
     font-size: 40px;
     text-align: center;
     color: var(--white);
@@ -51,7 +56,7 @@ export const TerraSpaceWrapper = styled.div`
     font-size: 18px;
     color: var(--white);
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 500;
   }
   svg {
     width: 24px;
@@ -84,6 +89,7 @@ export const CheckItem = styled.div`
     font-size: 16px;
     color: var(--white);
     opacity: 0.8;
+    font-weight: 100;
   }
 `
 
@@ -95,6 +101,7 @@ export const ButtonWrapper = styled.div`
     width: 100%;
     margin: 5px auto;
     height: 44px;
+    font-size: 18px;
     &:first-child {
       margin-right: 15px;
     }
@@ -114,7 +121,6 @@ export const ButtonWrapper = styled.div`
 `
 
 export const ImageWrapper = styled.div`
-  margin-top: 20px;
   @media (min-width: 768px) {
     padding-left: 20px;
     margin-top: 0px;
@@ -134,7 +140,6 @@ export const ImageContent = styled.div`
 `
 
 export const DetailInfoWrapper = styled.div`
-  position: absolute;
   bottom: 0px;
   left: 0px;
   padding: 20px;

@@ -13,12 +13,15 @@ export const TitleTabWrapper = styled.div`
   display: flex;
   align-items: center;
   > h1 {
-    font-size: 25px;
+    font-size: 30px;
     margin-right: 10px;
+    font-family: Gojali-Medium
   }
 
   @media (min-width: 576px) {
-    font-size: 30px;
+    > h1 {
+      font-size: 36px;
+    }
   }
 `
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { VerifiedIcon, LinkIcon } from '../Shared/SvgIcons';
 import {
   Container,
@@ -14,13 +14,21 @@ interface SingleCollectionCardProps {
 
 export const SingleCollectionCard = (props: SingleCollectionCardProps) => {
   const { card } = props;
+  const [title, setTitle] = useState('')
+  useEffect(() => {
+    if (card?.name.length > 32) {
+      setTitle(card?.name.substring(0, 32) + '...')
+    } else {
+      setTitle(card?.name)
+    }
+  })
   return (
     <Container>
       <InnerContainer>
         <img draggable={false} src={card?.photo} alt='' />
         <FooterWrapper>
           <TitleWrapper>
-            <h2>{card?.name}</h2>
+            <h2>{title}</h2>
             <VerifiedIcon />
           </TitleWrapper>
           <SocialList>

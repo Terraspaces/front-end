@@ -11,11 +11,21 @@ const { KeyPair, keyStores, connect, WalletConnection, utils: { format: { format
 
 export const STAKE_CONTRACT_ID = "terraspaces-staking.near"
 export const NFT_CONTRACT_ID = "terraspaces.near"
+export const FARM_CONTRACT_ID = "terraspaces-farming.near"
 export const GAS_FOR_NFT_APPROVE = "20000000000000";
 export const GAS_FOR_RESOLVE_TRANSFER = "10000000000000";
 export const GAS_FOR_SIMPLE_TRANSACTION = "10000000000000";
 export const MAX_GAS = "300000000000000";
 export const DEPOSIT = "1000000000000000000000";
+
+export const NFT_TYPE_REWARD = {
+  'Kryptonite': 7,
+  'Lunar': 4,
+  'Quartz': 3,
+  'Iceberg': 2,
+  'Golden': 1.5,
+  'Terra': 1
+}
 
 export const X_PARAS_COLLECTIONS = ["flipped-face-by-taiternnear", "the-wooks-by-nearwooksnear", "near-nomad-by-puunboynear", "mara-gen-0-by-maranftnear", "boo-monster-by-omarbibznear", "starry-night-by-markoethnear"]
 

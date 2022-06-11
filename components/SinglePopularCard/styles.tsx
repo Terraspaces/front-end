@@ -7,6 +7,9 @@ export const Container = styled.div`
 export const InnerContainer = styled.div`
   padding: 25px;
   background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(255, 255, 255, 0.4) 0%, #31254A 0.01%, rgba(160, 120, 237, 0) 100%);
+  background: url("/assets/img/vector/card-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 30px;
 `
 
@@ -29,10 +32,10 @@ export const InfoItem = styled.div`
   display: flex;
   align-items: center;
   span {
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 500;
     margin-right: 5px;
     color: var(--white);
-    font-weight: bold;
   }
   svg {
     width: 20px;
@@ -72,7 +75,7 @@ export const InfoCard = styled.div`
     color: var(--white);
     &:first-child {
       opacity: 0.8;
-      font-size: 14px;
+      font-size: 13px;
     }
     &:last-child {
       font-weight: 500;

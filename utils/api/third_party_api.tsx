@@ -1,10 +1,7 @@
+import { apiCall } from "./_apicall";
+
 const PARA_API_ENDPOINT = "https://api-v2-mainnet.paras.id";
 const DEGEN_WHALE_API_ENDPOINT = "https://api.degenwhale.club";
-
-const apiCall = async (url: string) => {
-    const response = await fetch(url);
-    return await response.json();
-}
 
 export const getFeaturedCollections = async () => {
     const url = `${PARA_API_ENDPOINT}/featured-collections`;

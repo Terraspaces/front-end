@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import ReactModal from 'react-modal'
-import { CardDetailFirst, CardDetailSecond, CardHeader, CardSubHeader } from "./FarmContent";
+import { CardDetailFirst, CardDetailSecond, CardHeader, CardSubHeader, ButtonContent, CardDetailThird } from "./FarmContent";
 import StakeModal from "./FarmContent/StakeModal/StakeModal";
-import { useFetchClaimAmountByOwnerId } from "../../state/hooks";
 import UnStakeModal from './FarmContent/UnStakeModal/UnStakeModal'
 
 interface NavFarmsContentProps {
@@ -23,7 +22,6 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
 }) => {
     const [isStakeModal, setIsStakeModal] = useState<boolean>(false);
     const [isUnStakeModal, setIsUnStakeModal] = useState<boolean>(false);
-    const [isClaimBtnStatus, setIsClaimBtnStatus] = useState<boolean>(false);
     const totalSupply = 777;
 
     ReactModal.defaultStyles.overlay!.backgroundColor = 'rgba(255, 100, 255, 0.05)';
@@ -57,12 +55,6 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
         setIsUnStakeModal(true);
         document.getElementById('__next')!.style.filter = 'blur(20px)'
     }
-    const claimAmount = useFetchClaimAmountByOwnerId('millicare.near', 'terraspaces.near')
-    useEffect(() => {
-        if (claimAmount as any === '0' || claimAmount as any === NaN) {
-            setIsClaimBtnStatus(true)
-        }
-    }, [claimAmount])
     return (
         <div className="tab-pane fade" id="pills-farms" role="tabpanel" aria-labelledby="pills-farms-tab">
             <div className='row'>
@@ -74,29 +66,13 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 <CardSubHeader farmData={farmData} />
                                 <CardDetailFirst farmData={farmData} />
                                 <CardDetailSecond farmData={farmData} />
-                                <div className='d-flex justify-content-between mt-20'>
-                                    <h6>Total Supply</h6>
-                                    <h6>Staking Cap</h6>
-                                </div>
-                                <div className='d-flex justify-content-between mt-1'>
-                                    <h6 className='t-20'>{totalSupply}</h6>
-                                    <h6 className='t-20'>{totalSupply}</h6>
-                                </div>
-                                <div className='d-flex mt-30'>
-                                    <div className='col-6 pr-7'>
-                                        <button className="cmn-btn-1 f-18 radius-12 mt-10 col-6 w-100" onClick={() => openStakeModal()}>
-                                            <span>Stake</span>
-                                        </button>
-                                    </div>
-                                    <div className='col-6 pl-7'>
-                                        <button className="cmn-btn-outline f-18 radius-12 mt-10 col-6 w-100" onClick={() => openUnStakeModal()}>
-                                            <span>Unstake</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <button className="cmn-btn-1 f-18 radius-12 mt-15 col-6 w-100" disabled={isClaimBtnStatus} onClick={() => onClaimReward(farmData)}>
-                                    <span>Claim Rewards</span>
-                                </button>
+                                <CardDetailThird totalSupply={totalSupply} />
+                                <ButtonContent
+                                    farmData={farmData}
+                                    openStakeModal={openStakeModal}
+                                    openUnStakeModal={openUnStakeModal}
+                                    onClaimReward={onClaimReward}
+                                />
                             </div>
                         </div>
                         <ReactModal isOpen={isStakeModal} onRequestClose={() => closeModal()} style={customStyles}>

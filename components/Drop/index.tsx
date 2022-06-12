@@ -46,7 +46,8 @@ const Drop: NextPage = () => {
         const clone = [...drops];
         const drop_index = clone.findIndex((x: any) => x.name === name);
         if (drop_index > -1) {
-            clone[drop_index].likes.pop();
+            const likes = clone[drop_index].likes.filter((account_id: string) => account_id !== wallet?.account().accountId)
+            clone[drop_index].likes = [...likes];
             setDrops(clone);
         }
     }

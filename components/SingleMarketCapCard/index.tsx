@@ -17,7 +17,7 @@ interface SingleMarketCapCardProps {
 
 export const SingleMarketCapCard = (props: SingleMarketCapCardProps) => {
   const { card } = props;
-  const { name, photo, est_market_cap, social_media } = card;
+  const { name, photo, est_market_cap, social_media, collection_id } = card;
   const { discord, twitter, website } = social_media;
   return (
     <Container>
@@ -34,15 +34,24 @@ export const SingleMarketCapCard = (props: SingleMarketCapCardProps) => {
               <p className="price">${est_market_cap.toFixed(0)}</p>
             </InfoWrapper>
             <SocialList>
-              <a href={discord ? `https://discord.gg/${discord}` : "#"} target='_blank' rel="noreferrer">
+              {/* {discord && (<a href={`https://discord.gg/${discord}`} target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
-              </a>
-              <a href={twitter ? `https://twitter.com/${twitter}` : "#"} target='_blank' rel="noreferrer">
-                <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
-              </a>
-              <a href={website || "#"} target='_blank' rel="noreferrer">
-                <LinkIcon />
-              </a>
+              </a>)}
+              {twitter && (
+                <a href={`https://twitter.com/${twitter}`} target='_blank' rel="noreferrer">
+                  <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
+                </a>
+              )}
+              {website && (
+                <a href={website.startsWith('http') ? website : `https://${website}`} target='_blank' rel="noreferrer">
+                  <LinkIcon />
+                </a>
+              )} */}
+              <button className='primary-btn'>
+                <a href={`https://paras.id/collection/${collection_id}`} target="_blank" rel='noreferrer' style={{ color: "white" }}>
+                  <span>PARAS</span>
+                </a>
+              </button>
             </SocialList>
           </Content>
         </FooterWrapper>

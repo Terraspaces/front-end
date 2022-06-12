@@ -29,7 +29,6 @@ export const FooterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
 `
 
 export const TitleWrapper = styled.div`

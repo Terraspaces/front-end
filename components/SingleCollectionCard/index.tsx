@@ -16,9 +16,13 @@ export const SingleCollectionCard = (props: SingleCollectionCardProps) => {
   const { card } = props;
   const { discord, twitter, website } = card?.social_media;
   const [title, setTitle] = useState('')
+  const [isSmallText, setIsSmallText] = useState<boolean>(false)
   useEffect(() => {
     if (card?.name.length > 32) {
       setTitle(card?.name.substring(0, 32) + '...')
+    } else if (card?.name.length < 24) {
+      setTitle(card?.name)
+      setIsSmallText(true)
     } else {
       setTitle(card?.name)
     }
@@ -48,7 +52,7 @@ export const SingleCollectionCard = (props: SingleCollectionCardProps) => {
             )}
           </SocialList> */}
           <SocialList>
-            <button className='primary-btn'>
+            <button className={isSmallText ? 'primary-btn mt-20' : 'primary-btn'}>
               <a href={`https://paras.id/collection/${card?.collection_id}`} target="_blank" rel='noreferrer' style={{ color: "white" }}>
                 <span>View on PARAS</span>
               </a>

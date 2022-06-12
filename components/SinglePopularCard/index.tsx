@@ -38,15 +38,19 @@ export const SinglePopularCard = (props: SinglePopularCardProps) => {
               <VerifiedIcon />
             </InfoItem>
             <SocialList>
-              <a href={discord ? `https://discord.gg/${discord}` : "#"} target='_blank' rel="noreferrer">
+              {discord && (<a href={`https://discord.gg/${discord}`} target='_blank' rel="noreferrer">
                 <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
-              </a>
-              <a href={twitter ? `https://twitter.com/${twitter}` : "#"} target='_blank' rel="noreferrer">
-                <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
-              </a>
-              <a href={website || "#"} target='_blank' rel="noreferrer">
-                <LinkIcon />
-              </a>
+              </a>)}
+              {twitter && (
+                <a href={`https://twitter.com/${twitter}`} target='_blank' rel="noreferrer">
+                  <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
+                </a>
+              )}
+              {website && (
+                <a href={website.startsWith('http') ? website : `https://${website}`} target='_blank' rel="noreferrer">
+                  <LinkIcon />
+                </a>
+              )}
             </SocialList>
           </InfoWrapper>
         </DetailWrapper>

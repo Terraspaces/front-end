@@ -13,8 +13,8 @@ export const getFeaturedCollections = async () => {
     return [];
 }
 
-export const getNewCollections = async () => {
-    const url = `${PARA_API_ENDPOINT}/publications`;
+export const getNewCollections = async (limit: number = 30) => {
+    const url = `${PARA_API_ENDPOINT}/publications?__limit=${limit}`;
     const { data, status } = await apiCall(url);
     if (status) {
         const { results } = data;

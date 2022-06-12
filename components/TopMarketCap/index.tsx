@@ -44,11 +44,12 @@ export const TopMarketCap = () => {
     const near_usd_value = await getNearPrice();
     const collections = await getHistoricalCollections();
     const derivatives = collections.sort((a: any, b: any) => b.est_market_cap - a.est_market_cap).slice(0, 10).map((data: any) => {
-      const { collection_info, est_market_cap } = data;
+      const { collection_info, est_market_cap, collection_id } = data;
       const { collection_name, media, discord, twitter, website } = collection_info;
       return {
         name: collection_name,
         photo: media,
+        collection_id,
         social_media: { discord, twitter, website },
         est_market_cap: est_market_cap * near_usd_value
       }

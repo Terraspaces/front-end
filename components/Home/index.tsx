@@ -119,7 +119,7 @@ export const Home = () => {
             className="partner-container"
             showDots={true}
             ssr={true}
-            autoPlay={true}
+            shouldResetAutoplay={false}
           >
             {heroData.map((item, i) => (
               <HomeHero key={i} data={item} />

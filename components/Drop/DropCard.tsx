@@ -61,9 +61,9 @@ const DropCard: NextPage<DropCardProps> = ({
                         )}
                     </div>
                     <div className='icon-set'>
-                        <Icon icon="akar-icons:discord-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(discord, "_blank")} />
-                        <Icon icon="akar-icons:twitter-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(twitter, "_blank")} />
-                        <Icon icon="akar-icons:link-chain" color="white" width="25" height="25" onClick={() => window.open(website, "_blank")} />
+                        {discord && (<Icon icon="akar-icons:discord-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(discord, "_blank")} />)}
+                        {twitter && (<Icon icon="akar-icons:twitter-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(twitter, "_blank")} />)}
+                        {website && (<Icon icon="akar-icons:link-chain" color="white" width="25" height="25" onClick={() => window.open(website, "_blank")} />)}
                     </div>
                     <p className='description'>{info.length > 320 ? info.substring(0, 320) + '...' : info}</p>
                 </div>

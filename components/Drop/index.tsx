@@ -28,7 +28,7 @@ const Drop: NextPage = () => {
             })
             setDrops(drops)
         })()
-    })
+    }, [])
 
     const handleFav = async (drop_name: string) => {
         await drop_like({ drop_name, account_id: wallet?.account().accountId || '' })

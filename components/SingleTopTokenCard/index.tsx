@@ -12,6 +12,7 @@ import {
 } from './styles';
 
 import { parseEther } from '../../utils/bignumber';
+import { X_PARAS_COLLECTIONS } from '../../contexts/wallet';
 
 interface SingleTopTokenCardProps {
   card?: any;
@@ -20,6 +21,8 @@ interface SingleTopTokenCardProps {
 export const SingleTopTokenCard = (props: SingleTopTokenCardProps) => {
   const { card } = props;
   const { token, volume } = card;
+
+  console.log(X_PARAS_COLLECTIONS.includes(token?.metadata?.contract_id) ? ("https://ipfs.fleek.co/ipfs/" + token?.metadata?.media) : (token?.metadata?.media).startsWith('https') ? (token?.metadata?.media) : (token?.metadata?.media))
   return (
     <Container>
       <InnerContainer>

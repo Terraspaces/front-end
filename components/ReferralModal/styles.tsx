@@ -34,6 +34,42 @@ export const TimelineContent = styled.div`
 
 export const DetailContent = styled.div`
     padding-left: 40px;
+    .dropdownList {
+        border-radius: 15px;
+        height: 54px;
+        margin-right: -.5rem;
+        margin-left: -.5rem;
+        width: calc(100% + 1rem);
+        padding: 15px;
+        color: white;
+        background-color: #63517e;
+        border: none;
+        padding-left: 20px;
+        input {
+            width: max-content;
+            font-size: 16px;
+            color: white;
+            ::placeholder {
+                font-size: 15px;
+            }
+        }
+        .react-dropdown-select-dropdown {
+            background-color: #63517e;
+            border-radius: 15px;
+            border: none;
+            max-height: 220px;
+            span {
+                border-bottom: none;
+                padding: 10px 16px;
+                :hover {
+                    background-color: #00000015;
+                }
+            }
+        }
+    }
+    .warning-text {
+        color: #c71d1d;
+    }
     @media screen and (max-width: 600px) {
         padding-left: 0px;
         .value-group {

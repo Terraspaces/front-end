@@ -1,9 +1,11 @@
 import type { NextPage } from 'next';
 import React, { useState, useContext, useEffect } from 'react';
+import Select from 'react-dropdown-select';
 import { Icon } from '@iconify/react';
 import { Container, BodyContainer, IconContent, TimelineContent, DetailContent, ModalInput, InputContent, Tooltip } from './styles';
 import { getReferralStats, submit_referral } from '../../utils/api/terraspace_api';
 import { WalletContext } from '../../contexts/wallet';
+import { getCollectionNameList } from '../../utils/api/terraspace_api'
 
 interface ReferralModalProps {
     totalCount: number;
@@ -17,6 +19,11 @@ interface ReferralStats {
     amount: number;
 }
 
+interface selectOptionProps {
+    value: string;
+    label: string;
+}
+
 const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) => {
 
     const { wallet } = useContext(WalletContext)
@@ -26,16 +33,30 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
     const [collectionName, setCollectionName] = useState<string>('')
     const [allowSubmit, setAllowSubmit] = useState<boolean>(false)
     const [isTooltipDisplayed, setIsTooltipDisplayed] = useState<boolean>(false);
+    const [selectOptions, setSelectOption] = useState<selectOptionProps[]>([]);
+    const [isValidWallet, setIsValidWallet] = useState<boolean>(true)
 
     const getReferralWallet = (event: any) => {
+        const result = event.target.value;
+        const index = result?.length - result?.lastIndexOf('.near');
+        if (result?.includes('.near') && index === 5) {
+            setIsValidWallet(true)
+        } else if (!result?.includes('.near') || index !== 5) {
+            setIsValidWallet(false)
+        }
         setReferralWallet(event.target.value)
     }
 
     const getCollectionName = (event: any) => {
-        setCollectionName(event.target.value)
+        setCollectionName(event.target.ariaLabel)
     }
 
     const SubmitReferral = async () => {
+        const index = referralWallet.length - referralWallet.lastIndexOf('.near')
+        if (!referralWallet.includes('.near') || index !== 5) {
+            setIsValidWallet(false)
+            return;
+        }
         if (allowSubmit && referralWallet !== '' && collectionName !== '') {
             await submit_referral({ referral_wallet_id: referralWallet, referred_wallet_id: wallet?.account().accountId || '', collection_name: collectionName })
         }
@@ -47,8 +68,15 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         setReferralStats(data)
     }
 
+    const getCollectionList = async () => {
+        const results = await getCollectionNameList()
+        const options = results.map((result: any) => ({ label: result.name, value: result.name }))
+        setSelectOption(options);
+    }
+
     useEffect(() => {
         updateReferralStats()
+        getCollectionList()
     }, [wallet])
 
     return (
@@ -140,24 +168,23 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                 <p className='text-18 bold mt-1'>${referralStats?.amount}</p>
                             </div>
                         </div>
-                        <div className="floor-c row mt-20">
-                            <div className='col-md-12 p-1'>
-                                <p className='text-16'>Your Referral Wallet</p>
-                                <InputContent>
-                                    <ModalInput placeholder='zerotime.near' onChange={() => getReferralWallet(event)} />
-                                    <Icon icon="bx:copy" width="22" height="22"
-                                        onClick={() => {
-                                            if (navigator.clipboard) {
-                                                navigator.clipboard.writeText(referralWallet);
-                                                setIsTooltipDisplayed(true);
-                                                setTimeout(() => {
-                                                    setIsTooltipDisplayed(false);
-                                                }, 1500);
-                                            }
-                                        }} />
-                                    <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
-                                </InputContent>
-                            </div>
+                        <div className="floor-c row mt-15 p-1">
+                            <p className='text-16 p-1'>Your Referral Wallet</p>
+                            <InputContent>
+                                <ModalInput placeholder='zerotime.near' onChange={() => getReferralWallet(event)} />
+                                <Icon icon="bx:copy" width="22" height="22"
+                                    onClick={() => {
+                                        if (navigator.clipboard) {
+                                            navigator.clipboard.writeText(referralWallet);
+                                            setIsTooltipDisplayed(true);
+                                            setTimeout(() => {
+                                                setIsTooltipDisplayed(false);
+                                            }, 1500);
+                                        }
+                                    }} />
+                                <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
+                            </InputContent>
+                            {!isValidWallet && <p className='warning-text'>Please enter correct wallet format.</p>}
                             {/* <div className='col-md-6 col-xs-12 p-1'>
                                 <p className='text-16'>Your Referral Link</p>
                                 <InputContent>
@@ -166,12 +193,20 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                 </InputContent>
                             </div> */}
                         </div>
-                        <div className='floor-c row mt-20 p-1'>
+                        <div className='floor-c row mt-15 p-1'>
                             <p className='text-16 p-1'>Collection Name*</p>
-                            <InputContent>
+                            {/* <InputContent>
                                 <ModalInput placeholder='Enter collection name' onChange={() => getCollectionName(event)} />
-                            </InputContent>
+                            </InputContent> */}
                         </div>
+                        <Select
+                            color='#63517e'
+                            values={[]}
+                            options={selectOptions}
+                            onChange={() => getCollectionName(event)}
+                            className="dropdownList"
+                            placeholder='Select Collection name'
+                        />
                         <label className="checkbox-container mt-20">I have shared the application form and referral wallet to invited collection.
                             <input type="checkbox" checked={allowSubmit} onClick={() => setAllowSubmit(!allowSubmit)} />
                             <span className="checkmark" />

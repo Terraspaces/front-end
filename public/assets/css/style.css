@@ -878,6 +878,10 @@ span.search-icon {
     border: 2px solid white;
 }
 
+.css-1iqetxb-DropdownHandleComponent {
+    margin: 0 0 5px 5px !important;
+}
+
 @media screen and (min-width: 768px) {
     .stake-wrapper .navs-title {
         display: flex;

@@ -41,3 +41,9 @@ export const getReferralStats = async (wallet_id: string) => {
     const results = await apiCall(url);
     return results;
 }
+
+export const getCollectionNameList = async () => {
+    const url = `${process.env.NEXT_PUBLIC_API}/drops/sorted`;
+    const results = await apiCall(url);
+    return results
+}

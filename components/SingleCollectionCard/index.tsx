@@ -14,10 +14,15 @@ interface SingleCollectionCardProps {
 
 export const SingleCollectionCard = (props: SingleCollectionCardProps) => {
   const { card } = props;
+  const { discord, twitter, website } = card?.social_media;
   const [title, setTitle] = useState('')
+  const [isSmallText, setIsSmallText] = useState<boolean>(false)
   useEffect(() => {
     if (card?.name.length > 32) {
       setTitle(card?.name.substring(0, 32) + '...')
+    } else if (card?.name.length < 24) {
+      setTitle(card?.name)
+      setIsSmallText(true)
     } else {
       setTitle(card?.name)
     }
@@ -31,16 +36,27 @@ export const SingleCollectionCard = (props: SingleCollectionCardProps) => {
             <h2>{title}</h2>
             <VerifiedIcon />
           </TitleWrapper>
-          <SocialList>
-            <a href='https://discord.com' target='_blank' rel="noreferrer">
+          {/* <SocialList>
+            {discord && (<a href={`https://discord.gg/${discord}`} target='_blank' rel="noreferrer">
               <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
-            </a>
-            <a href='https://twitter.com' target='_blank' rel="noreferrer">
-              <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
-            </a>
-            <a href='https://twitter.com' target='_blank' rel="noreferrer">
-              <LinkIcon />
-            </a>
+            </a>)}
+            {twitter && (
+              <a href={`https://twitter.com/${twitter}`} target='_blank' rel="noreferrer">
+                <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
+              </a>
+            )}
+            {website && (
+              <a href={website.startsWith('http') ? website : `https://${website}`} target='_blank' rel="noreferrer">
+                <LinkIcon />
+              </a>
+            )}
+          </SocialList> */}
+          <SocialList>
+            <button className={isSmallText ? 'primary-btn mt-20' : 'primary-btn'}>
+              <a href={`https://paras.id/collection/${card?.collection_id}`} target="_blank" rel='noreferrer' style={{ color: "white" }}>
+                <span>View on PARAS</span>
+              </a>
+            </button>
           </SocialList>
         </FooterWrapper>
       </InnerContainer>

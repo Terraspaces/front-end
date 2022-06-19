@@ -149,10 +149,10 @@ const WalletProvider = (props: any) => {
     }
   }, [keyStore])
 
-  const getNftMetadata = async (wallet: WalletConnectionProps) => {
+  const getNftMetadata = async (nft_contract_id: string) => {
     if (wallet && wallet.isSignedIn()) {
       const metadata = await wallet.account().viewFunction(
-        NFT_CONTRACT_ID,
+        nft_contract_id,
         "nft_metadata",
         {
         }

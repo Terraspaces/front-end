@@ -18,7 +18,7 @@ interface SingleExplorecardProps {
 
 export const SingleCommunityCard = (props: SingleExplorecardProps) => {
   const { card } = props;
-  const {name, image_link, mint_date, discord, twitter, website} = card;
+  const { name, image_link, mint_date, discord, twitter, website } = card;
   return (
     <Container>
       <InnerContainer>
@@ -30,17 +30,23 @@ export const SingleCommunityCard = (props: SingleExplorecardProps) => {
           </TitleWrapper>
           <div>
             <DateIconWrapper>
-              <DateBox className='date-box'>{mint_date ? moment(mint_date).format('MMM DD | HH:mm') : "Coming soon" }</DateBox>
+              <DateBox className='date-box'>{mint_date ? moment(mint_date).format('MMM DD | HH:mm') : "Coming soon"}</DateBox>
               <SocialList>
-                <a href={discord || '#'} target='_blank' rel="noreferrer">
-                  <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
-                </a>
-                <a href={twitter || '#'} target='_blank' rel="noreferrer">
-                  <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
-                </a>
-                <a href={website || '#'} target='_blank' rel="noreferrer">
-                  <LinkIcon />
-                </a>
+                {discord && (
+                  <a href={discord.startsWith('http') ? discord : `https://${discord}`} target='_blank' rel="noreferrer">
+                    <img draggable={false} src='/assets/img/icons/discord.png' alt='' />
+                  </a>
+                )}
+                {twitter && (
+                  <a href={twitter.startsWith('http') ? twitter : `https://${twitter}`} target='_blank' rel="noreferrer">
+                    <img draggable={false} src='/assets/img/icons/twitter.png' alt='' />
+                  </a>
+                )}
+                {website && (
+                  <a href={website.startsWith('http') ? website : `https://${website}`} target='_blank' rel="noreferrer">
+                    <LinkIcon />
+                  </a>
+                )}
               </SocialList>
             </DateIconWrapper>
             <FavoriteBox className='favorite-box'>

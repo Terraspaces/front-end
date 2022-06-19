@@ -168,17 +168,18 @@ export const CardContent = styled.div`
 export const Card = styled.div`
   width: 100%;
   border: 2px solid var(--primary-2);
-  border-radius: 24px;
+  border-radius: 40px;
   background: #ff90ff25;
   display: flex;
   flex-direction: row;
   position: relative;
   margin-top: 20px;
+  padding-right: 30px;
   img {
     width: 400px;
     height: 100%;
-    border-radius: 20px;
-    transform: scale(1.02);
+    border-radius: 32px;
+    transform: scale(1.015);
   }
   @media screen and (max-width: 1200px) {
     img {
@@ -186,12 +187,13 @@ export const Card = styled.div`
     }
   }
   @media screen and (max-width: 800px) {
+    padding-right: 0px;
     flex-direction: column;
     .img-content {
       height: 250px;
       overflow: hidden;
-      border-radius: 20px;
-      transform: scale(1.02);
+      border-radius: 32px;
+      transform: scale(1.015);
     }
     img {
       width: 100%;

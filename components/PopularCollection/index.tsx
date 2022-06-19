@@ -56,7 +56,7 @@ export const PopularCollection = () => {
       const { floor_price, total_card_sale, volume } = await getCollectionStats(collection_id);
       return {
         name,
-        photo: `https://ipfs.io/ipfs/${media}`,
+        photo: `https://paras-cdn.imgix.net/${media}`,
         social_media: socialMedia || {},
         floor_price: parseEther(floor_price),
         total_listed: total_card_sale,

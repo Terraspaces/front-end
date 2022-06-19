@@ -25,3 +25,19 @@ export const drop_unlike = async (params: { drop_name: string, account_id: strin
     }
     await apiCall(url, options);
 }
+
+export const submit_referral = async (params: { referral_wallet_id: string, referred_wallet_id: string, collection_name: string }) => {
+    const url = `${process.env.NEXT_PUBLIC_API}/referral`;
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+    }
+    await apiCall(url, options, true);
+}
+
+export const getReferralStats = async (wallet_id: string) => {
+    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats`;
+    const results = await apiCall(url);
+    return results;
+}

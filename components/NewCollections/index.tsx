@@ -12,7 +12,7 @@ import {
   CarouselButtonGroup,
   ArrowButton
 } from './styles';
-import { getNewCollections } from '../../utils/api/third_party_api';
+import { getNewCollections, getCollectionData } from '../../utils/api/third_party_api';
 
 export const NewCollections = () => {
   const carouselRef = useRef<any>();
@@ -42,11 +42,20 @@ export const NewCollections = () => {
   const [publications, setPublications] = useState<any[]>([]);
 
   const getPublications = async () => {
-    const collections = await getNewCollections();
-    setPublications(collections.map((collection: any) => ({
-      name: collection.title,
-      photo: `https://ipfs.io/ipfs/${collection.thumbnail.split("ipfs://")[1]}`
-    })))
+    let collections = await getNewCollections();
+    collections = collections.filter((collection: any) => collection.collection_ids.length > 0).slice(0, 10);
+    const derivates = await Promise.all(collections.map(async (collection: any) => {
+      const { title: name, collection_ids, thumbnail, contract_token_ids } = collection;
+      const collection_id = collection_ids[0];
+      const { socialMedia } = await getCollectionData(collection_id);
+      return {
+        name,
+        social_media: socialMedia || {},
+        collection_id,
+        photo: `https://paras-cdn.imgix.net/${thumbnail.split("ipfs://")[1]}`
+      }
+    }));
+    setPublications(derivates);
   }
 
   const goToNext = () => {

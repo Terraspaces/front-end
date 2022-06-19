@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useContext, useEffect, useState, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { Icon } from '@iconify/react';
 import { useFetchFarmSpec, useFetchStakingInfoByOwnerId, useFetchTokenRate } from "../../../state/hooks";
 import { WalletContext } from '../../../contexts/wallet'

@@ -72,7 +72,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
 
     useEffect(() => {
         fetchData()
-    })
+    }, [wallet])
 
     const handleSortOptionChange = (option: OptionProps): void => {
         setSelectedNFT(option.value)

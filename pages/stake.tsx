@@ -28,6 +28,7 @@ const Mint: NextPage = () => {
   const [totalStaked, setTotalStaked] = useState<number>(0);
   const [overviewStatus, setOverviewStatus] = useState<number>(0);
   const [isNetworkSelectModalOpen, setIsNetworkSelectModalOpen] = useState<boolean>(false);
+
   const farmContractList = useFetchFarmContractIds();
   const getTrendingCollectionData = async () => {
     const api = process.env.NEXT_PUBLIC_API;
@@ -208,16 +209,10 @@ const Mint: NextPage = () => {
 
   useEffect(() => {
     if (wallet && wallet.isSignedIn()) {
-      fetchData()
-    }
-  }, [nftContractList]);
-
-  useEffect(() => {
-    if (wallet && wallet.isSignedIn()) {
+      fetchData();
       fetchCollectionList();
     }
   }, [wallet]);
-
   ReactModal.defaultStyles.overlay!.backgroundColor = 'rgba(255, 100, 255, 0.05)';
 
   const customStyles = {

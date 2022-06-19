@@ -12,7 +12,7 @@ const CardSubHeader: NextPage<CardSubHeaderProps> = ({
 }) => {
     const { wallet } = useContext(WalletContext)
     const totalStaked = useFetchSupplyFarm(farmData)
-    const stakedPerUser = useFetchByOwnerId(wallet?.account().accountId as string, farmData)
+    const stakedPerUser = useFetchByOwnerId(wallet?.account().accountId as string, [farmData])
     return (
         <div className="floor-c d-flex justify-content-between mt-10">
             <button type="button" className="floor-btn">Total Staked: {totalStaked}</button>

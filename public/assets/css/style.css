@@ -531,7 +531,7 @@ button.star-btn:hover:before {
     font-family: Gojali-Regular;
     font-size: 16px;
     color: var(--neutral);
-    padding: 3px 12px;
+    padding: 3px 6px;
     background: #ffffff15;
     border-radius: 5px;
 }
@@ -871,6 +871,11 @@ span.search-icon {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.partner-image {
+    border-radius: 50%;
+    border: 2px solid white;
 }
 
 @media screen and (min-width: 768px) {

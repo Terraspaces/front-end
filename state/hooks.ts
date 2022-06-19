@@ -69,22 +69,25 @@ export const useFetchSupplyFarm = (nft_contract_id: string) => {
     return data
 }
 
-export const useFetchByOwnerId = (account_id: string, nft_contract_id: string) => {
+export const useFetchByOwnerId = (account_id: string, nft_contract_ids: string[]) => {
     const { wallet } = useContext(WalletContext)
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<number[]>([]);
     useEffect(() => {
         (async () => {
-            const data = await wallet?.account().viewFunction(
-                FARM_CONTRACT_ID,
-                "get_supply_by_owner_id",
-                {
-                    account_id,
-                    nft_contract_id
-                }
-            )
-            setData(data)
+            const _ownerId = await Promise.all(nft_contract_ids.map(async (contract_id) => {
+                const data = await wallet?.account().viewFunction(
+                    FARM_CONTRACT_ID,
+                    "get_supply_by_owner_id",
+                    {
+                        account_id,
+                        nft_contract_id: contract_id
+                    }
+                )
+                return data
+            }))
+            setData(_ownerId)
         })()
-    }, [wallet, account_id, nft_contract_id])
+    }, [wallet, account_id, nft_contract_ids])
     return data
 }
 

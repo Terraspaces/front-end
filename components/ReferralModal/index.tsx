@@ -1,16 +1,64 @@
-import React from 'react';
+import type { NextPage } from 'next';
+import React, { useState, useContext, useEffect } from 'react';
 import { Icon } from '@iconify/react';
-import { Container, BodyContainer, IconContent, TimelineContent, DetailContent, ModalInput, InputContent } from './styles';
+import { Container, BodyContainer, IconContent, TimelineContent, DetailContent, ModalInput, InputContent, Tooltip } from './styles';
+import { getReferralStats, submit_referral } from '../../utils/api/terraspace_api';
+import { WalletContext } from '../../contexts/wallet';
 
-const ReferralModal = () => {
+interface ReferralModalProps {
+    totalCount: number;
+    variables: number[];
+}
+
+interface ReferralStats {
+    submitted: number;
+    pending: number;
+    approved: number;
+    amount: number;
+}
+
+const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) => {
+
+    const { wallet } = useContext(WalletContext)
+    const [referralStats, setReferralStats] = useState<ReferralStats>()
+
+    const [referralWallet, setReferralWallet] = useState<string>('')
+    const [collectionName, setCollectionName] = useState<string>('')
+    const [allowSubmit, setAllowSubmit] = useState<boolean>(false)
+    const [isTooltipDisplayed, setIsTooltipDisplayed] = useState<boolean>(false);
+
+    const getReferralWallet = (event: any) => {
+        setReferralWallet(event.target.value)
+    }
+
+    const getCollectionName = (event: any) => {
+        setCollectionName(event.target.value)
+    }
+
+    const SubmitReferral = async () => {
+        if (allowSubmit && referralWallet !== '' && collectionName !== '') {
+            await submit_referral({ referral_wallet_id: referralWallet, referred_wallet_id: wallet?.account().accountId || '', collection_name: collectionName })
+        }
+        updateReferralStats()
+    }
+
+    const updateReferralStats = async () => {
+        const data = await getReferralStats(wallet?.account().accountId || '')
+        setReferralStats(data)
+    }
+
+    useEffect(() => {
+        updateReferralStats()
+    }, [wallet])
+
     return (
         <Container>
             <div className='d-flex align-items-center justify-content-between'>
                 <h1 className='t-36'>Make New Referral</h1>
-                <button className="cmn-btn-1 f-18 radius-12 p-15">
+                {/* <button className="cmn-btn-1 f-18 radius-12 p-15">
                     <span className='mr-5'>Wallet</span>
                     <img src="assets/img/icons/Wallet1.svg" alt="wallet" />
-                </button>
+                </button> */}
             </div>
             <BodyContainer className='row'>
                 <div className='col-md-4 col-xs-12'>
@@ -65,63 +113,73 @@ const ReferralModal = () => {
                     <DetailContent>
                         <div className="floor-c row value-group">
                             <div className='col-md-4 col-xs-12 p-1'>
-                                <button type="button" className="modal-btn w-100">Referral Commission: 5%</button>
+                                <button type="button" className="modal-btn w-100">Referral Commission: {variables[0]}%</button>
                             </div>
                             <div className='col-md-4 col-xs-12 p-1'>
-                                <button type="button" className="modal-btn w-100">Your NFTs Staked: 10</button>
+                                <button type="button" className="modal-btn w-100">Your NFTs Staked: {totalCount}</button>
                             </div>
                             <div className='col-md-4 col-xs-12 p-1'>
-                                <button type="button" className="modal-btn w-100">Staking Multiplier: 0.5</button>
+                                <button type="button" className="modal-btn w-100">Staking Multiplier: {variables[1]}</button>
                             </div>
                         </div>
                         <div className="row mt-30">
                             <div className='col-md-3 col-xs-6 p-1'>
                                 <p className='text-14 font-light'>Submitted Referrals</p>
-                                <p className='text-18 bold mt-1'>5</p>
+                                <p className='text-18 bold mt-1'>{referralStats?.submitted}</p>
                             </div>
                             <div className='col-md-3 col-xs-6 p-1'>
                                 <p className='text-14 font-light'>Pending Referrals</p>
-                                <p className='text-18 bold mt-1'>3</p>
+                                <p className='text-18 bold mt-1'>{referralStats?.pending}</p>
                             </div>
                             <div className='col-md-3 col-xs-6 p-1'>
                                 <p className='text-14 font-light'>Approved Referrals</p>
-                                <p className='text-18 bold mt-1'>2</p>
+                                <p className='text-18 bold mt-1'>{referralStats?.approved}</p>
                             </div>
                             <div className='col-md-3 col-xs-6 p-1'>
                                 <p className='text-14 font-light'>Amount Earned</p>
-                                <p className='text-18 bold mt-1'>$500</p>
+                                <p className='text-18 bold mt-1'>${referralStats?.amount}</p>
                             </div>
                         </div>
                         <div className="floor-c row mt-20">
-                            <div className='col-md-6 col-xs-12 p-1'>
+                            <div className='col-md-12 p-1'>
                                 <p className='text-16'>Your Referral Wallet</p>
                                 <InputContent>
-                                    <ModalInput placeholder='zerotime.near' />
-                                    <Icon icon="bx:copy" color="#a194bb" width="22" height="22" />
+                                    <ModalInput placeholder='zerotime.near' onChange={() => getReferralWallet(event)} />
+                                    <Icon icon="bx:copy" width="22" height="22"
+                                        onClick={() => {
+                                            if (navigator.clipboard) {
+                                                navigator.clipboard.writeText(referralWallet);
+                                                setIsTooltipDisplayed(true);
+                                                setTimeout(() => {
+                                                    setIsTooltipDisplayed(false);
+                                                }, 1500);
+                                            }
+                                        }} />
+                                    <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
                                 </InputContent>
                             </div>
-                            <div className='col-md-6 col-xs-12 p-1'>
+                            {/* <div className='col-md-6 col-xs-12 p-1'>
                                 <p className='text-16'>Your Referral Link</p>
                                 <InputContent>
-                                    <ModalInput placeholder='zerotime.near' />
+                                    <ModalInput placeholder='https://terraspaces.io/apply' />
                                     <Icon icon="bx:copy" color="#a194bb" width="22" height="22" />
                                 </InputContent>
-                            </div>
+                            </div> */}
                         </div>
                         <div className='floor-c row mt-20 p-1'>
                             <p className='text-16 p-1'>Collection Name*</p>
                             <InputContent>
-                                <ModalInput placeholder='zerotime.near' />
+                                <ModalInput placeholder='Enter collection name' onChange={() => getCollectionName(event)} />
                             </InputContent>
                         </div>
                         <label className="checkbox-container mt-20">I have shared the application form and referral wallet to invited collection.
-                            <input type="checkbox" />
+                            <input type="checkbox" checked={allowSubmit} onClick={() => setAllowSubmit(!allowSubmit)} />
                             <span className="checkmark" />
                         </label>
-                        <button className="cmn-btn-1 f-18 radius-12 w-100 mt-50">
+                        <button className="cmn-btn-1 f-18 radius-12 w-100 mt-50" onClick={() => SubmitReferral()}>
                             <span>Submit Referral</span>
                         </button>
-                        <p className='text-14 p-1'>Note: You may only submit once every 24 hours.</p>
+                        <p className='text-14 p-1 italic'>Note: You may only submit once every 24 hours.</p>
                     </DetailContent>
                 </div>
             </BodyContainer >

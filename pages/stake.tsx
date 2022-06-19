@@ -13,6 +13,7 @@ import {
 } from '../components/StakePageContent'
 import {
   useFetchFarmContractIds,
+  useFetchByOwnerId
 } from '../state/hooks'
 
 const Mint: NextPage = () => {
@@ -238,7 +239,13 @@ const Mint: NextPage = () => {
     document.getElementById('__next')!.style.filter = 'none'
   }
 
-  function openModal() {
+  const [variables, setVariables] = useState<number[]>()
+
+  function openModal(type: string) {
+    setVariables([2.5, 0.5])
+    if (type === 'terra') {
+      setVariables([5, 0.5])
+    }
     setIsNetworkSelectModalOpen(true);
     document.getElementById('__next')!.style.filter = 'blur(20px)'
   }
@@ -246,6 +253,13 @@ const Mint: NextPage = () => {
   const setOverview = (key: number) => {
     setOverviewStatus(key)
   }
+
+  let totalCount = stakeList.size;
+
+  const nftStakedCount = useFetchByOwnerId(wallet?.account().accountId || '', farmContractList || [])
+  nftStakedCount.map((stakeCount: number) => {
+    totalCount += Number(stakeCount)
+  })
 
   return (
     <main id="app-root" className="stking-page pt-120 fix">
@@ -289,7 +303,10 @@ const Mint: NextPage = () => {
                       farmContractList={farmContractList}
                       nftList={nftList}
                     />
-                    <NavReferralsContent openModal={openModal} />
+                    <NavReferralsContent
+                      openModal={openModal}
+                      totalCountPerUser={totalCount}
+                    />
                   </div>
                 </div>
               </div>
@@ -303,7 +320,10 @@ const Mint: NextPage = () => {
           </div>
       }
       <ReactModal isOpen={isNetworkSelectModalOpen} onRequestClose={() => closeModal()} style={customStyles}>
-        <ReferralModal />
+        <ReferralModal
+          totalCount={totalCount}
+          variables={variables || []}
+        />
       </ReactModal>
     </main >
   )

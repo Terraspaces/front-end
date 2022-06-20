@@ -58,7 +58,7 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
             return;
         }
         if (allowSubmit && referralWallet !== '' && collectionName !== '') {
-            await submit_referral({ referral_wallet_id: referralWallet, referred_wallet_id: wallet?.account().accountId || '', collection_name: collectionName })
+            await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_wallet_id: referralWallet, collection_name: collectionName })
         }
         updateReferralStats()
     }

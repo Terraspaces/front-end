@@ -48,7 +48,7 @@ const Header: NextPage = () => {
                             <ul className="navbar-nav">
                                 <li className="nav-item">
                                     <Link href="/">
-                                        <a className={`nav-link ${router.pathname == "/" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Overview</a>
+                                        <a className={`nav-link ${router.pathname == "/" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Overview</a>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
@@ -58,7 +58,7 @@ const Header: NextPage = () => {
                                 </li>
                                 <li className="nav-item">
                                     <Link href="/dashboard">
-                                        <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Dashboard</a>
+                                        <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Dashboard</a>
                                     </Link>
                                 </li>
                                 <li className="nav-item">

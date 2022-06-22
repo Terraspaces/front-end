@@ -17,6 +17,7 @@ interface UnStakeModalProps {
     farmData: any;
     closeModal: any;
     onFarmingUnstake: any;
+    nftList: any;
 }
 
 export interface OptionProps {
@@ -27,7 +28,8 @@ export interface OptionProps {
 const UnStakeModal: NextPage<UnStakeModalProps> = ({
     farmData,
     closeModal,
-    onFarmingUnstake
+    onFarmingUnstake,
+    nftList
 }) => {
     const { wallet } = useContext(WalletContext)
     const [selectOptions, setSelectOptions] = useState([])
@@ -58,14 +60,20 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
                 }
                 list.push(stakingInfo.token_ids[i]);
                 newData.set(nft_contract_id, list);
-                selectOption.push({ label: nft_info.metadata.title, value: stakingInfo.token_ids[i] })
+                for (let i = 0; i < nftList.get(farmData).length; i++) {
+                    if (!(stakingInfo.token_ids || []).includes((newData.get(farmData) as any)[i])) {
+                        selectOption.push({ label: nft_info.metadata.title, value: nftList.get(farmData)[i]?.token_id })
+                    }
+                }
                 setSelectOptions(selectOption)
             }
         }
     }
 
     useEffect(() => {
-        fetchData()
+        if (wallet) {
+            fetchData()
+        }
     }, [wallet])
 
     const handleSortOptionChange = (option: OptionProps): void => {

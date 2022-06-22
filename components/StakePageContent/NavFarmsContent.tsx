@@ -87,6 +87,7 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                             <UnStakeModal
                                 farmData={farmData}
                                 closeModal={closeModal}
+                                nftList={nftList}
                                 onFarmingUnstake={onFarmingUnstake}
                             />
                         </ReactModal>

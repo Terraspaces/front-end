@@ -33,7 +33,8 @@ export const submit_referral = async (params: { referral_wallet_id: string, refe
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(params)
     }
-    await apiCall(url, options, true);
+    const result = await apiCall(url, options);
+    return result
 }
 
 export const getReferralStats = async (wallet_id: string) => {

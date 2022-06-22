@@ -213,6 +213,7 @@ const Mint: NextPage = () => {
       fetchCollectionList();
     }
   }, [wallet]);
+
   ReactModal.defaultStyles.overlay!.backgroundColor = 'rgba(255, 100, 255, 0.05)';
 
   const customStyles = {

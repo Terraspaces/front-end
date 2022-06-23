@@ -1,4 +1,3 @@
-import { NativeSelect, MenuItem } from "@mui/material";
 import type { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import { FARM_CONTRACT_ID, WalletContext } from "../../../../contexts/wallet";
@@ -21,8 +20,8 @@ interface StakeModalProps {
 }
 
 export interface OptionProps {
-    label: string
-    value: any
+    label: string;
+    value: any;
 }
 
 const StakeModal: NextPage<StakeModalProps> = ({
@@ -36,7 +35,8 @@ const StakeModal: NextPage<StakeModalProps> = ({
     const [selectedNFT, setSelectedNFT] = useState('')
     const stakingInfo = useFetchStakingInfoByOwnerId(wallet?.account().accountId as string, farmData)
     const newData = new Map<string, string[]>();
-    const selectOption: any = []
+    const selectOption: any = [];
+
     const fetchData = async () => {
         for (let i = 0; i < nftList.get(farmData)?.length; i++) {
             const nft_info = await wallet?.account().viewFunction(
@@ -71,8 +71,10 @@ const StakeModal: NextPage<StakeModalProps> = ({
     }
 
     useEffect(() => {
-        fetchData()
-    })
+        if (stakingInfo.token_ids && wallet) {
+            fetchData()
+        }
+    }, [wallet, stakingInfo])
 
     const handleSortOptionChange = (option: OptionProps): void => {
         setSelectedNFT(option.value)

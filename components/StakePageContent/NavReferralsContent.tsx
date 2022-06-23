@@ -1,7 +1,4 @@
 import type { NextPage } from "next";
-import { useEffect, useContext, useState } from "react";
-import { useFetchByOwnerId } from '../../state/hooks'
-import { WalletContext } from '../../contexts/wallet'
 
 interface NavReferralsContentProps {
     openModal: any;
@@ -41,18 +38,18 @@ const NavReferralsContent: NextPage<NavReferralsContentProps> = ({ openModal, to
                         </div>
                         <div className='d-flex justify-content-between mt-40'>
                             <h6 className='t-14 w-50'>New Staking Partner Fee: $2000 x 5%</h6>
-                            <h6 className='t-14'>Your NFTs Staked: 10 x 0.5</h6>
+                            <h6 className='t-14'>Your NFTs Staked: {totalCountPerUser} x 0.5</h6>
                         </div>
                         <div className='d-flex justify-content-between mt-1'>
                             <h6 className='t-20'>$100</h6>
-                            <h6 className='t-20'>5</h6>
+                            <h6 className='t-20'>{totalCountPerUser * .5}</h6>
                         </div>
                         <div className='d-flex justify-content-between mt-20'>
-                            <h6 className='t-14'>Referral Payout: $100 x 5</h6>
+                            <h6 className='t-14'>Referral Payout: $100 x {totalCountPerUser * .5}</h6>
                             <h6 className='t-14'>Staking Multiplier Cap</h6>
                         </div>
                         <div className='d-flex justify-content-between mt-1'>
-                            <h6 className='t-20'>$500</h6>
+                            <h6 className='t-20'>${totalCountPerUser * .5 * 100}</h6>
                             <h6 className='t-20'>40 NFTs</h6>
                         </div>
                         <button className="cmn-btn-1 f-18 radius-12 mt-10 col-6 w-100 mt-30" onClick={() => openModal('terra')}>
@@ -82,18 +79,18 @@ const NavReferralsContent: NextPage<NavReferralsContentProps> = ({ openModal, to
                         </div>
                         <div className='d-flex justify-content-between mt-40'>
                             <h6 className='t-14 w-50'>New Staking Partner Fee: $2000 x 2.5%</h6>
-                            <h6 className='t-14'>Your NFTs Staked: 10 x 0.5</h6>
+                            <h6 className='t-14'>Your NFTs Staked: {totalCountPerUser} x 0.5</h6>
                         </div>
                         <div className='d-flex justify-content-between mt-1'>
                             <h6 className='t-20'>$50</h6>
-                            <h6 className='t-20'>5</h6>
+                            <h6 className='t-20'>{totalCountPerUser * 0.5}</h6>
                         </div>
                         <div className='d-flex justify-content-between mt-20'>
-                            <h6 className='t-14'>Referral Payout: $50 x 5</h6>
+                            <h6 className='t-14'>Referral Payout: $50 x {totalCountPerUser * 0.5}</h6>
                             <h6 className='t-14'>Staking Multiplier Cap</h6>
                         </div>
                         <div className='d-flex justify-content-between mt-1'>
-                            <h6 className='t-20'>$250</h6>
+                            <h6 className='t-20'>${totalCountPerUser * 0.5 * 50}</h6>
                             <h6 className='t-20'>40 NFTs</h6>
                         </div>
                         <button className="cmn-btn-1 f-18 radius-12 mt-10 col-6 w-100 mt-30" onClick={() => openModal('partners')}>

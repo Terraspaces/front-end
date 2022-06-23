@@ -178,8 +178,7 @@ export const Card = styled.div`
   img {
     width: 400px;
     height: 100%;
-    border-radius: 32px;
-    transform: scale(1.015);
+    border-radius: 40px;
   }
   @media screen and (max-width: 1200px) {
     img {
@@ -192,8 +191,7 @@ export const Card = styled.div`
     .img-content {
       height: 250px;
       overflow: hidden;
-      border-radius: 32px;
-      transform: scale(1.015);
+      border-radius: 40px;
     }
     img {
       width: 100%;

@@ -87,7 +87,7 @@ export const useFetchByOwnerId = (account_id: string, nft_contract_ids: string[]
             }))
             setData(_ownerId)
         })()
-    }, [wallet, account_id, nft_contract_ids])
+    }, [wallet, account_id, JSON.stringify(nft_contract_ids)])
     return data
 }
 

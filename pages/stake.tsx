@@ -121,7 +121,6 @@ const Mint: NextPage = () => {
 
   const fetchCollectionList = async () => {
     const nftContractLists = await getMainCollectionList();
-    console.log(nftContractLists)
     let list = new Map<string, NftContractMetadata>();
     for (let i = 0; i < nftContractLists.length; i++) {
       const data = await getCollectionMetadata(nftContractLists[i]);
@@ -258,8 +257,6 @@ const Mint: NextPage = () => {
   nftStakedCount.map((stakeCount: number) => {
     totalCount += Number(stakeCount)
   })
-
-  console.log(stakeList, nftList)
 
   return (
     <main id="app-root" className="stking-page pt-120 fix">

@@ -120,18 +120,20 @@ const Mint: NextPage = () => {
   }
 
   const fetchCollectionList = async () => {
-    const nftContractList = await getMainCollectionList();
+    const nftContractLists = await getMainCollectionList();
+    console.log(nftContractLists)
     let list = new Map<string, NftContractMetadata>();
-    for (let i = 0; i < nftContractList.length; i++) {
-      const data = await getCollectionMetadata(nftContractList[i]);
-      list.set(nftContractList[i], data);
+    for (let i = 0; i < nftContractLists.length; i++) {
+      const data = await getCollectionMetadata(nftContractLists[i]);
+      list.set(nftContractLists[i], data);
     }
     getTrendingCollectionData();
     setNftMetadata(list);
-    setNftContractList(nftContractList);
+    setNftContractList(nftContractLists);
   }
 
   const fetchData = async () => {
+    const nftContractLists = await getMainCollectionList();
     const totalCount = await wallet?.account().viewFunction(STAKE_CONTRACT_ID,
       "get_supply_by_contract_id",
       {
@@ -140,20 +142,20 @@ const Mint: NextPage = () => {
     setTotalStaked(totalCount);
 
     const NFTData = new Map<string, NftData[]>();
-    for (let i = 0; i < nftContractList.length; i++) {
-      if (X_PARAS_COLLECTIONS.includes(nftContractList[i])) {
-        const result = await fetch("https://api-v2-mainnet.paras.id/token?owner_id=" + wallet?.getAccountId() + "&collection_id=" + nftContractList[i] + "&contract_id=x.paras.near&__limit=30");
+    for (let i = 0; i < nftContractLists.length; i++) {
+      if (X_PARAS_COLLECTIONS.includes(nftContractLists[i])) {
+        const result = await fetch("https://api-v2-mainnet.paras.id/token?owner_id=" + wallet?.getAccountId() + "&collection_id=" + nftContractLists[i] + "&contract_id=x.paras.near&__limit=30");
         const nftList = (await result.json())["data"]["results"];
-        NFTData.set(nftContractList[i], nftList);
+        NFTData.set(nftContractLists[i], nftList);
       } else {
-        const nftList = await wallet?.account().viewFunction(nftContractList[i],
+        const nftList = await wallet?.account().viewFunction(nftContractLists[i],
           "nft_tokens_for_owner",
           {
             account_id: wallet.getAccountId(),
             from_index: "0",
             limit: 100,
           });
-        NFTData.set(nftContractList[i], nftList);
+        NFTData.set(nftContractLists[i], nftList);
       }
     }
     let stakeData = await wallet?.account().viewFunction(STAKE_CONTRACT_ID,
@@ -191,15 +193,15 @@ const Mint: NextPage = () => {
     }
     const totalCountData = new Map<string, number>();
     const stakedCountData = new Map<string, number>();
-    for (let i = 0; i < nftContractList.length; i++) {
-      let total_count = NFTData.get(nftContractList[i]) != undefined ? NFTData.get(nftContractList[i])?.length : 0
+    for (let i = 0; i < nftContractLists.length; i++) {
+      let total_count = NFTData.get(nftContractLists[i]) != undefined ? NFTData.get(nftContractLists[i])?.length : 0
       if (total_count == undefined)
         total_count = 0;
-      let stake_count = newData.get(nftContractList[i]) != undefined ? newData.get(nftContractList[i])?.length : 0
+      let stake_count = newData.get(nftContractLists[i]) != undefined ? newData.get(nftContractLists[i])?.length : 0
       if (stake_count == undefined)
         stake_count = 0;
-      totalCountData.set(nftContractList[i], total_count - stake_count)
-      stakedCountData.set(nftContractList[i], stake_count);
+      totalCountData.set(nftContractLists[i], total_count - stake_count)
+      stakedCountData.set(nftContractLists[i], stake_count);
     }
     setNftList(NFTData);
     setStakeList(newData);
@@ -209,8 +211,8 @@ const Mint: NextPage = () => {
 
   useEffect(() => {
     if (wallet && wallet.isSignedIn()) {
-      fetchData();
       fetchCollectionList();
+      fetchData();
     }
   }, [wallet]);
 
@@ -256,6 +258,8 @@ const Mint: NextPage = () => {
   nftStakedCount.map((stakeCount: number) => {
     totalCount += Number(stakeCount)
   })
+
+  console.log(stakeList, nftList)
 
   return (
     <main id="app-root" className="stking-page pt-120 fix">

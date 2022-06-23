@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ReactModal from 'react-modal'
+import { WalletContext } from "../../contexts/wallet";
 import { CardDetailFirst, CardDetailSecond, CardHeader, CardSubHeader, ButtonContent, CardDetailThird } from "./FarmContent";
 import StakeModal from "./FarmContent/StakeModal/StakeModal";
 import UnStakeModal from './FarmContent/UnStakeModal/UnStakeModal'
@@ -20,6 +21,7 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
     farmContractList,
     nftList
 }) => {
+    const { wallet } = useContext(WalletContext)
     const [isStakeModal, setIsStakeModal] = useState<boolean>(false);
     const [isUnStakeModal, setIsUnStakeModal] = useState<boolean>(false);
     const totalSupply = 777;
@@ -55,6 +57,7 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
         setIsUnStakeModal(true);
         document.getElementById('__next')!.style.filter = 'blur(20px)'
     }
+
     return (
         <div className="tab-pane fade" id="pills-farms" role="tabpanel" aria-labelledby="pills-farms-tab">
             <div className='row'>

@@ -61,7 +61,7 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
                 list.push(stakingInfo.token_ids[i]);
                 newData.set(nft_contract_id, list);
                 for (let i = 0; i < nftList.get(farmData).length; i++) {
-                    if (!(stakingInfo.token_ids || []).includes((newData.get(farmData) as any)[i])) {
+                    if ((stakingInfo.token_ids || []).includes((newData.get(farmData) as any)[i])) {
                         selectOption.push({ label: nft_info.metadata.title, value: nftList.get(farmData)[i]?.token_id })
                     }
                 }
@@ -71,10 +71,10 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
     }
 
     useEffect(() => {
-        if (wallet) {
+        if (stakingInfo.token_ids && wallet) {
             fetchData()
         }
-    }, [wallet])
+    }, [wallet, stakingInfo])
 
     const handleSortOptionChange = (option: OptionProps): void => {
         setSelectedNFT(option.value)

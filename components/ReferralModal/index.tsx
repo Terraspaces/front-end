@@ -90,6 +90,16 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         getCollectionList()
     }, [wallet])
 
+    const exploreList = [
+        { name: 'Antisocial Ape Club', photo: '/assets/partners/asac.jpg', description: 'A collection of 3333 pixel art ape NFTs stored an the NEAR blockchain', para_link: "https://paras.id/collection/asac.near" },
+        { name: 'Boo Monsters', photo: '/assets/partners/boomonsters.png', description: 'A limited collection of Boo Monsters roaming the blockchain', para_link: "https://paras.id/collection/boo-monster-by-omarbibznear" },
+        { name: 'Mara Gen1', photo: '/assets/partners/mara.png', description: '1000 unique Mara holding one of these gives access to loads of benefits from MARADAO.', para_link: "https://paras.id/collection/mara-smartcontract.near" },
+        { name: 'Nearnauts', photo: '/assets/partners/nearnaut.png', description: 'NEARNauts is a generative NFT project on the NEAR network consisting of 7777 randomly generated Nauts of varying rarity.', para_link: "https://paras.id/collection/nearnautnft.near" },
+        { name: 'Mr. Brown', photo: '/assets/partners/mrbrown.jpeg', description: 'Mr. Brown is a middle-aged insurance clerk with 4,200 imagined identities living inside his head. He gets lost in them every day, sometimes even forgetting which one is real. Even though the mental borders between identities are thin, no two identities are alike. Each Mr. Brown is unique and stored on the NEAR blockchain.', para_link: "https://paras.id/collection/mrbrownproject.near" },
+        { name: 'The Dons', photo: '/assets/partners/thedons.jpg', description: 'A collection of 3,500 Mafia Bosses coming to take over NEAR Protocol. Blood makes you related. Loyalty makes you family.', para_link: "https://paras.id/collection/nft.thedons.near" },
+        { name: 'Monarchs By Haven', photo: '/assets/partners/haven.gif', description: 'Monarchs is a collection of 333 NFTs rewriting history on the NEAR Protocol.', para_link: "https://paras.id/collection/mint.havendao.near" }
+    ]
+
     return (
         <>
             <Container>
@@ -98,10 +108,18 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                 </div>
                 <BodyContainer className='row'>
                     <div className='col-md-4 col-xs-12'>
-                        <div className="d-flex align-items-center">
-                            <img className='mr-10' src='assets/img/dashbaord/stakin-l.png' alt='terraspaces image' width={42} height={42} />
-                            <h5 className='mr-5 letter-space-1 t-20'>Terraspaces</h5>
-                            <img src="assets/img/icons/verified.svg" alt="verified" width={24} height={24} />
+                        <div className={variables[0] === 2.5 ? "" : "d-flex align-items-center"}>
+                            {variables[0] === 2.5 ? (
+                                exploreList.map((explore, index) => {
+                                    return <img className='-mr-15 partner-image' src={explore.photo} alt='terraspaces image' width={45} height={45} key={index} />
+                                })
+                            ) : (
+                                <img className='mr-10' src='assets/img/dashbaord/stakin-l.png' alt='terraspaces image' width={42} height={42} />
+                            )}
+                            <div className='d-flex align-items-center'>
+                                <h5 className='mr-5 letter-space-1 t-20'>{variables[0] === 2.5 ? 'Staking Partners' : 'Terraspaces'}</h5>
+                                <img src="assets/img/icons/verified.svg" alt="verified" width={24} height={24} />
+                            </div>
                         </div>
                         <h4 className='mt-20'>How it works</h4>
                         <div className='timeline'>

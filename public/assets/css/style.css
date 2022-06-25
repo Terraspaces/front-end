@@ -577,7 +577,17 @@ button.star-btn:hover:before {
     border: 1px solid white;
 }
 
-/* .dasboard-wrapper */
+.farm-header::first-letter {
+    text-transform: uppercase;
+}
+
+.text-grey {
+    color: lightgrey;
+}
+
+.trait-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 .dashboard-wrapper {
     margin-bottom: 225px;

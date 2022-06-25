@@ -529,13 +529,12 @@ button.star-btn:hover:before {
 
 .stake-wrapper .floor-btn {
     font-family: Gojali-Regular;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--neutral);
-    padding: 3px 6px;
+    padding: 3px;
     background: #ffffff15;
     border-radius: 5px;
     line-height: normal;
-    letter-spacing: 0.5px;
 }
 
 .stake-wrapper .t-card-img .stake-img {

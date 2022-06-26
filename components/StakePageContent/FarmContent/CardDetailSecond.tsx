@@ -33,7 +33,7 @@ const CardDetailSecond: NextPage<CardDetailSecondProps> = ({
                 </div>
             </div>
             <div className='d-flex justify-content-between mt-1'>
-                <h6 className='t-20'>{(reward).toFixed(2)} USN</h6>
+                <h6 className='t-20'>{(reward).toFixed(2)} $USN</h6>
                 <div className='d-flex align-items-center'>
                     <h6 className='mr-5'>Dashboard Access</h6>
                     <Icon icon="akar-icons:circle-check" color='white' width={20} height={20} />

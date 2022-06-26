@@ -15,7 +15,7 @@ const CardSubHeader: NextPage<CardSubHeaderProps> = ({
     const stakedPerUser = useFetchByOwnerId(wallet?.account().accountId as string, [farmData])
     return (
         <div className="floor-c d-flex justify-content-between mt-10">
-            <button type="button" className="floor-btn">Total Staked: {totalStaked}</button>
+            <button type="button" className="floor-btn">Total NFTs Staked: {totalStaked}</button>
             <button type="button" className="floor-btn">Your NFTs Staked: {stakedPerUser}</button>
         </div>
     )

@@ -16,7 +16,8 @@ const DropCard: NextPage<DropCardProps> = ({
     handleUnFav,
 }) => {
     const { wallet } = useContext(WalletContext)
-    const { name,
+    const {
+        name,
         image_link,
         discord,
         twitter,
@@ -27,11 +28,16 @@ const DropCard: NextPage<DropCardProps> = ({
         price,
         mint_date,
         mint_time,
-        supply } = dropData;
+        supply
+    } = dropData;
+    console.log(image_link)
     return (
         <Card>
             <div className='img-content'>
-                <img src={image_link} alt={name} />
+                <img src={image_link} alt={name} onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = '/assets/img/home/collection1.png'
+                }} />
             </div>
             <CardBody>
                 <div>
@@ -65,7 +71,7 @@ const DropCard: NextPage<DropCardProps> = ({
                         {twitter && (<Icon icon="akar-icons:twitter-fill" color="white" width="25" height="25" className='mr-10' onClick={() => window.open(twitter, "_blank")} />)}
                         {website && (<Icon icon="akar-icons:link-chain" color="white" width="25" height="25" onClick={() => window.open(website, "_blank")} />)}
                     </div>
-                    <p className='description'>{info.length > 320 ? info.substring(0, 320) + '...' : info}</p>
+                    <p className='description'>{info?.length > 320 ? info.substring(0, 320) + '...' : info}</p>
                 </div>
                 <div className='detail-content row'>
                     <div className='col-md-5 col-xs-12 d-flex justify-content-between'>

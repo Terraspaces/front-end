@@ -36,7 +36,7 @@ const DropCard: NextPage<DropCardProps> = ({
             <div className='img-content'>
                 <img src={image_link} alt={name} onError={({ currentTarget }) => {
                     currentTarget.onerror = null;
-                    currentTarget.src = '/assets/img/home/collection1.png'
+                    currentTarget.src = ''
                 }} />
             </div>
             <CardBody>

@@ -41,7 +41,7 @@ const CardDetailFirst: NextPage<CardDetailFirstProps> = ({
             <div className='d-flex justify-content-between mt-40' style={{ position: 'relative' }}>
                 <h6 className="text-grey">NFT Type: {nftType} <Icon icon="bi:question-circle" width={18} data-tip data-for='tip-trait' onMouseEnter={handleShowTooltip} onMouseLeave={handleHideTooltip} /></h6>
                 {isMounted && <ReactTooltip id='tip-trait' aria-haspopup='true' >
-                    <p className="t-16 mb-10 trait-text">Traits type</p>
+                    <p className="t-16 mb-10 trait-text">Trait-Based NFT Farm</p>
                     <p className="trait-text">Kryptonite: 12USN</p>
                     <p className="trait-text">Lunar: 4USN</p>
                     <p className="trait-text">Quartz: 3USN</p>
@@ -52,8 +52,8 @@ const CardDetailFirst: NextPage<CardDetailFirstProps> = ({
                 <h6 className="text-grey">Reward Tokens</h6>
             </div>
             <div className='d-flex justify-content-between mt-1'>
-                {stakingInfo && stakingInfo.token_ids && stakingInfo.token_ids.length > 0 ? <img className='mr-10 farms-card-img' src={`https://terraspaces_nft_1.mypinata.cloud/ipfs/QmeP2Gn7fjycGerqTiKZnexyYXvu5qvDVKq4WHdfzwL8bi/${stakingInfo.token_ids[0]}.png`} alt='terraspaces image' width={27} height={27} /> : <h6 className='t-18'>None</h6>}
-                <h6 className='t-18'>{farmSpec.reward_token_id?.toUpperCase()}</h6>
+                {stakingInfo && stakingInfo.token_ids && stakingInfo.token_ids.length > 0 ? <img className='mr-10 farms-card-img' src={`https://terraspaces_nft_1.mypinata.cloud/ipfs/QmeP2Gn7fjycGerqTiKZnexyYXvu5qvDVKq4WHdfzwL8bi/${stakingInfo.token_ids[0]}.png`} alt='terraspaces image' width={27} height={27} /> : <h6 className='t-18'>Any</h6>}
+                <h6 className='t-18'>${farmSpec.reward_token_id?.toUpperCase()}</h6>
             </div>
         </>
     )

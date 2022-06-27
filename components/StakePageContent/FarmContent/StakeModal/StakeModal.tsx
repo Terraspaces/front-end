@@ -65,7 +65,13 @@ const StakeModal: NextPage<StakeModalProps> = ({
                         selectOption.push({ label: nft_info.metadata.title, value: nftList.get(farmData)[i]?.token_id })
                     }
                 }
-                setSelectOptions(selectOption)
+                if (selectOption.length === 0) {
+                    const emptyOption: any = [];
+                    emptyOption.push({ label: "You don't have NFTs can stake.", value: '' })
+                    setSelectOptions(emptyOption)
+                } else {
+                    setSelectOptions(selectOption)
+                }
             }
         }
     }

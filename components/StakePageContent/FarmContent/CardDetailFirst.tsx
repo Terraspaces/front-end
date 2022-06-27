@@ -42,12 +42,12 @@ const CardDetailFirst: NextPage<CardDetailFirstProps> = ({
                 <h6 className="text-grey">NFT Type: {nftType} <Icon icon="bi:question-circle" width={18} data-tip data-for='tip-trait' onMouseEnter={handleShowTooltip} onMouseLeave={handleHideTooltip} /></h6>
                 {isMounted && <ReactTooltip id='tip-trait' aria-haspopup='true' >
                     <p className="t-16 mb-10 trait-text">Trait-Based NFT Farm</p>
-                    <p className="trait-text">Kryptonite: 12USN</p>
-                    <p className="trait-text">Lunar: 4USN</p>
-                    <p className="trait-text">Quartz: 3USN</p>
-                    <p className="trait-text">Iceberg: 2USN</p>
-                    <p className="trait-text">Golden: 1.5USN</p>
-                    <p className="trait-text">Terra: 1USN</p>
+                    <p className="trait-text">Kryptonite: 12 -&gt; 7USN</p>
+                    <p className="trait-text">Lunar: 84&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 4USN</p>
+                    <p className="trait-text">Quartz: 124&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 3USN</p>
+                    <p className="trait-text">Iceberg: 166&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 2USN</p>
+                    <p className="trait-text">Golden: 188&nbsp;&nbsp;&nbsp;-&gt;1.5USN</p>
+                    <p className="trait-text">Terra: 203&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 1USN</p>
                 </ReactTooltip>}
                 <h6 className="text-grey">Reward Tokens</h6>
             </div>

@@ -596,6 +596,7 @@ button.star-btn:hover:before {
     border-radius: 20px;
     margin-bottom: 20px;
     cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .stakeModal-img:hover {
@@ -605,6 +606,7 @@ button.star-btn:hover:before {
 .stakeModal-subHeader {
     padding-bottom: 10px;
     border-bottom: 1px dashed var(--primary-2);
+    box-shadow: 0px 9px 6px -9px #111;
 }
 
 .dashboard-wrapper {
@@ -656,6 +658,8 @@ button.star-btn:hover:before {
     border-radius: 40px;
     padding: 30px;
     width: 400px;
+    background-color: #00000020;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .nft-detailView .nft-detailImg {
@@ -668,6 +672,10 @@ button.star-btn:hover:before {
 }
 
 /* end farm stake & unstake modal */
+
+.modalBody {
+    overflow: hidden;
+}
 
 .dashboard-wrapper .search-f input {
     font-family: Gojali-Regular;

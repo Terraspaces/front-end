@@ -11,7 +11,6 @@ interface NavFarmsContentProps {
     onClaimReward: any;
     farmContractList: any;
     nftList: any;
-    nftContractList: any;
     nftMetadata: any;
 }
 
@@ -21,7 +20,6 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
     onClaimReward,
     farmContractList,
     nftList,
-    nftContractList,
     nftMetadata
 }) => {
     const [isStakeModal, setIsStakeModal] = useState<boolean>(false);
@@ -86,7 +84,6 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 closeModal={closeModal}
                                 nftList={nftList}
                                 onFarmingStake={onFarmingStake}
-                                nftContractList={nftContractList}
                                 nftMetadata={nftMetadata}
                             />
                         </ReactModal>
@@ -96,7 +93,6 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 closeModal={closeModal}
                                 nftList={nftList}
                                 onFarmingUnstake={onFarmingUnstake}
-                                nftContractList={nftContractList}
                                 nftMetadata={nftMetadata}
                             />
                         </ReactModal>

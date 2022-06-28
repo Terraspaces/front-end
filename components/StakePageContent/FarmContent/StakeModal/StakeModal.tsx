@@ -71,7 +71,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
         <Container>
             <div className="d-flex">
                 <div className="collection-list">
-                    <h1 className="ml-20 mt-20 bold">Select your NFT</h1>
+                    <h1 className="ml-20 mt-20 bold mb-40">Select your NFT</h1>
                     {nftContractList.map((contract_id: string, contract_index: number) => {
                         return (
                             <div key={contract_index}>

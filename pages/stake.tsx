@@ -294,10 +294,12 @@ const Mint: NextPage = () => {
                       onUnstake={onUnstake}
                     />
                     <NavFarmsContent
+                      nftContractList={nftContractList}
                       onFarmingStake={onFarmingStake}
                       onFarmingUnstake={onFarmingUnstake}
                       onClaimReward={onClaimReward}
                       farmContractList={farmContractList}
+                      nftMetadata={nftMetadata}
                       nftList={nftList}
                     />
                     <NavReferralsContent

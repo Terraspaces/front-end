@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import ReactModal from 'react-modal'
-import { WalletContext } from "../../contexts/wallet";
 import { CardDetailFirst, CardDetailSecond, CardHeader, CardSubHeader, ButtonContent, CardDetailThird } from "./FarmContent";
 import StakeModal from "./FarmContent/StakeModal/StakeModal";
 import UnStakeModal from './FarmContent/UnStakeModal/UnStakeModal'
@@ -12,6 +11,8 @@ interface NavFarmsContentProps {
     onClaimReward: any;
     farmContractList: any;
     nftList: any;
+    nftContractList: any;
+    nftMetadata: any;
 }
 
 const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
@@ -19,9 +20,10 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
     onFarmingUnstake,
     onClaimReward,
     farmContractList,
-    nftList
+    nftList,
+    nftContractList,
+    nftMetadata
 }) => {
-    const { wallet } = useContext(WalletContext)
     const [isStakeModal, setIsStakeModal] = useState<boolean>(false);
     const [isUnStakeModal, setIsUnStakeModal] = useState<boolean>(false);
     const totalSupply = 777;
@@ -84,6 +86,8 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 closeModal={closeModal}
                                 nftList={nftList}
                                 onFarmingStake={onFarmingStake}
+                                nftContractList={nftContractList}
+                                nftMetadata={nftMetadata}
                             />
                         </ReactModal>
                         <ReactModal isOpen={isUnStakeModal} onRequestClose={() => closeModal()} style={customStyles}>
@@ -92,6 +96,8 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 closeModal={closeModal}
                                 nftList={nftList}
                                 onFarmingUnstake={onFarmingUnstake}
+                                nftContractList={nftContractList}
+                                nftMetadata={nftMetadata}
                             />
                         </ReactModal>
                     </>

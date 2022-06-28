@@ -46,32 +46,29 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
                     token_id: stakingInfo.token_ids[i]
                 }
             )
-            if ((JSON.stringify(nft_info.approved_account_ids).match(FARM_CONTRACT_ID) || []).length
-                == (JSON.stringify(nft_info.approved_account_ids).match('":') || []).length) {
-                let nft_contract_id = farmData;
-                if (nft_contract_id == "x.paras.near") {
-                    const result = await fetch("https://api-v2-mainnet.paras.id/token?token_id=" + stakingInfo.token_ids[i]);
-                    nft_contract_id = (await result.json())["data"]["results"][0].metadata.collection_id;
+            let nft_contract_id = farmData;
+            if (nft_contract_id == "x.paras.near") {
+                const result = await fetch("https://api-v2-mainnet.paras.id/token?token_id=" + stakingInfo.token_ids[i]);
+                nft_contract_id = (await result.json())["data"]["results"][0].metadata.collection_id;
+            }
+            let list: string[] = [];
+            if (newData.has(nft_contract_id)) {
+                const data = newData.get(nft_contract_id);
+                list = data == undefined ? [] : data;
+            }
+            list.push(stakingInfo.token_ids[i]);
+            newData.set(nft_contract_id, list);
+            for (let i = 0; i < nftList.get(farmData).length; i++) {
+                if ((stakingInfo.token_ids || []).includes((newData.get(farmData) as any)[i])) {
+                    selectOption.push({ label: nft_info.metadata.title, value: nftList.get(farmData)[i]?.token_id })
                 }
-                let list: string[] = [];
-                if (newData.has(nft_contract_id)) {
-                    const data = newData.get(nft_contract_id);
-                    list = data == undefined ? [] : data;
-                }
-                list.push(stakingInfo.token_ids[i]);
-                newData.set(nft_contract_id, list);
-                for (let i = 0; i < nftList.get(farmData).length; i++) {
-                    if ((stakingInfo.token_ids || []).includes((newData.get(farmData) as any)[i])) {
-                        selectOption.push({ label: nft_info.metadata.title, value: nftList.get(farmData)[i]?.token_id })
-                    }
-                }
-                if (selectOption.length === 0) {
-                    const emptyOption: any = [];
-                    emptyOption.push({ label: "You don't have NFTs can unstake.", value: '' })
-                    setSelectOptions(emptyOption)
-                } else {
-                    setSelectOptions(selectOption)
-                }
+            }
+            if (selectOption.length === 0) {
+                const emptyOption: any = [];
+                emptyOption.push({ label: "You don't have NFTs can unstake.", value: '' })
+                setSelectOptions(emptyOption)
+            } else {
+                setSelectOptions(selectOption)
             }
         }
     }

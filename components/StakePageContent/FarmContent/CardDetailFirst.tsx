@@ -42,17 +42,18 @@ const CardDetailFirst: NextPage<CardDetailFirstProps> = ({
                 <h6 className="text-grey">NFT Type: {nftType} <Icon icon="bi:question-circle" width={18} data-tip data-for='tip-trait' onMouseEnter={handleShowTooltip} onMouseLeave={handleHideTooltip} /></h6>
                 {isMounted && <ReactTooltip id='tip-trait' aria-haspopup='true' >
                     <p className="t-16 mb-10 trait-text">Trait-Based NFT Farm</p>
-                    <p className="trait-text">Kryptonite: 12 -&gt; 7USN</p>
-                    <p className="trait-text">Lunar: 84&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 4USN</p>
-                    <p className="trait-text">Quartz: 124&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 3USN</p>
-                    <p className="trait-text">Iceberg: 166&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 2USN</p>
-                    <p className="trait-text">Golden: 188&nbsp;&nbsp;&nbsp;-&gt;1.5USN</p>
-                    <p className="trait-text">Terra: 203&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt; 1USN</p>
+                    <p className="trait-text">Kryptonite: 7 $USN/NFT</p>
+                    <p className="trait-text">Lunar: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4 $USN/NFT</p>
+                    <p className="trait-text">Quartz: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 $USN/NFT</p>
+                    <p className="trait-text">Iceberg: &nbsp;&nbsp;&nbsp;&nbsp; 2 $USN/NFT</p>
+                    <p className="trait-text">Golden: &nbsp;&nbsp; 1.5 $USN/NFT</p>
+                    <p className="trait-text">Terra: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 $USN/NFT</p>
                 </ReactTooltip>}
                 <h6 className="text-grey">Reward Tokens</h6>
             </div>
             <div className='d-flex justify-content-between mt-1'>
-                {stakingInfo && stakingInfo.token_ids && stakingInfo.token_ids.length > 0 ? <img className='mr-10 farms-card-img' src={`https://terraspaces_nft_1.mypinata.cloud/ipfs/QmeP2Gn7fjycGerqTiKZnexyYXvu5qvDVKq4WHdfzwL8bi/${stakingInfo.token_ids[0]}.png`} alt='terraspaces image' width={27} height={27} /> : <h6 className='t-18'>Any</h6>}
+                {/* {stakingInfo && stakingInfo.token_ids && stakingInfo.token_ids.length > 0 ? <img className='mr-10 farms-card-img' src={`https://terraspaces_nft_1.mypinata.cloud/ipfs/QmeP2Gn7fjycGerqTiKZnexyYXvu5qvDVKq4WHdfzwL8bi/${stakingInfo.token_ids[0]}.png`} alt='terraspaces image' width={27} height={27} /> : <h6 className='t-18'>Any</h6>} */}
+                <h6 className='t-18'>Any</h6>
                 <h6 className='t-18'>${farmSpec.reward_token_id?.toUpperCase()}</h6>
             </div>
         </>

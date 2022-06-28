@@ -80,7 +80,7 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 />
                             </div>
                         </div>
-                        <ReactModal isOpen={isStakeModal} onRequestClose={() => closeModal()} style={customStyles}>
+                        <ReactModal isOpen={isStakeModal} onRequestClose={() => closeModal()} style={customStyles} htmlOpenClassName="modalBody">
                             <StakeModal
                                 farmData={farmData}
                                 closeModal={closeModal}
@@ -90,7 +90,7 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 nftMetadata={nftMetadata}
                             />
                         </ReactModal>
-                        <ReactModal isOpen={isUnStakeModal} onRequestClose={() => closeModal()} style={customStyles}>
+                        <ReactModal isOpen={isUnStakeModal} onRequestClose={() => closeModal()} style={customStyles} htmlOpenClassName="modalBody">
                             <UnStakeModal
                                 farmData={farmData}
                                 closeModal={closeModal}

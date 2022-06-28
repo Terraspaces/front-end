@@ -65,7 +65,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
             }
             if (selectOption.length === 0) {
                 const emptyOption: any = [];
-                emptyOption.push({ label: "You don't have NFTs can stake.", value: '' })
+                emptyOption.push({ label: "You do not have any more NFTs to stake.", value: '' })
                 setSelectOptions(emptyOption)
             } else {
                 setSelectOptions(selectOption)

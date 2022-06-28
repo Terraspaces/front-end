@@ -65,7 +65,7 @@ const UnStakeModal: NextPage<UnStakeModalProps> = ({
             }
             if (selectOption.length === 0) {
                 const emptyOption: any = [];
-                emptyOption.push({ label: "You don't have NFTs can unstake.", value: '' })
+                emptyOption.push({ label: "You do not have any more NFTs to unstake.", value: '' })
                 setSelectOptions(emptyOption)
             } else {
                 setSelectOptions(selectOption)

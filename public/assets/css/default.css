@@ -1744,6 +1744,10 @@ input::placeholder {
     flex-direction: column;
 }
 
+.justify-content-between {
+    justify-content: space-between;
+}
+
 .italic {
     font-style: italic;
 }

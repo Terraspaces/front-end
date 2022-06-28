@@ -586,12 +586,88 @@ button.star-btn:hover:before {
 }
 
 .trait-text {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* farm stake & unstake modal */
+
+.stakeModal-img {
+    max-width: 200px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.stakeModal-img:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+.stakeModal-subHeader {
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--primary-2);
 }
 
 .dashboard-wrapper {
     margin-bottom: 225px;
 }
+
+.collection-list {
+    min-width: 500px;
+    margin-right: 20px;
+    height: calc(100vh - 200px);
+    overflow: auto;
+    border-radius: 40px;
+}
+
+.collection-list .nft-list {
+    margin-top: 20px;
+    margin-left: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 220px);
+}
+
+.nft-view {
+    position: relative;
+}
+
+.nft-view .hidden-stake-btn {
+    position: absolute;
+    bottom: 25px;
+    left: 5px;
+    width: 240px;
+    height: 36px;
+    padding: 0;
+    border-radius: 40px;
+    display: none;
+}
+
+.nft-view .nft-badge {
+    top: 10px;
+    left: 10px;
+    background-color: var(--primary-2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    position: absolute;
+    font-size: 13px;
+}
+
+.nft-detailView {
+    border: 2px solid var(--primary-2);
+    border-radius: 40px;
+    padding: 30px;
+    width: 400px;
+}
+
+.nft-detailView .nft-detailImg {
+    border-radius: 40px;
+}
+
+.nft-detailView .description {
+    color: lightgray;
+    margin: 20px 10px;
+}
+
+/* end farm stake & unstake modal */
 
 .dashboard-wrapper .search-f input {
     font-family: Gojali-Regular;
@@ -968,6 +1044,62 @@ span.search-icon {
         right: 0;
         opacity: 0;
     }
+}
+
+@media screen and (max-width: 1000px) {
+    /* farm stake & unstake modal */
+
+    .collection-list {
+        min-width: 250px;
+    }
+
+    .collection-list .nft-list {
+        display: block;
+    }
+
+    .nft-detailView {
+        border: 2px solid var(--primary-2);
+        border-radius: 40px;
+        padding: 30px;
+        width: 350px;
+    }
+
+    .nft-detailView .nft-detailImg {
+        border-radius: 40px;
+    }
+
+    .nft-detailView .description {
+        overflow: auto;
+    }
+
+    /* end farm stake & unstake modal */
+}
+
+@media screen and (max-width: 700px) {
+    /* farm stake & unstake modal */
+
+    .stakeModal-img {
+        max-width: 250px;
+    }
+
+    .nft-detailView {
+        display: none;
+    }
+
+    .collection-list {
+        margin-right: 0px;
+        height: 100%;
+    }
+
+    .nft-view .hidden-stake-btn {
+        display: block;
+    }
+
+    .collection-list .nft-list {
+        margin-left: 10px;
+    }
+
+    /* end farm stake & unstake modal */
 }
 
 @media screen and (min-width: 768px) {

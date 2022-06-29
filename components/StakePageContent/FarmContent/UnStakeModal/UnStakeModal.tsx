@@ -232,22 +232,26 @@ const StakeModal: NextPage<StakeModalProps> = ({
                             <h5>{nftMetadata.get(farmData) != undefined ? nftMetadata.get(farmData)?.name : farmData}</h5>
                             <img src="assets/img/icons/verified.svg" width="24" height="24" draggable={false} alt="verified" className="ml-10" />
                         </div>
-                        <div className="nft-list">
-                            {nftList.get(farmData)?.map((nftData: any, index: number) => {
-                                if ((selectOptions || [])?.includes(nftData.token_id)) {
-                                    const imageURL = X_PARAS_COLLECTIONS.includes(farmData) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(farmData)?.base_uri + '/' + nftData.metadata.media));
-                                    return (
-                                        <div className="nft-view" key={index} onClick={() => handleSelectNFT(imageURL, nftData.metadata, nftData.token_id)}>
-                                            <img className="stakeModal-img" src={imageURL} draggable={false} alt="staking" loading="lazy" />
-                                            <div className="nft-badge">{nftData.metadata.title}</div>
-                                            <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingUnstake(farmData, selectedNFT)}>
-                                                <span>Unstake</span>
-                                            </button>
-                                        </div>
-                                    )
-                                }
-                            })}
-                        </div>
+                        {selectOptions.length === 0 ? (
+                            <h3 className="mt-20 ml-20">There are no NFTs to unstake.</h3>
+                        ) : (
+                            <div className="nft-list">
+                                {nftList.get(farmData)?.map((nftData: any, index: number) => {
+                                    if ((selectOptions || [])?.includes(nftData.token_id)) {
+                                        const imageURL = X_PARAS_COLLECTIONS.includes(farmData) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(farmData)?.base_uri + '/' + nftData.metadata.media));
+                                        return (
+                                            <div className="nft-view" key={index} onClick={() => handleSelectNFT(imageURL, nftData.metadata, nftData.token_id)}>
+                                                <img className="stakeModal-img" src={imageURL} draggable={false} alt="staking" loading="lazy" />
+                                                <div className="nft-badge">{nftData.metadata.title}</div>
+                                                <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingUnstake(farmData, selectedNFT)}>
+                                                    <span>Unstake</span>
+                                                </button>
+                                            </div>
+                                        )
+                                    }
+                                })}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="nft-detailView">

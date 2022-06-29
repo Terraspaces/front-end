@@ -37,14 +37,26 @@ export const submit_referral = async (params: { referral_wallet_id: string, refe
     return result
 }
 
-export const getReferralStats = async (wallet_id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats`;
-    const results = await apiCall(url);
-    return results;
-}
+// export const getReferralStats = async (wallet_id: string) => {
+//     const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats`;
+//     const results = await apiCall(url);
+//     return results;
+// }
 
 export const getCollectionNameList = async () => {
     const url = `${process.env.NEXT_PUBLIC_API}/drops/sorted`;
+    const results = await apiCall(url);
+    return results
+}
+
+export const getReferralTerraStats = async (wallet_id: string) => {
+    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats/terraspaces`
+    const results = await apiCall(url);
+    return results
+}
+
+export const getReferralStakingStats = async (wallet_id: string) => {
+    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats/staking_partners`
     const results = await apiCall(url);
     return results
 }

@@ -35,6 +35,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
     const newData = new Map<string, string[]>();
 
     const fetchData = async () => {
+        const tmpOptions = [];
         for (let i = 0; i < nftList.get(farmData)?.length; i++) {
             let nft_contract_id = farmData;
             if (nft_contract_id == "x.paras.near") {
@@ -49,9 +50,10 @@ const StakeModal: NextPage<StakeModalProps> = ({
             list.push(nftList.get(farmData)[i]?.token_id);
             newData.set(nft_contract_id, list);
             if (!(stakingInfo.token_ids || []).includes((newData.get(farmData) as string[])[i])) {
-                setSelectOptions([...selectOptions, (newData.get(farmData) as string[])[i]])
+                tmpOptions.push((newData.get(farmData) as string[])[i]);
             }
         }
+        setSelectOptions([...selectOptions, ...tmpOptions]);
     }
 
     useEffect(() => {
@@ -69,29 +71,33 @@ const StakeModal: NextPage<StakeModalProps> = ({
         <Container>
             <div className="d-flex">
                 <div className="collection-list">
-                    <h1 className="ml-20 mt-20 bold mb-40">Select your NFT</h1>
+                    <h1 className="ml-20 mt-20 bold mb-40">Stake your NFT</h1>
                     <div>
                         <div className="d-flex align-items-center mt-20 stakeModal-subHeader">
                             <img className="mr-8 radius-35 border-white" draggable={false} src={"assets/icons/" + farmData + ".png"} alt="Near" width={45} height={45} loading="lazy" />
                             <h5>{nftMetadata.get(farmData) != undefined ? nftMetadata.get(farmData)?.name : farmData}</h5>
                             <img src="assets/img/icons/verified.svg" width="24" height="24" alt="verified" draggable={false} className="ml-10" />
                         </div>
-                        <div className="nft-list">
-                            {nftList.get(farmData)?.map((nftData: any, index: number) => {
-                                if ((selectOptions || [])?.includes(nftData.token_id)) {
-                                    const imageURL = X_PARAS_COLLECTIONS.includes(farmData) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(farmData)?.base_uri + '/' + nftData.metadata.media));
-                                    return (
-                                        <div className="nft-view" key={index} onClick={() => handleSelectNFT(imageURL, nftData.metadata, nftData.token_id)}>
-                                            <img className="stakeModal-img" draggable={false} src={imageURL} alt="staking" loading="lazy" />
-                                            <div className="nft-badge">{nftData.metadata.title}</div>
-                                            <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingStake(farmData, selectedNFT)}>
-                                                <span>Stake</span>
-                                            </button>
-                                        </div>
-                                    )
-                                }
-                            })}
-                        </div>
+                        {selectOptions && selectOptions.length === 0 ? (
+                            <h3 className="mt-20 ml-20">There are no NFTs to stake.</h3>
+                        ) : (
+                            <div className="nft-list">
+                                {nftList.get(farmData)?.map((nftData: any, index: number) => {
+                                    if ((selectOptions || [])?.includes(nftData.token_id)) {
+                                        const imageURL = X_PARAS_COLLECTIONS.includes(farmData) ? ("https://ipfs.fleek.co/ipfs/" + nftData.metadata.media) : (nftData.metadata.media?.startsWith('http') ? nftData.metadata.media : (nftMetadata.get(farmData)?.base_uri + '/' + nftData.metadata.media));
+                                        return (
+                                            <div className="nft-view" key={index} onClick={() => handleSelectNFT(imageURL, nftData.metadata, nftData.token_id)}>
+                                                <img className="stakeModal-img" draggable={false} src={imageURL} alt="staking" loading="lazy" />
+                                                <div className="nft-badge">{nftData.metadata.title}</div>
+                                                <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingStake(farmData, selectedNFT)}>
+                                                    <span>Stake</span>
+                                                </button>
+                                            </div>
+                                        )
+                                    }
+                                })}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="nft-detailView">

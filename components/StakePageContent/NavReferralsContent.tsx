@@ -63,7 +63,7 @@ const NavReferralsContent: NextPage<NavReferralsContentProps> = ({ openModal, to
                             {exploreList.map((explore, index) => {
                                 return <img className='-mr-20 partner-image' src={explore.photo} alt='terraspaces image' width={45} height={45} key={index} />
                             })}
-                            <h5 className='ml-20 mr-5 letter-space-1 t-20'>Staking Partners</h5>
+                            <h5 className='ml-30 mr-5 letter-space-1 t-20'>Staking Partners</h5>
                             <img src="assets/img/icons/verified.svg" alt="verified" width={24} height={24} />
                         </div>
                         <div className="floor-c row mt-10">

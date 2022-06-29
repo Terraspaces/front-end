@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import Select from 'react-dropdown-select';
 import { Icon } from '@iconify/react';
 import { Container, BodyContainer, IconContent, TimelineContent, DetailContent, ModalInput, InputContent, Tooltip } from './styles';
-import { getReferralStats, submit_referral } from '../../utils/api/terraspace_api';
+import { submit_referral, getReferralTerraStats, getReferralStakingStats } from '../../utils/api/terraspace_api';
 import { WalletContext } from '../../contexts/wallet';
 import { getCollectionNameList } from '../../utils/api/terraspace_api'
 
@@ -66,8 +66,8 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         }
         if (allowSubmit && referralWallet !== '' && collectionName !== '') {
             const result = await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_wallet_id: referralWallet, collection_name: collectionName })
-            setToast(result.message)
             if (result.code === 403) {
+                setToast(result.message)
                 copyToClipBoard()
             }
         }
@@ -75,9 +75,17 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
     }
 
     const updateReferralStats = async () => {
-        const data = await getReferralStats(wallet?.account().accountId || '')
-        setReferralStats(data)
+        const data_terra = await getReferralTerraStats(wallet?.account().accountId || '')
+        const data_staking = await getReferralStakingStats(wallet?.account().accountId || '')
+        variables[0] === 2.5 ? setReferralStats(data_staking) : setReferralStats(data_terra)
     }
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const result = await getReferralTerraStats(wallet?.account().accountId || '')
+    //         console.log(result)
+    //     })
+    // }, [wallet])
 
     const getCollectionList = async () => {
         const results = await getCollectionNameList()

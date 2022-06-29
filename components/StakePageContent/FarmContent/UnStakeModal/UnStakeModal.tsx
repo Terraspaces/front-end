@@ -33,8 +33,163 @@ const StakeModal: NextPage<StakeModalProps> = ({
     const [selectedNFT, setSelectedNFT] = useState<string[]>()
     const stakingInfo = useFetchStakingInfoByOwnerId(wallet?.account().accountId as string, farmData)
     const newData = new Map<string, string[]>();
+    // const stakingInfo = {
+    //     "token_ids": [
+    //         "44",
+    //         "45",
+    //         "46",
+    //         "47",
+    //         "48"
+    //     ],
+    //     "stacked_reward": 5826388888891872,
+    //     "updated_at": 1656431058
+    // }
+
+    // const nftList.get(farmData) = [
+    //     {
+    //         "token_id": "44",
+    //         "owner_id": "millicare.near",
+    //         "metadata": {
+    //             "title": "Terraspaces #44",
+    //             "description": "Genesis collection of 777 abstract NFTs. The First Generative Landmarks Collection on NEAR featuring Gated-via-Staking Access to Analaytical Dashboard. Tap into revenue generation via Staking-as-a-Service [SaaS] business model.",
+    //             "media": "44.png",
+    //             "media_hash": null,
+    //             "copies": null,
+    //             "issued_at": 1651705354843,
+    //             "expires_at": null,
+    //             "starts_at": null,
+    //             "updated_at": null,
+    //             "extra": null,
+    //             "reference": "44.json",
+    //             "reference_hash": null
+    //         },
+    //         "approved_account_ids": {
+    //             "terraspaces-farming.near": 19,
+    //             "terraspaces-staking.near": 14
+    //         },
+    //         "royalty": {
+    //             "luciddream.near": 100,
+    //             "zerotime.near": 100,
+    //             "terraspaces-treasury.near": 300,
+    //             "xuguangxia725.near": 100
+    //         }
+    //     },
+    //     {
+    //         "token_id": "45",
+    //         "owner_id": "millicare.near",
+    //         "metadata": {
+    //             "title": "Terraspaces #45",
+    //             "description": "Genesis collection of 777 abstract NFTs. The First Generative Landmarks Collection on NEAR featuring Gated-via-Staking Access to Analaytical Dashboard. Tap into revenue generation via Staking-as-a-Service [SaaS] business model.",
+    //             "media": "45.png",
+    //             "media_hash": null,
+    //             "copies": null,
+    //             "issued_at": 1651705354843,
+    //             "expires_at": null,
+    //             "starts_at": null,
+    //             "updated_at": null,
+    //             "extra": null,
+    //             "reference": "45.json",
+    //             "reference_hash": null
+    //         },
+    //         "approved_account_ids": {
+    //             "terraspaces-farming.near": 19,
+    //             "terraspaces-staking.near": 14
+    //         },
+    //         "royalty": {
+    //             "luciddream.near": 100,
+    //             "zerotime.near": 100,
+    //             "terraspaces-treasury.near": 300,
+    //             "xuguangxia725.near": 100
+    //         }
+    //     },
+    //     {
+    //         "token_id": "46",
+    //         "owner_id": "millicare.near",
+    //         "metadata": {
+    //             "title": "Terraspaces #46",
+    //             "description": "Genesis collection of 777 abstract NFTs. The First Generative Landmarks Collection on NEAR featuring Gated-via-Staking Access to Analaytical Dashboard. Tap into revenue generation via Staking-as-a-Service [SaaS] business model.",
+    //             "media": "46.png",
+    //             "media_hash": null,
+    //             "copies": null,
+    //             "issued_at": 1651705354843,
+    //             "expires_at": null,
+    //             "starts_at": null,
+    //             "updated_at": null,
+    //             "extra": null,
+    //             "reference": "46.json",
+    //             "reference_hash": null
+    //         },
+    //         "approved_account_ids": {
+    //             "terraspaces-farming.near": 19,
+    //             "terraspaces-staking.near": 14
+    //         },
+    //         "royalty": {
+    //             "luciddream.near": 100,
+    //             "zerotime.near": 100,
+    //             "terraspaces-treasury.near": 300,
+    //             "xuguangxia725.near": 100
+    //         }
+    //     },
+    //     {
+    //         "token_id": "47",
+    //         "owner_id": "millicare.near",
+    //         "metadata": {
+    //             "title": "Terraspaces #47",
+    //             "description": "Genesis collection of 777 abstract NFTs. The First Generative Landmarks Collection on NEAR featuring Gated-via-Staking Access to Analaytical Dashboard. Tap into revenue generation via Staking-as-a-Service [SaaS] business model.",
+    //             "media": "47.png",
+    //             "media_hash": null,
+    //             "copies": null,
+    //             "issued_at": 1651705354843,
+    //             "expires_at": null,
+    //             "starts_at": null,
+    //             "updated_at": null,
+    //             "extra": null,
+    //             "reference": "47.json",
+    //             "reference_hash": null
+    //         },
+    //         "approved_account_ids": {
+    //             "terraspaces-farming.near": 19,
+    //             "terraspaces-staking.near": 14
+    //         },
+    //         "royalty": {
+    //             "luciddream.near": 100,
+    //             "zerotime.near": 100,
+    //             "terraspaces-treasury.near": 300,
+    //             "xuguangxia725.near": 100
+    //         }
+    //     },
+    //     {
+    //         "token_id": "48",
+    //         "owner_id": "millicare.near",
+    //         "metadata": {
+    //             "title": "Terraspaces #48",
+    //             "description": "Genesis collection of 777 abstract NFTs. The First Generative Landmarks Collection on NEAR featuring Gated-via-Staking Access to Analaytical Dashboard. Tap into revenue generation via Staking-as-a-Service [SaaS] business model.",
+    //             "media": "48.png",
+    //             "media_hash": null,
+    //             "copies": null,
+    //             "issued_at": 1651705354843,
+    //             "expires_at": null,
+    //             "starts_at": null,
+    //             "updated_at": null,
+    //             "extra": null,
+    //             "reference": "48.json",
+    //             "reference_hash": null
+    //         },
+    //         "approved_account_ids": {
+    //             "terraspaces-farming.near": 19,
+    //             "terraspaces-staking.near": 14
+    //         },
+    //         "royalty": {
+    //             "luciddream.near": 100,
+    //             "zerotime.near": 100,
+    //             "terraspaces-treasury.near": 300,
+    //             "xuguangxia725.near": 100
+    //         }
+    //     }
+    // ]
 
     const fetchData = async () => {
+        const tmpOptions = [];
         for (let i = 0; i < nftList.get(farmData)?.length; i++) {
             let nft_contract_id = farmData;
             if (nft_contract_id == "x.paras.near") {
@@ -49,16 +204,17 @@ const StakeModal: NextPage<StakeModalProps> = ({
             list.push(nftList.get(farmData)[i]?.token_id);
             newData.set(nft_contract_id, list);
             if ((stakingInfo.token_ids || []).includes((newData.get(farmData) as string[])[i])) {
-                setSelectOptions([...selectOptions, (newData.get(farmData) as string[])[i]])
+                tmpOptions.push((newData.get(farmData) as string[])[i]);
             }
         }
+        setSelectOptions([...selectOptions, ...tmpOptions]);
     }
 
     useEffect(() => {
-        if (stakingInfo.token_ids && wallet?.account().accountId) {
+        if (stakingInfo && wallet && nftList && farmData && newData) {
             fetchData()
         }
-    }, [wallet?.account().accountId, JSON.stringify(stakingInfo.token_ids)])
+    }, [wallet, JSON.stringify(stakingInfo), JSON.stringify(nftList), farmData, JSON.stringify(newData)])
 
     const handleSelectNFT = (imageURL: string, metadata: any, token_id: string) => {
         const result: any[] = [{ imageURL: imageURL, metadata: metadata, token_id: token_id }]
@@ -69,7 +225,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
         <Container>
             <div className="d-flex">
                 <div className="collection-list">
-                    <h1 className="ml-20 mt-20 mb-40 bold">Select your NFT</h1>
+                    <h1 className="ml-20 mt-20 mb-40 bold">Unstake your NFT</h1>
                     <div>
                         <div className="d-flex align-items-center mt-20 stakeModal-subHeader">
                             <img className="mr-8 radius-35 border-white" draggable={false} src={"assets/icons/" + farmData + ".png"} alt="Near" width={45} height={45} loading="lazy" />

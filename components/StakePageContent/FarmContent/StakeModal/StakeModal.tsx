@@ -69,7 +69,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
         <Container>
             <div className="d-flex">
                 <div className="collection-list">
-                    <h1 className="ml-20 mt-20 bold mb-40">Select your NFT</h1>
+                    <h1 className="ml-20 mt-20 bold mb-40">Stake your NFT</h1>
                     <div>
                         <div className="d-flex align-items-center mt-20 stakeModal-subHeader">
                             <img className="mr-8 radius-35 border-white" draggable={false} src={"assets/icons/" + farmData + ".png"} alt="Near" width={45} height={45} loading="lazy" />

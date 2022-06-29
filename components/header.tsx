@@ -4,10 +4,11 @@ import { WalletContext } from "../contexts/wallet"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { SearchBox } from './SearchBox';
+import { useFetchByOwnerId } from '../state/hooks';
 
 const Header: NextPage = () => {
     const router = useRouter()
-    const { near, wallet, signIn, signOut } = useContext(WalletContext)
+    const { wallet, signIn, signOut } = useContext(WalletContext)
     const [isSearchBox, setIsSearchBox] = useState<boolean>(true)
     const onWallet = async () => {
         if (wallet?.isSignedIn()) {
@@ -16,6 +17,7 @@ const Header: NextPage = () => {
             signIn();
         }
     }
+    const stakedPerUser = useFetchByOwnerId(wallet?.account().accountId as string, ["terraspaces.near"])
     return (
         <header id="header" className="hedaer-abs">
             <div className="header-area">
@@ -56,11 +58,13 @@ const Header: NextPage = () => {
                                         <a className={`nav-link ${router.pathname == "/stake" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Stake</a>
                                     </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link href="/dashboard">
-                                        <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Dashboard</a>
-                                    </Link>
-                                </li>
+                                {stakedPerUser[0] > 0 && (
+                                    <li className="nav-item">
+                                        <Link href="/dashboard">
+                                            <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Dashboard</a>
+                                        </Link>
+                                    </li>
+                                )}
                                 <li className="nav-item">
                                     <Link href="/drops">
                                         <a className={`nav-link ${router.pathname == "/drops" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Drops</a>

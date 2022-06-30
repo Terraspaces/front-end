@@ -71,7 +71,7 @@ const NavReferralsContent: NextPage<NavReferralsContentProps> = ({ openModal, to
                                 <button type="button" className="floor-btn w-100">Referral Commission: 2.5%</button>
                             </div>
                             <div className='col-lg-4 col-md-6 col-xs-12 p-1'>
-                                <button type="button" className="floor-btn w-100">Your NFTs Staked: {totalCountPerUser}</button>
+                                <button type="button" className="floor-btn w-100">Your NFTs Staked: 0</button>
                             </div>
                             <div className='col-lg-4 col-md-6 col-xs-12 p-1'>
                                 <button type="button" className="floor-btn w-100">Staking Multiplier: 0.5</button>

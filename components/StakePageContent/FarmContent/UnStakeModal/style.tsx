@@ -8,6 +8,7 @@ export const Container = styled.div`
     max-width: 1100px;
     color: white;
     min-height: 300px;
+    max-height: calc(100vh-100px);
     @media screen and (max-width: 700px) {
         height: calc(100vh - 100px);
         overflow: auto;

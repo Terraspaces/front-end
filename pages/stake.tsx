@@ -251,7 +251,7 @@ const Mint: NextPage = () => {
     setOverviewStatus(key)
   }
 
-  let totalCount = stakeList.size;
+  let totalCount = 0;
 
   const nftStakedCount = useFetchByOwnerId(wallet?.account().accountId || '', farmContractList || [])
   nftStakedCount.map((stakeCount: number) => {

@@ -89,9 +89,12 @@ const StakeModal: NextPage<StakeModalProps> = ({
                                             <div className="nft-view" key={index} onClick={() => handleSelectNFT(imageURL, nftData.metadata, nftData.token_id)}>
                                                 <img className="stakeModal-img" draggable={false} src={imageURL} alt="staking" loading="lazy" />
                                                 <div className="nft-badge">{nftData.metadata.title}</div>
-                                                <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingStake(farmData, selectedNFT)}>
-                                                    <span>Stake</span>
-                                                </button>
+                                                {
+                                                    selectedNFT &&
+                                                    <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingStake(farmData, (selectedNFT as any)[0].token_id)}>
+                                                        <span>Stake</span>
+                                                    </button>
+                                                }
                                             </div>
                                         )
                                     }

@@ -243,9 +243,13 @@ const StakeModal: NextPage<StakeModalProps> = ({
                                             <div className="nft-view" key={index} onClick={() => handleSelectNFT(imageURL, nftData.metadata, nftData.token_id)}>
                                                 <img className="stakeModal-img" src={imageURL} draggable={false} alt="staking" loading="lazy" />
                                                 <div className="nft-badge">{nftData.metadata.title}</div>
-                                                <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingUnstake(farmData, selectedNFT)}>
-                                                    <span>Unstake</span>
-                                                </button>
+                                                {
+                                                    selectedNFT &&
+                                                    <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingUnstake(farmData, (selectedNFT as any)[0].token_id)}>
+                                                        <span>Unstake</span>
+                                                    </button>
+
+                                                }
                                             </div>
                                         )
                                     }
@@ -263,7 +267,10 @@ const StakeModal: NextPage<StakeModalProps> = ({
                                 <h6 className="description">{(selectedNFT as any)[0].metadata.description}</h6>
                             </div>
                             <div>
-                                <button className="cmn-btn-1 f-18 radius-12 mt-20 w-100" onClick={() => onFarmingUnstake(farmData, (selectedNFT as any)[0].token_id)}>
+                                <button className="cmn-btn-1 f-18 radius-12 mt-20 w-100" onClick={() => {
+                                    onFarmingUnstake(farmData, (selectedNFT as any)[0].token_id)
+                                }
+                                }>
                                     <span>Unstake</span>
                                 </button>
                                 <button className="cmn-btn-outline f-18 radius-12 mt-10 w-100" onClick={() => closeModal()}>

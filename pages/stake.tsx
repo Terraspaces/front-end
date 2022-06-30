@@ -50,72 +50,77 @@ const Mint: NextPage = () => {
   }
 
   const onStake = async (account_id: string, token_id: string) => {
-    await wallet?.account().functionCall(
-      X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
-      "nft_approve",
-      {
-        token_id,
+    await wallet?.account().functionCall({
+      contractId: X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
+      methodName: "nft_approve",
+      args: {
+        token_id: token_id,
         account_id: STAKE_CONTRACT_ID,
         msg: JSON.stringify({
           staking_status: "Staking to platform"
         }),
       },
-      MAX_GAS,
-      DEPOSIT,
+      gas: MAX_GAS,
+      attachedDeposit: DEPOSIT,
+    }
     )
   }
 
   const onFarmingStake = async (account_id: string, token_id: string) => {
-    await wallet?.account().functionCall(
-      X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
-      "nft_approve",
-      {
-        token_id,
+    await wallet?.account().functionCall({
+      contractId: X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
+      methodName: "nft_approve",
+      args: {
+        token_id: token_id,
         account_id: FARM_CONTRACT_ID,
         msg: JSON.stringify({
           staking_status: "Staking to platform"
         }),
       },
-      MAX_GAS,
-      DEPOSIT,
+      gas: MAX_GAS,
+      attachedDeposit: DEPOSIT,
+    }
     )
   }
 
   const onUnstake = async (account_id: string, token_id: string) => {
-    await wallet?.account().functionCall(
-      STAKE_CONTRACT_ID,
-      "unstake",
-      {
-        token_id,
+    await wallet?.account().functionCall({
+      contractId: STAKE_CONTRACT_ID,
+      methodName: "unstake",
+      args: {
+        token_id: token_id,
         nft_contract_id: X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
       },
-      MAX_GAS,
-      "1",
+      gas: MAX_GAS,
+      attachedDeposit: "1",
+    }
     )
   }
 
   const onFarmingUnstake = async (account_id: string, token_id: string) => {
-    await wallet?.account().functionCall(
-      FARM_CONTRACT_ID,
-      "unstake",
-      {
+    await wallet?.account().functionCall({
+      contractId: FARM_CONTRACT_ID,
+      methodName: "unstake",
+      args: {
         nft_contract_id: X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
-        token_id
+        token_id: token_id,
       },
-      MAX_GAS,
-      "1"
+      gas: MAX_GAS,
+      attachedDeposit: "1"
+    }
     )
   }
 
   const onClaimReward = async (nft_contract_id: string) => {
-    await wallet?.account().functionCall(
-      FARM_CONTRACT_ID,
-      "claim_reward",
-      {
+    await wallet?.account().functionCall({
+      contractId: FARM_CONTRACT_ID,
+      methodName: "claim_reward",
+      args: {
         nft_contract_id: X_PARAS_COLLECTIONS.includes(nft_contract_id) ? "x.paras.near" : nft_contract_id,
       },
-      MAX_GAS,
-      "1"
+      gas: MAX_GAS,
+      attachedDeposit: "1"
+    }
     )
   }
 

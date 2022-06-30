@@ -178,26 +178,22 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                     <button type="button" className="modal-btn w-100">Referral Commission: {variables[0]}%</button>
                                 </div>
                                 <div className='col-md-4 col-xs-12 p-1'>
-                                    <button type="button" className="modal-btn w-100">Your NFTs Staked: {totalCount}</button>
+                                    <button type="button" className="modal-btn w-100">Your NFTs Staked: {variables[0] === 2.5 ? 0 : totalCount}</button>
                                 </div>
                                 <div className='col-md-4 col-xs-12 p-1'>
                                     <button type="button" className="modal-btn w-100">Staking Multiplier: {variables[1]}</button>
                                 </div>
                             </div>
                             <div className="row mt-30">
-                                <div className='col-md-3 col-xs-6 p-1'>
+                                <div className='col-md-4 col-xs-6 p-1'>
                                     <p className='text-14 font-light'>Submitted Referrals</p>
                                     <p className='text-18 bold mt-1'>{referralStats?.submitted}</p>
                                 </div>
-                                <div className='col-md-3 col-xs-6 p-1'>
-                                    <p className='text-14 font-light'>Pending Referrals</p>
-                                    <p className='text-18 bold mt-1'>{referralStats?.pending}</p>
-                                </div>
-                                <div className='col-md-3 col-xs-6 p-1'>
+                                <div className='col-md-4 col-xs-6 p-1'>
                                     <p className='text-14 font-light'>Approved Referrals</p>
                                     <p className='text-18 bold mt-1'>{referralStats?.approved}</p>
                                 </div>
-                                <div className='col-md-3 col-xs-6 p-1'>
+                                <div className='col-md-4 col-xs-6 p-1'>
                                     <p className='text-14 font-light'>Amount Earned</p>
                                     <p className='text-18 bold mt-1'>${referralStats?.amount}</p>
                                 </div>

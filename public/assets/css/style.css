@@ -596,7 +596,7 @@ button.star-btn:hover:before {
     border-radius: 20px;
     margin-bottom: 20px;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .stakeModal-img:hover {
@@ -616,7 +616,7 @@ button.star-btn:hover:before {
 .collection-list {
     min-width: 500px;
     margin-right: 20px;
-    height: calc(100vh - 200px);
+    max-height: calc(100vh - 200px);
     overflow: auto;
     border-radius: 40px;
 }
@@ -659,7 +659,7 @@ button.star-btn:hover:before {
     padding: 30px;
     width: 400px;
     background-color: #00000020;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .nft-detailView .nft-detailImg {

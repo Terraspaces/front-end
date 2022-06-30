@@ -269,7 +269,7 @@ const Mint: NextPage = () => {
       {
         wallet?.isSignedIn() ?
           <>
-            {/* <HeaderContent overviewStatus={overviewStatus} /> */}
+            <HeaderContent overviewStatus={overviewStatus} />
             <div className="stake-area">
               <div className="container">
                 <div className="stake-wrapper">

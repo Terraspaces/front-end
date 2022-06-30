@@ -89,7 +89,6 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
 
     const getCollectionList = async () => {
         const results = await getCollectionNameList()
-        console.log(results)
         const options = results.map((result: any) => ({ label: result.name, value: result.name }))
         setSelectOption(options);
     }

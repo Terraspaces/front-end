@@ -65,7 +65,7 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
             return;
         }
         if (allowSubmit && referralWallet !== '' && collectionName !== '') {
-            const result = await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_wallet_id: referralWallet, collection_name: collectionName })
+            const result = await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_by: variables[0] === 2.5 ? "Staking Partners" : "Terraspaces", collection_name: collectionName })
             if (result.code === 403) {
                 setToast(result.message)
                 copyToClipBoard()
@@ -87,15 +87,16 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
     //     })
     // }, [wallet])
 
-    const getCollectionList = async () => {
-        const results = await getCollectionNameList()
-        const options = results.map((result: any) => ({ label: result.name, value: result.name }))
-        setSelectOption(options);
-    }
+    // const getCollectionList = async () => {
+    //     const results = await getCollectionNameList()
+    //     const options = results.map((result: any) => ({ label: result.name, value: result.name }))
+    //     setSelectOption(options);
+    // }
 
     useEffect(() => {
         updateReferralStats()
-        getCollectionList()
+        // getCollectionList()
+        setReferralWallet(wallet?.account().accountId as string)
     }, [wallet])
 
     const exploreList = [
@@ -193,6 +194,10 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                     <p className='text-14 font-light'>Approved Referrals</p>
                                     <p className='text-18 bold mt-1'>{referralStats?.approved}</p>
                                 </div>
+                                {/* <div className='col-md-4 col-xs-6 p-1'>
+                                    <p className='text-14 font-light'>Pending Referrals</p>
+                                    <p className='text-18 bold mt-1'>{referralStats?.pending}</p>
+                                </div> */}
                                 <div className='col-md-4 col-xs-6 p-1'>
                                     <p className='text-14 font-light'>Amount Earned</p>
                                     <p className='text-18 bold mt-1'>${referralStats?.amount}</p>
@@ -201,7 +206,7 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                             <div className="floor-c row mt-15 p-1">
                                 <p className='text-16 p-1'>Your Referral Wallet</p>
                                 <InputContent>
-                                    <ModalInput placeholder='zerotime.near' value={referralWallet} disabled onChange={() => getReferralWallet(event)} />
+                                    <ModalInput placeholder='zerotime.near' disabled value={referralWallet} onChange={() => getReferralWallet(event)} />
                                     <Icon icon="entypo:erase" width="22" height="22"
                                         onClick={() => {
                                             setReferralWallet('')
@@ -210,16 +215,17 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                     <Icon icon="fluent:clipboard-paste-16-regular" width="22" height="22" className='ml-10'
                                         onClick={() => {
                                             if (navigator.clipboard) {
-                                                navigator.clipboard.readText().then(
-                                                    clipText => setReferralWallet(clipText)
-                                                );
-                                                // setIsTooltipDisplayed(true);
-                                                // setTimeout(() => {
-                                                //     setIsTooltipDisplayed(false);
-                                                // }, 1500);
+                                                // navigator.clipboard.readText().then(
+                                                //     clipText => setReferralWallet(clipText)
+                                                // );
+                                                navigator.clipboard.writeText(wallet?.account().accountId as string)
+                                                setIsTooltipDisplayed(true);
+                                                setTimeout(() => {
+                                                    setIsTooltipDisplayed(false);
+                                                }, 1500);
                                             }
                                         }} />
-                                    {/* <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip> */}
+                                    <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
                                 </InputContent>
                                 {!isValidWallet && <p className='warning-text'>Please enter correct wallet format.</p>}
                             </div>

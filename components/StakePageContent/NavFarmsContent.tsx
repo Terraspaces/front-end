@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactModal from 'react-modal'
 import { CardDetailFirst, CardDetailSecond, CardHeader, CardSubHeader, ButtonContent, CardDetailThird } from "./FarmContent";
 import StakeModal from "./FarmContent/StakeModal/StakeModal";
@@ -58,8 +58,16 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
         document.getElementById('__next')!.style.filter = 'blur(20px)'
     }
 
+    const [storage, setStorage] = useState(localStorage.getItem('isFarms'))
+    const [navState, setNavState] = useState('')
+    useEffect(() => {
+        if (storage === 'yes') {
+            setNavState('Owned')
+        }
+    }, [storage])
+
     return (
-        <div className="tab-pane fade" id="pills-farms" role="tabpanel" aria-labelledby="pills-farms-tab">
+        <div className={navState === 'Owned' ? "tab-pane fade show active" : "tab-pane fade"} id="pills-farms" role="tabpanel" aria-labelledby="pills-farms-tab">
             <div className='row'>
                 {farmContractList?.map((farmData: any, index: number) => (
                     <>

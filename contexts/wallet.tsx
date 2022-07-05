@@ -141,7 +141,6 @@ const WalletProvider = (props: any) => {
           // }
         } else {
           setNearBalance("0");
-          console.log("==============================", nearBalance);
         }
       }
     } catch (error) {
@@ -192,7 +191,6 @@ const WalletProvider = (props: any) => {
     if (X_PARAS_COLLECTIONS.includes(account_id)) {
       const result = await fetch("https://api-v2-mainnet.paras.id/collections?collection_id=" + account_id);
       const fetch_result = await result.json();
-      console.log(fetch_result);
       const collection_info = fetch_result["data"]["results"][0];
       return {
         name: collection_info.collection,

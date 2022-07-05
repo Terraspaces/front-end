@@ -46,6 +46,18 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
             button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
             button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
         },
+        {
+            title: 'Introducing $USN Stablecoin Rewards Via Terraspaces.',
+            description: 'Terraspaces integrate $USN rewards.',
+            list: [
+                'Earn 2 $USN monthly per Terraspaces NFT being staked into the farm.',
+                'Access the analytical dashboard for NFT staistics while staked into the farm.',
+                'Access Refer-to-Earn benefits while staked into the farm.',
+                'Expect increase in monthly $USN rewards as Terraspaces grows.'
+            ],
+            button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
+            button2: { title: 'Stake Your NFTs', link: '/stake', _blank: false }
+        },
     ]
 
     const farmsData = [
@@ -60,18 +72,6 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
             ],
             button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
             button2: { title: 'Stake Your NFTs', link: '/stake', _blank: false }
-        },
-        {
-            title: 'Introducing $SAGA Token Rewards For Monarchs',
-            description: 'Terraspaces integrates $SAGA by Haven',
-            list: [
-                'Earn 9 $SAGA tokens per day staking your Normal Type Monarchs By Haven.',
-                'Earn 18 $SAGA tokens per day staking your Origin Type Monarchs By Haven.',
-                '$SAGA is a  utility token with max supply of 12,000,000 tokens.',
-                '$SAGA will pay for Haven\'s utilities, services and mint future collections.'
-            ],
-            button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
-            button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
         }
     ]
     const responsive = {
@@ -95,9 +95,9 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
     };
     return (
         <HomeHeroWrapper className="container">
-            {overviewStatus !== 3 ? (
+            {/* {overviewStatus !== 3 ? ( */}
                 <HomeHero data={heroData[overviewStatus]} />
-            ) : (
+            {/* ) : (
                 <Carousel
                     swipeable={true}
                     draggable={true}
@@ -116,7 +116,7 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
                         <HomeHero key={i} data={item} />
                     ))}
                 </Carousel>
-            )}
+            )} */}
         </HomeHeroWrapper>
     )
 }

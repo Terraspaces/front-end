@@ -248,7 +248,6 @@ const StakeModal: NextPage<StakeModalProps> = ({
                                                     <button className="cmn-btn-1 f-18 mt-20 hidden-stake-btn" onClick={() => onFarmingUnstake(farmData, (selectedNFT as any)[0].token_id)}>
                                                         <span>Unstake</span>
                                                     </button>
-
                                                 }
                                             </div>
                                         )

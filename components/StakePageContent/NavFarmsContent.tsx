@@ -77,7 +77,7 @@ const NavFarmsContent: NextPage<NavFarmsContentProps> = ({
                                 <CardSubHeader farmData={farmData} />
                                 <CardDetailFirst farmData={farmData} />
                                 <CardDetailSecond farmData={farmData} />
-                                <CardDetailThird totalSupply={totalSupply} />
+                                <CardDetailThird totalSupply={totalSupply} farmData={farmData} />
                                 <ButtonContent
                                     farmData={farmData}
                                     openStakeModal={openStakeModal}

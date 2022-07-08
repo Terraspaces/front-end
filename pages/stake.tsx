@@ -67,6 +67,7 @@ const Mint: NextPage = () => {
   }
 
   const onFarmingStake = async (account_id: string, token_id: string) => {
+    localStorage.setItem('isFarms', 'yes')
     await wallet?.account().functionCall({
       contractId: X_PARAS_COLLECTIONS.includes(account_id) ? "x.paras.near" : account_id,
       methodName: "nft_approve",
@@ -98,6 +99,7 @@ const Mint: NextPage = () => {
   }
 
   const onFarmingUnstake = async (account_id: string, token_id: string) => {
+    localStorage.setItem('isFarms', 'yes')
     await wallet?.account().functionCall({
       contractId: FARM_CONTRACT_ID,
       methodName: "unstake",
@@ -107,8 +109,7 @@ const Mint: NextPage = () => {
       },
       gas: MAX_GAS,
       attachedDeposit: "1"
-    }
-    )
+    })
   }
 
   const onClaimReward = async (nft_contract_id: string) => {
@@ -219,6 +220,12 @@ const Mint: NextPage = () => {
       fetchData();
     }
   }, [wallet]);
+
+  useEffect(() => {
+    if (localStorage.getItem('isFarms') === 'yes') {
+      setOverview(3)
+    }
+  }, [])
 
   ReactModal.defaultStyles.overlay!.backgroundColor = 'rgba(255, 100, 255, 0.05)';
 

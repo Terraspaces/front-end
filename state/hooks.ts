@@ -187,3 +187,22 @@ export const useFetchTokenRate = (nft_contract_id: string, token_ids: string[]) 
     }, [wallet, nft_contract_id, JSON.stringify(token_ids)])
     return tokenRates;
 }
+
+export const useFetchClaimAmount = (account_id: string, nft_contract_id: string) => {
+    const { wallet } = useContext(WalletContext)
+    const [claimAmount, setClaimAmount] = useState<number>(0)
+    useEffect(() => {
+        (async () => {
+            const _claimAmount = await wallet?.account().viewFunction(
+                FARM_CONTRACT_ID,
+                'get_claim_amount_by_owner_id',
+                {
+                    account_id,
+                    nft_contract_id
+                }
+            )
+            setClaimAmount(_claimAmount)
+        })()
+    }, [wallet, account_id, nft_contract_id])
+    return claimAmount
+}

@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
-import { X_PARAS_COLLECTIONS } from '../../contexts/wallet'
+import { X_PARAS_COLLECTIONS } from '../../contexts/wallet';
+import { useState, useEffect } from 'react'
 
 interface NavHomeContentProps {
     nftContractList: any;
@@ -20,8 +21,15 @@ const NavHomeContent: NextPage<NavHomeContentProps> = ({
     stakeList,
     onStake
 }) => {
+    const [storage, setStorage] = useState(localStorage.getItem('isFarms'))
+    const [navState, setNavState] = useState('')
+    useEffect(() => {
+        if (storage === 'yes') {
+            setNavState('Owned')
+        }
+    }, [storage])
     return (
-        <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div className={navState !== 'Owned' ? "tab-pane fade show active" : "tab-pane fade"} id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
             {
                 nftContractList.map((contract_id: any, contract_index: number) => {
                     if (contract_id !== 'terraspaces.near')

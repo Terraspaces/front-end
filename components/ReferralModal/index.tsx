@@ -33,6 +33,7 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
     const [collectionName, setCollectionName] = useState<string>('')
     const [allowSubmit, setAllowSubmit] = useState<boolean>(false)
     const [isTooltipDisplayed, setIsTooltipDisplayed] = useState<boolean>(false);
+    const [isTooltipDisplayedLink, setIsTooltipDisplayedLink] = useState<boolean>(false);
     const [selectOptions, setSelectOption] = useState<selectOptionProps[]>([]);
     const [isValidWallet, setIsValidWallet] = useState<boolean>(true)
     const [toast, setToast] = useState<string>('')
@@ -203,30 +204,43 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                     <p className='text-18 bold mt-1'>${referralStats?.amount}</p>
                                 </div>
                             </div>
-                            <div className="floor-c row mt-15 p-1">
-                                <p className='text-16 p-1'>Your Referral Wallet</p>
-                                <InputContent>
-                                    <ModalInput placeholder='zerotime.near' disabled value={referralWallet} onChange={() => getReferralWallet(event)} />
-                                    <Icon icon="entypo:erase" width="22" height="22"
-                                        onClick={() => {
-                                            setReferralWallet('')
-                                        }}
-                                    />
-                                    <Icon icon="fluent:clipboard-paste-16-regular" width="22" height="22" className='ml-10'
-                                        onClick={() => {
-                                            if (navigator.clipboard) {
-                                                // navigator.clipboard.readText().then(
-                                                //     clipText => setReferralWallet(clipText)
-                                                // );
-                                                navigator.clipboard.writeText(wallet?.account().accountId as string)
-                                                setIsTooltipDisplayed(true);
-                                                setTimeout(() => {
-                                                    setIsTooltipDisplayed(false);
-                                                }, 1500);
-                                            }
-                                        }} />
-                                    <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
-                                </InputContent>
+                            <div className="floor-c row mt-15">
+                                <div className='row d-flex justify-content-between'>
+                                    <div className='col-md-6 col-xs-12 p-1'>
+                                        <p className='text-16'>Your Referral Wallet</p>
+                                        <InputContent>
+                                            <ModalInput placeholder='zerotime.near' disabled value={referralWallet} onChange={() => getReferralWallet(event)} />
+                                            <Icon icon="fluent:clipboard-paste-16-regular" width="22" height="22" className='ml-10'
+                                                onClick={() => {
+                                                    if (navigator.clipboard) {
+                                                        navigator.clipboard.writeText(wallet?.account().accountId as string)
+                                                        setIsTooltipDisplayed(true);
+                                                        setTimeout(() => {
+                                                            setIsTooltipDisplayed(false);
+                                                        }, 1500);
+                                                    }
+                                                }} />
+                                            <Tooltip isTooltipDisplayed={isTooltipDisplayed} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
+                                        </InputContent>
+                                    </div>
+                                    <div className='col-md-6 col-xs-12 p-1'>
+                                        <p className='text-16'>Your Referral Link</p>
+                                        <InputContent>
+                                            <ModalInput placeholder='Airtable Link' value="https://airtable.com/shrt1s7uQK1z3pjs9" className="cursor-pointer" onClick={() => window.open("https://airtable.com/shrt1s7uQK1z3pjs9", '_blank')} />
+                                            <Icon icon="fluent:clipboard-paste-16-regular" width="22" height="22" className='ml-10'
+                                                onClick={() => {
+                                                    if (navigator.clipboard) {
+                                                        navigator.clipboard.writeText("https://airtable.com/shrt1s7uQK1z3pjs9")
+                                                        setIsTooltipDisplayedLink(true);
+                                                        setTimeout(() => {
+                                                            setIsTooltipDisplayedLink(false);
+                                                        }, 1500);
+                                                    }
+                                                }} />
+                                            <Tooltip isTooltipDisplayed={isTooltipDisplayedLink} style={{ width: "70px", left: "-15px" }}>Copied</Tooltip>
+                                        </InputContent>
+                                    </div>
+                                </div>
                                 {!isValidWallet && <p className='warning-text'>Please enter correct wallet format.</p>}
                             </div>
                             <div className='floor-c row mt-15 p-1'>
@@ -243,11 +257,11 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                                 className="dropdownList"
                                 placeholder='Select Collection name'
                             /> */}
-                            <label className="checkbox-container mt-20">I have shared the application form and referral wallet to invited collection.
+                            <label className="checkbox-container">I have shared the application form and referral wallet to invited collection.
                                 <input type="checkbox" checked={allowSubmit} onClick={() => setAllowSubmit(!allowSubmit)} />
                                 <span className="checkmark" />
                             </label>
-                            <button className="cmn-btn-1 f-18 radius-12 w-100 mt-50" onClick={() => SubmitReferral()}>
+                            <button className="cmn-btn-1 f-18 radius-12 w-100" onClick={() => SubmitReferral()}>
                                 <span>Submit Referral</span>
                             </button>
                             <p className='text-14 p-1 italic'>Note: You may only submit once every 24 hours.</p>

@@ -62,18 +62,18 @@ const heroData = [
     button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
     button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
   },
-  {
-    title: 'Introducing $SAGA Token Rewards For Monarchs',
-    description: 'Terraspaces integrates $SAGA by Haven',
-    list: [
-      'Earn 9 $SAGA tokens per day staking your Normal Type Monarchs By Haven.',
-      'Earn 18 $SAGA tokens per day staking your Origin Type Monarchs By Haven.',
-      '$SAGA is a  utility token with max supply of 12,000,000 tokens.',
-      '$SAGA will pay for Haven\'s utilities, services and mint future collections.'
-    ],
-    button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
-    button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
-  },
+  // {
+  //   title: 'Introducing $SAGA Token Rewards For Monarchs',
+  //   description: 'Terraspaces integrates $SAGA by Haven',
+  //   list: [
+  //     'Earn 9 $SAGA tokens per day staking your Normal Type Monarchs By Haven.',
+  //     'Earn 18 $SAGA tokens per day staking your Origin Type Monarchs By Haven.',
+  //     '$SAGA is a  utility token with max supply of 12,000,000 tokens.',
+  //     '$SAGA will pay for Haven\'s utilities, services and mint future collections.'
+  //   ],
+  //   button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
+  //   button2: { title: 'Read Gitbook', link: 'https://terraspaces.gitbook.io/', _blank: true }
+  // },
 ]
 
 export const Home = () => {

@@ -914,6 +914,7 @@ span.search-icon {
 }
 
 /* Hide the browser's default checkbox */
+
 .checkbox-container input {
     position: absolute;
     opacity: 0;
@@ -1105,6 +1106,10 @@ span.search-icon {
 
     .collection-list .nft-list {
         margin-left: 10px;
+    }
+
+    .checkbox-container {
+        margin-top: 20px;
     }
 
     /* end farm stake & unstake modal */

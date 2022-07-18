@@ -1,13 +1,13 @@
 import { apiCall } from "./_apicall";
 
 export const drop_get = async () => {
-    const url = `${process.env.NEXT_PUBLIC_API}/drops`;
+    const url = `https://dev-api.terraspaces.io/drops`;
     const results = await apiCall(url)
     return results
 }
 
 export const drop_like = async (params: { drop_name: string, account_id: string }) => {
-    const url = `${process.env.NEXT_PUBLIC_API}/drops/like`;
+    const url = `https://dev-api.terraspaces.io/drops/like`;
     const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -17,7 +17,7 @@ export const drop_like = async (params: { drop_name: string, account_id: string 
 }
 
 export const drop_unlike = async (params: { drop_name: string, account_id: string }) => {
-    const url = `${process.env.NEXT_PUBLIC_API}/drops/unlike`;
+    const url = `https://dev-api.terraspaces.io/drops/unlike`;
     const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +27,7 @@ export const drop_unlike = async (params: { drop_name: string, account_id: strin
 }
 
 export const submit_referral = async (params: { referral_wallet_id: string, referred_by: string, collection_name: string }) => {
-    const url = `${process.env.NEXT_PUBLIC_API}/referral`;
+    const url = `https://dev-api.terraspaces.io/referral`;
     const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,25 +38,25 @@ export const submit_referral = async (params: { referral_wallet_id: string, refe
 }
 
 // export const getReferralStats = async (wallet_id: string) => {
-//     const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats`;
+//     const url = `https://dev-api.terraspaces.io/referral/${wallet_id}/stats`;
 //     const results = await apiCall(url);
 //     return results;
 // }
 
 export const getCollectionNameList = async () => {
-    const url = `${process.env.NEXT_PUBLIC_API}/drops/sorted`;
+    const url = `https://dev-api.terraspaces.io/drops/sorted`;
     const results = await apiCall(url);
     return results
 }
 
 export const getReferralTerraStats = async (wallet_id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats/terraspaces`;
+    const url = `https://dev-api.terraspaces.io/referral/${wallet_id}/stats/terraspaces`;
     const results = await apiCall(url);
     return results
 }
 
 export const getReferralStakingStats = async (wallet_id: string) => {
-    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/stats/staking_partners`;
+    const url = `https://dev-api.terraspaces.io/referral/${wallet_id}/stats/staking_partners`;
     const results = await apiCall(url);
     return results
 }

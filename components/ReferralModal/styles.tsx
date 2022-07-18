@@ -34,6 +34,10 @@ export const TimelineContent = styled.div`
 
 export const DetailContent = styled.div`
     padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
     .dropdownList {
         border-radius: 15px;
         height: 54px;
@@ -80,6 +84,7 @@ export const DetailContent = styled.div`
 
 export const ModalInput = styled.input`
     background-color: transparent;
+    caretColor: transparent;
     padding: 15px;
     color: white;
     width: 100%;

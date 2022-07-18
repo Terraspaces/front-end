@@ -234,6 +234,10 @@ p {
     border-radius: 10px;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 /*Defalt Margin and padding*/
 
 .mt-10 {

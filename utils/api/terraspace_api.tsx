@@ -60,3 +60,9 @@ export const getReferralStakingStats = async (wallet_id: string) => {
     const results = await apiCall(url);
     return results
 }
+
+export const getReferralStatus = async (wallet_id: string) => {
+    const url = `${process.env.NEXT_PUBLIC_API}/referral/${wallet_id}/status`;
+    const results = await apiCall(url);
+    return results
+}

@@ -1,10 +1,12 @@
 import type { NextPage } from 'next';
 import React, { useState, useContext, useEffect } from 'react';
 import Select from 'react-dropdown-select';
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { Icon } from '@iconify/react';
 import { Container, BodyContainer, IconContent, TimelineContent, DetailContent, ModalInput, InputContent, Tooltip } from './styles';
-import { submit_referral, getReferralTerraStats, getReferralStakingStats } from '../../utils/api/terraspace_api';
+import { submit_referral, getReferralTerraStats, getReferralStakingStats, getReferralStatus } from '../../utils/api/terraspace_api';
 import { WalletContext } from '../../contexts/wallet';
+import ReactModal from 'react-modal';
 import { getCollectionNameList } from '../../utils/api/terraspace_api'
 
 interface ReferralModalProps {
@@ -37,6 +39,7 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
     const [selectOptions, setSelectOption] = useState<selectOptionProps[]>([]);
     const [isValidWallet, setIsValidWallet] = useState<boolean>(true)
     const [toast, setToast] = useState<string>('')
+    const [isNetworkSelectModalOpen, setIsNetworkSelectModalOpen] = useState<boolean>(false);
 
     const getReferralWallet = (event: any) => {
         const result = event.target.value;
@@ -53,11 +56,11 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         setCollectionName(event.target.value)
     }
 
-    function copyToClipBoard() {
-        var x: any = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4500);
-    }
+    // function copyToClipBoard() {
+    //     var x: any = document.getElementById("snackbar");
+    //     x.className = "show";
+    //     setTimeout(function () { x.className = x.className.replace("show", ""); }, 4500);
+    // }
 
     const SubmitReferral = async () => {
         const index = referralWallet.length - referralWallet.lastIndexOf('.near')
@@ -66,10 +69,16 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
             return;
         }
         if (allowSubmit && referralWallet !== '' && collectionName !== '') {
-            const result = await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_by: variables[0] === 2.5 ? "Staking Partners" : "Terraspaces", collection_name: collectionName })
-            if (result.code === 403) {
-                setToast(result.message)
-                copyToClipBoard()
+            await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_by: variables[0] === 2.5 ? "Staking Partners" : "Terraspaces", collection_name: collectionName })
+            const submitStatus = await getReferralStatus(wallet?.account().accountId || '')
+            if (submitStatus.has_referral) {
+                setIsNetworkSelectModalOpen(true)
+                const timer = setTimeout(() => {
+                    setIsNetworkSelectModalOpen(false)
+                }, 4000);
+                return () => {
+                    clearTimeout(timer)
+                }
             }
         }
         updateReferralStats()
@@ -109,6 +118,26 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         { name: 'The Dons', photo: '/assets/partners/thedons.jpg', description: 'A collection of 3,500 Mafia Bosses coming to take over NEAR Protocol. Blood makes you related. Loyalty makes you family.', para_link: "https://paras.id/collection/nft.thedons.near" },
         { name: 'Monarchs By Haven', photo: '/assets/partners/haven.gif', description: 'Monarchs is a collection of 333 NFTs rewriting history on the NEAR Protocol.', para_link: "https://paras.id/collection/mint.havendao.near" }
     ]
+
+    ReactModal.defaultStyles.overlay!.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: "transparent",
+            border: 'none',
+            overflow: 'hidden',
+        },
+    };
+
+    function closeModal() {
+        setIsNetworkSelectModalOpen(false);
+    }
 
     return (
         <>
@@ -269,6 +298,14 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                     </div>
                 </BodyContainer >
                 <p id="snackbar">{toast}</p>
+                <ReactModal isOpen={isNetworkSelectModalOpen} style={customStyles}>
+                    <Player
+                        autoplay
+                        loop
+                        src="https://assets1.lottiefiles.com/packages/lf20_cjoombb4.json"
+                        style={{ width: '350px' }}
+                    />
+                </ReactModal>
             </Container >
         </>
     )

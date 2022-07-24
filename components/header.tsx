@@ -58,13 +58,13 @@ const Header: NextPage = () => {
                                         <a className={`nav-link ${router.pathname == "/stake" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Stake</a>
                                     </Link>
                                 </li>
-                                {stakedPerUser[0] > 0 && (
-                                    <li className="nav-item">
-                                        <Link href="/dashboard">
-                                            <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Dashboard</a>
-                                        </Link>
-                                    </li>
-                                )}
+                                {/* {stakedPerUser[0] > 0 && ( */}
+                                <li className="nav-item">
+                                    <Link href="/dashboard">
+                                        <a className={`nav-link ${router.pathname == "/dashboard" ? "active" : ""}`} onClick={() => setIsSearchBox(true)}>Dashboard</a>
+                                    </Link>
+                                </li>
+                                {/* )} */}
                                 <li className="nav-item">
                                     <Link href="/drops">
                                         <a className={`nav-link ${router.pathname == "/drops" ? "active" : ""}`} onClick={() => setIsSearchBox(false)}>Drops</a>

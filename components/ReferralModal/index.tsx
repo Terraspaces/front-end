@@ -39,7 +39,7 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
     const [selectOptions, setSelectOption] = useState<selectOptionProps[]>([]);
     const [isValidWallet, setIsValidWallet] = useState<boolean>(true)
     const [toast, setToast] = useState<string>('')
-    const [isNetworkSelectModalOpen, setIsNetworkSelectModalOpen] = useState<boolean>(false);
+    // const [isNetworkSelectModalOpen, setIsNetworkSelectModalOpen] = useState<boolean>(false);
 
     const getReferralWallet = (event: any) => {
         const result = event.target.value;
@@ -56,11 +56,11 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         setCollectionName(event.target.value)
     }
 
-    // function copyToClipBoard() {
-    //     var x: any = document.getElementById("snackbar");
-    //     x.className = "show";
-    //     setTimeout(function () { x.className = x.className.replace("show", ""); }, 4500);
-    // }
+    function copyToClipBoard() {
+        var x: any = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 4500);
+    }
 
     const SubmitReferral = async () => {
         const index = referralWallet.length - referralWallet.lastIndexOf('.near')
@@ -69,17 +69,19 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
             return;
         }
         if (allowSubmit && referralWallet !== '' && collectionName !== '') {
-            await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_by: variables[0] === 2.5 ? "Staking Partners" : "Terraspaces", collection_name: collectionName })
-            const submitStatus = await getReferralStatus(wallet?.account().accountId || '')
-            if (submitStatus.has_referral) {
-                setIsNetworkSelectModalOpen(true)
-                const timer = setTimeout(() => {
-                    setIsNetworkSelectModalOpen(false)
-                }, 4000);
-                return () => {
-                    clearTimeout(timer)
-                }
-            }
+            const submitStatus = await submit_referral({ referral_wallet_id: wallet?.account().accountId || '', referred_by: variables[0] === 2.5 ? "Staking Partners" : "Terraspaces", collection_name: collectionName })
+            setToast(submitStatus.message)
+            copyToClipBoard()
+            // const submitStatus = await getReferralStatus(wallet?.account().accountId || '')
+            // if (submitStatus.has_referral) {
+            //     setIsNetworkSelectModalOpen(true)
+            //     const timer = setTimeout(() => {
+            //         setIsNetworkSelectModalOpen(false)
+            //     }, 4000);
+            //     return () => {
+            //         clearTimeout(timer)
+            //     }
+            // }
         }
         updateReferralStats()
     }
@@ -135,9 +137,9 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
         },
     };
 
-    function closeModal() {
-        setIsNetworkSelectModalOpen(false);
-    }
+    // function closeModal() {
+    //     setIsNetworkSelectModalOpen(false);
+    // }
 
     return (
         <>
@@ -298,14 +300,14 @@ const ReferralModal: NextPage<ReferralModalProps> = ({ totalCount, variables }) 
                     </div>
                 </BodyContainer >
                 <p id="snackbar">{toast}</p>
-                <ReactModal isOpen={isNetworkSelectModalOpen} style={customStyles}>
+                {/* <ReactModal isOpen={isNetworkSelectModalOpen} style={customStyles}>
                     <Player
                         autoplay
                         loop
                         src="https://assets1.lottiefiles.com/packages/lf20_cjoombb4.json"
                         style={{ width: '350px' }}
                     />
-                </ReactModal>
+                </ReactModal> */}
             </Container >
         </>
     )

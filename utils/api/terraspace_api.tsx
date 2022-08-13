@@ -1,5 +1,7 @@
 import { apiCall } from "./_apicall";
 
+//https://dev-api.terraspaces.io/
+
 export const drop_get = async () => {
     const url = `${process.env.NEXT_PUBLIC_API}/drops`;
     const results = await apiCall(url)

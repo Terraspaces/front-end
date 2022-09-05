@@ -33,19 +33,20 @@ export const DashboardChartView = ({ token }: Props) => {
     if (token && token.account_id) {
       (async () => {
         console.log("getting transaction data...");
-        // const api = 'https://api.terraspaces.io';
-        const api = process.env.NEXT_PUBLIC_API;
+        const api = 'https://api.terraspaces.io';
+        // const api = process.env.NEXT_PUBLIC_API;
         const getAPI = async () => {
           const statisticDataEndpoint = `${api}/statistic_data`;
           const result = await fetch(statisticDataEndpoint, {
             method: 'POST',
             mode: 'cors',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ account_id: token.account_id })
+            body: JSON.stringify({ account_id: token.account_id, skip: 0, limit: 100 })
           });
-          return (await result.json())
+          const finalResult = await result.clone().json()
+          return finalResult
         };
         const result = await getAPI();
         // const result = transactionData;
@@ -58,6 +59,7 @@ export const DashboardChartView = ({ token }: Props) => {
       })();
     }
   }, [token]);
+
   return (
     <Container>
       <HeaderWrapper expand={isCollapse}>

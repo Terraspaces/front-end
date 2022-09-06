@@ -9,20 +9,20 @@ function TradingViewLineChart(props: any) {
   const { graphStatus, floorData, listedData, volumeData } = props
   const chartRef = React.useRef<any>();
 
-  const finalFloorData = floorData.map((floorDataOne, index) => {
-    const time = new Date(floorDataOne.time * 1000)
+  const finalFloorData = floorData.map((floorDataOne) => {
+    const time = new Date(floorDataOne.time).getTime()
     const value = floorDataOne.value
-    return { _id: index, time: time, value: value }
+    return { _id: floorDataOne._id, time: time, value: value }
   })
-  const finalListedData = listedData.map((ListedDataOne, index) => {
-    const time = new Date(ListedDataOne.time * 1000)
+  const finalListedData = listedData.map((ListedDataOne) => {
+    const time = new Date(ListedDataOne.time)
     const value = ListedDataOne.value
-    return { _id: index, time: time, value: value }
+    return { _id: ListedDataOne._id, time: time, value: value }
   })
-  const finalVolumeData = volumeData.map((volumeDataOne, index) => {
-    const time = new Date(volumeDataOne.time * 1000)
+  const finalVolumeData = volumeData.map((volumeDataOne) => {
+    const time = new Date(volumeDataOne.time)
     const value = volumeDataOne.value
-    return { _id: index, time: time, value: value }
+    return { _id: volumeDataOne._id, time: time, value: value }
   })
 
   useEffect(() => {

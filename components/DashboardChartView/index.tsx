@@ -50,9 +50,9 @@ export const DashboardChartView = ({ token }: Props) => {
         };
         const result = await getAPI();
         // const result = transactionData;
-        const floorData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.floor_price }));
-        const listedData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.total_listed }));
-        const volumeData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.instant_volume }));
+        const floorData = result.map((data: any) => ({ _id: data._id, time: new Date(data.created_at).getTime() / 1000, value: data.floor_price }));
+        const listedData = result.map((data: any) => ({ _id: data._id, time: new Date(data.created_at).getTime() / 1000, value: data.total_listed }));
+        const volumeData = result.map((data: any) => ({ _id: data._id, time: new Date(data.created_at).getTime() / 1000, value: data.instant_volume }));
         setFloorData(floorData);
         setListedData(listedData);
         setVolumeData(volumeData);

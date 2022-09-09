@@ -285,16 +285,16 @@ const Mint: NextPage = () => {
     if (!itemArray.includes(text)) {
 
       // itemArray = JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[0]).data;
-      itemArray.push(text)
-      var showListDataTmp = []
-      var showListDataTmp2 = []
+      itemArray.push(text);
+      var showListDataTmp: any[] = [];
+      var showListDataTmp2: any[] = [];
       for (let i = 0; i < JSON.parse(localStorage.getItem('watchlistdata')!).length; i++) {
         if (i === selectedShowListDataNum) {
           let tmp = JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[i]);
 
           tmp.data = itemArray;//JSON.parse();
           showListDataTmp.push(JSON.stringify(tmp));
-          showListDataTmp2.push(tmp)
+          showListDataTmp2.push(tmp);
         } else {
           showListDataTmp.push(JSON.stringify(JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[i])));
           showListDataTmp2.push(JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[i]));
@@ -322,8 +322,8 @@ const Mint: NextPage = () => {
 
 
       //
-      var showListDataTmp2 = []
-      var showListDataTmp = []
+      var showListDataTmp2: any = [];
+      var showListDataTmp: any = [];
       for (let i = 0; i < JSON.parse(localStorage.getItem('watchlistdata')!).length; i++) {
         if (i === selectedShowListDataNum) {
           let tmp = JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[i]);
@@ -349,8 +349,8 @@ const Mint: NextPage = () => {
   }
 
   const deleteWatchList = (index: number) => {
-    var showListDataTmp2 = []
-    var showListDataTmp = []
+    var showListDataTmp2: any = [];
+    var showListDataTmp: any = [];
     for (let i = 0; i < JSON.parse(localStorage.getItem('watchlistdata')!).length; i++) {
 
       if (i !== index) {
@@ -373,8 +373,8 @@ const Mint: NextPage = () => {
   }
 
   const duplicateWatchList = (index: number) => {
-    var showListDataTmp2 = []
-    var showListDataTmp = []
+    var showListDataTmp2: any = [];
+    var showListDataTmp: any = [];
     var tmp;
     for (let i = 0; i < JSON.parse(localStorage.getItem('watchlistdata')!).length; i++) {
 
@@ -407,8 +407,8 @@ const Mint: NextPage = () => {
 
   const addEmptyWatchList = () => {
     if (JSON.parse(localStorage.getItem('watchlistdata')!).length > 4) return;
-    var showListDataTmp2 = []
-    var showListDataTmp = []
+    var showListDataTmp2: any = [];
+    var showListDataTmp: any = [];
     var tmp;
     for (let i = 0; i < JSON.parse(localStorage.getItem('watchlistdata')!).length; i++) {
       showListDataTmp.push(JSON.stringify(JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[i])));
@@ -440,8 +440,8 @@ const Mint: NextPage = () => {
   }
 
   const deleteWatchItem = (index: number, data: string) => {
-    var showListDataTmp2 = []
-    var showListDataTmp = []
+    var showListDataTmp2: any = [];
+    var showListDataTmp: any = [];
     var tmp: any;
     var keys: any[] = [];
     for (let i = 0; i < JSON.parse(localStorage.getItem('watchlistdata')!).length; i++) {
@@ -501,7 +501,7 @@ const Mint: NextPage = () => {
   useEffect(() => {
     try {
       var tmpLength = JSON.parse(localStorage.getItem('watchlistdata')!).length;
-      var showListDataTmp1 = [];
+      var showListDataTmp1: any = [];
       for (let i = 0; i < tmpLength; i++) {
         let item = JSON.parse(JSON.parse(localStorage.getItem('watchlistdata')!)[i]);
         showListDataTmp1.push(item);

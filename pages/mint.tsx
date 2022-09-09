@@ -77,7 +77,7 @@ const Mint: NextPage = () => {
 
                                     <div className="mint-c pb-20">
                                         <p className="t-16">
-                                            WL Mint Price: <a target="_blank" rel="noreferrer" href="https://discord.gg/terraspaces">Check Discord</a>
+                                            WL Mint Price: <a target="_blank" rel="noreferrer" href="https://discord.gg/6dHJNGWs">Check Discord</a>
 
                                         </p>
                                         <p className="t-16"> Mint Price: 9N</p>

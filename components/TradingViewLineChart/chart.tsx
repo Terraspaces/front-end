@@ -9,6 +9,22 @@ function TradingViewLineChart(props: any) {
   const { graphStatus, floorData, listedData, volumeData } = props
   const chartRef = React.useRef<any>();
 
+  const finalFloorData = floorData.map((floorDataOne) => {
+    const time = new Date(floorDataOne.time).getTime()
+    const value = floorDataOne.value
+    return { _id: floorDataOne._id, time: time, value: value }
+  })
+  const finalListedData = listedData.map((ListedDataOne) => {
+    const time = new Date(ListedDataOne.time)
+    const value = ListedDataOne.value
+    return { _id: ListedDataOne._id, time: time, value: value }
+  })
+  const finalVolumeData = volumeData.map((volumeDataOne) => {
+    const time = new Date(volumeDataOne.time)
+    const value = volumeDataOne.value
+    return { _id: volumeDataOne._id, time: time, value: value }
+  })
+
   useEffect(() => {
     chartRef.current.innerHTML = ''
     const width = chartRef.current.clientWidth
@@ -52,9 +68,9 @@ function TradingViewLineChart(props: any) {
         }
       }
     });
-    
+
     // chart.resize(width, height);
-    
+
     const areaSeries = chart.addAreaSeries({
       topColor: "rgba(115, 251, 211, 0.56)",
       bottomColor: "rgba(0, 150, 136, 0.04)",
@@ -83,21 +99,21 @@ function TradingViewLineChart(props: any) {
       },
       visible: graphStatus.volume
     });
-    
-    floorData?.length && areaSeries.setData(floorData);
-    listedData?.length && extraAreaSeries.setData(listedData);
-    volumeData?.length && volumeSeries.setData(volumeData);
-    
+
+    finalFloorData?.length && areaSeries.setData(finalFloorData);
+    finalListedData?.length && extraAreaSeries.setData(finalListedData);
+    finalVolumeData?.length && volumeSeries.setData(finalVolumeData);
+
     var toolTipWidth = 100;
     var toolTipHeight = 80;
     var toolTipMargin = 15;
-    
+
     var toolTip = document.createElement('div');
     toolTip.className = 'floating-tooltip-2';
     chartRef.current.appendChild(toolTip);
-    
+
     // update tooltip
-    chart.subscribeCrosshairMove(function(param: any) {
+    chart.subscribeCrosshairMove(function (param: any) {
       if (!param.time || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
         toolTip.style.display = 'none';
         return;
@@ -110,23 +126,23 @@ function TradingViewLineChart(props: any) {
       const listedElement = graphStatus.listed ? `<div><span>LST</span> <span style="color:rgba(255, 255, 255, 0.7);">${listed ?? '-'}</span></div>` : ''
       const volumeElement = graphStatus.volume ? `<div><span>VOL</span> <span style="color:rgb(119, 134, 212);">${volume ?? '-'}</span></div>` : ''
       if (graphStatus.floor || graphStatus.volume || graphStatus.listed) toolTip.innerHTML = `${floorElement}${listedElement}${volumeElement}`;
-    
+
       let y = param.point.y;
-    
+
       let left = param.point.x + toolTipMargin;
       if (left > width - toolTipWidth) {
         left = param.point.x - toolTipMargin - toolTipWidth;
       }
-    
+
       let top = y + toolTipMargin;
       if (top > height - toolTipHeight) {
         top = y - toolTipHeight - toolTipMargin;
       }
-    
+
       toolTip.style.left = left + 'px';
       toolTip.style.top = top + 'px';
     });
-  }, [graphStatus, floorData, listedData, volumeData]);
+  }, [graphStatus, finalFloorData, finalListedData, finalVolumeData]);
 
   return (
     <Container>

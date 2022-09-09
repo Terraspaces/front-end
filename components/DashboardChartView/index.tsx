@@ -33,31 +33,33 @@ export const DashboardChartView = ({ token }: Props) => {
     if (token && token.account_id) {
       (async () => {
         console.log("getting transaction data...");
-        // const api = 'https://api.terraspaces.io';
-        const api = process.env.NEXT_PUBLIC_API;
+        const api = 'https://api.terraspaces.io';
+        // const api = process.env.NEXT_PUBLIC_API;
         const getAPI = async () => {
           const statisticDataEndpoint = `${api}/statistic_data`;
           const result = await fetch(statisticDataEndpoint, {
             method: 'POST',
             mode: 'cors',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ account_id: token.account_id })
+            body: JSON.stringify({ account_id: token.account_id, skip: 0, limit: 100 })
           });
-          return (await result.json())
+          const finalResult = await result.clone().json()
+          return finalResult
         };
         const result = await getAPI();
         // const result = transactionData;
-        const floorData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.floor_price }));
-        const listedData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.total_listed }));
-        const volumeData = result.map((data: any) => ({ time: new Date(data.created_at).getTime() / 1000, value: data.instant_volume }));
+        const floorData = result.map((data: any) => ({ _id: data._id, time: new Date(data.created_at).getTime() / 1000, value: data.floor_price }));
+        const listedData = result.map((data: any) => ({ _id: data._id, time: new Date(data.created_at).getTime() / 1000, value: data.total_listed }));
+        const volumeData = result.map((data: any) => ({ _id: data._id, time: new Date(data.created_at).getTime() / 1000, value: data.instant_volume }));
         setFloorData(floorData);
         setListedData(listedData);
         setVolumeData(volumeData);
       })();
     }
   }, [token]);
+
   return (
     <Container>
       <HeaderWrapper expand={isCollapse}>

@@ -189,7 +189,7 @@ const StakeModal: NextPage<StakeModalProps> = ({
     // ]
 
     const fetchData = async () => {
-        const tmpOptions = [];
+        const tmpOptions: any[] = [];
         for (let i = 0; i < nftList.get(farmData)?.length; i++) {
             let nft_contract_id = farmData;
             if (nft_contract_id == "x.paras.near") {

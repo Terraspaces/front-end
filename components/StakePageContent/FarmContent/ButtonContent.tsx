@@ -38,9 +38,9 @@ const ButtonContent: NextPage<ButtonContentProps> = ({
                     </button>
                 </div>
             </div>
-            <button className="cmn-btn-1 f-18 radius-12 mt-15 col-6 w-100" disabled={isClaimBtnStatus} onClick={() => onClaimReward(farmData)}>
+            {/* <button className="cmn-btn-1 f-18 radius-12 mt-15 col-6 w-100" disabled={isClaimBtnStatus} onClick={() => onClaimReward(farmData)}>
                 <span>Claim Rewards</span>
-            </button>
+            </button> */}
         </>
     )
 }

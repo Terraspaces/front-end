@@ -12,12 +12,12 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
     const heroData = [
         {
             title: 'Check For Terraspaces Or Partnered NFTs To Stake.',
-            description: 'Stake NFTs to access analytics and referral commission',
+            description: 'Stake NFTs for access to exclusive Terraspaces holdership features',
             list: [
-                'Explore staking partners and stake their NFT to access dashboard.',
-                'Tap-into the Refer-To-Earn program based an amount of staked NFTs.',
-                'Earn up to $2000 upon successful referrals of new staking partners.',
-                'Access our farm by staking specific NFTs to earn passive token emission.'
+                'Explore Staking Partners and Stake Their NFT For Access to Collaborative Terraspaces Experiences.',
+                'Contact Terraspaces' For Staking NFT Integration via Management@Terraspaces.io.',
+                'Stake Terraspaces' NFTs Using Our Read-Only Snapshot Mechanism To Opt-In For Future Project Airdrops.',
+                'View Floor Price, & Total Value via Wallet When You Stake Compatible NEAR NFTs With Terraspaces.'
             ],
             button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
             button2: { title: 'Read Gitbook', link: '/stake', _blank: false }

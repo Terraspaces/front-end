@@ -15,8 +15,8 @@ const HeaderContent: NextPage<HeaderContentProps> = ({ overviewStatus }) => {
             description: 'Stake NFTs for access to exclusive Terraspaces holdership features',
             list: [
                 'Explore Staking Partners and Stake Their NFT For Access to Collaborative Terraspaces Experiences.',
-                'Contact Terraspaces' For Staking NFT Integration via Management@Terraspaces.io.',
-                'Stake Terraspaces' NFTs Using Our Read-Only Snapshot Mechanism To Opt-In For Future Project Airdrops.',
+                'Contact Terraspaces\' For Staking NFT Integration via Management@Terraspaces.io.',
+                'Stake Terraspaces\' NFTs Using Our Read-Only Snapshot Mechanism To Opt-In For Future Project Airdrops.',
                 'View Floor Price, & Total Value via Wallet When You Stake Compatible NEAR NFTs With Terraspaces.'
             ],
             button1: { title: 'Live on PARAS', link: 'https://paras.id/collection/terraspaces.near', _blank: true },
